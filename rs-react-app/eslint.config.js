@@ -9,10 +9,9 @@ import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import reactCompiler from 'eslint-plugin-react-compiler';
 
 export default defineConfig([
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'vite.config.ts'] },
   js.configs.recommended,
   ...tseslint.configs.strict,
-  eslintPluginPrettier,
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -41,4 +40,5 @@ export default defineConfig([
       },
     },
   },
+  eslintPluginPrettier,
 ]);
