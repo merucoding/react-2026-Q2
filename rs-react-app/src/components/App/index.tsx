@@ -1,7 +1,14 @@
-import AppHeader from '../AppHeader';
+import { Component } from 'react';
+import Header from '../Header';
+import TopControls from '../TopControls';
 
-function App() {
-  return <AppHeader />;
+export default class App extends Component {
+  render() {
+    return (
+      <>
+        <Header />
+        <TopControls />
+      </>
+    );
+  }
 }
-
-export default App;
