@@ -1,13 +1,13 @@
 import { Component } from 'react';
-import Header from '../Header';
-import TopControls from '../TopControls';
+import Header from './Header';
+import Main from './Main';
 
 export default class App extends Component {
   render() {
     return (
       <>
         <Header />
-        <TopControls />
+        <Main />
       </>
     );
   }
