@@ -3,6 +3,7 @@ import TopControls from './TopControls';
 import { LOCAL_STORAGE_QUERY_KEY } from '../types/constants';
 import type { Pokemon } from 'pokeapi-typescript';
 import { fetchPokemons } from '../api/fetchPokemons';
+import Loading from './Loading';
 
 type MainState = {
   loading: boolean;
@@ -50,7 +51,7 @@ export default class Main extends Component {
           onChange={this.handleInputChange}
         />
         {loading ? (
-          <div>Loading...</div>
+          <Loading />
         ) : errorMessage ? (
           <div className="mt-8 text-fuchsia-400 font-bold text-lg">
             {errorMessage}
