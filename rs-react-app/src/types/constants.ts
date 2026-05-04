@@ -9,3 +9,5 @@ export const POKEMON_LIST_URL =
 export const POKEMON_BY_NAME_URL = 'https://pokeapi.co/api/v2/pokemon/';
 
 export const LOCAL_STORAGE_QUERY_KEY = 'searchText';
+
+export const UNIT_CONVERSION = 10;
