@@ -10,6 +10,7 @@ type MainState = {
   loading: boolean;
   pokemons: Pokemon[];
   searchText: string;
+  lastSearchText: string;
   errorMessage: string;
 };
 
@@ -17,15 +18,22 @@ export default class Main extends Component {
   state: MainState = {
     loading: false,
     pokemons: [],
-    searchText: localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || '',
+    searchText: '',
+    lastSearchText: '',
     errorMessage: '',
   };
 
   componentDidMount(): void {
-    this.loadPokemons(this.state.searchText);
+    const saved = localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || '';
+
+    this.setState({
+      searchText: saved,
+      lastSearchText: saved,
+    });
+    this.loadPokemons(saved);
   }
 
-  async loadPokemons(searchText: string) {
+  async loadPokemons(searchText: string): Promise<void> {
     this.setState({ loading: true });
     const { pokemons, errorMessage } = await fetchPokemons(searchText);
     this.setState({ loading: false, pokemons, errorMessage });
@@ -33,9 +41,12 @@ export default class Main extends Component {
 
   handleSearch = () => {
     const trimmed = this.state.searchText.trim();
-    localStorage.setItem(LOCAL_STORAGE_QUERY_KEY, trimmed);
+    if (trimmed !== this.state.lastSearchText) {
+      localStorage.setItem(LOCAL_STORAGE_QUERY_KEY, trimmed);
+      this.setState({ lastSearchText: trimmed });
+      this.loadPokemons(trimmed);
+    }
     this.setState({ searchText: trimmed });
-    this.loadPokemons(trimmed);
   };
 
   handleInputChange = (searchText: string) => {
