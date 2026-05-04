@@ -4,6 +4,7 @@ import { LOCAL_STORAGE_QUERY_KEY } from '../types/constants';
 import type { Pokemon } from 'pokeapi-typescript';
 import { fetchPokemons } from '../api/fetchPokemons';
 import Loading from './Loading';
+import CardList from './CardList';
 
 type MainState = {
   loading: boolean;
@@ -41,7 +42,7 @@ export default class Main extends Component {
   };
 
   render() {
-    const { loading, searchText, errorMessage } = this.state;
+    const { loading, pokemons, searchText, errorMessage } = this.state;
 
     return (
       <main className="font-lexend-exa text-emerald-500 font-light">
@@ -57,7 +58,7 @@ export default class Main extends Component {
             {errorMessage}
           </div>
         ) : (
-          <div>Pokemon</div>
+          <CardList pokemons={pokemons} />
         )}
       </main>
     );
