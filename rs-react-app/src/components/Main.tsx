@@ -22,7 +22,7 @@ export default class Main extends Component {
   };
 
   componentDidMount(): void {
-    this.loadPokemons(this.state.searchText.trim());
+    this.loadPokemons(this.state.searchText);
   }
 
   async loadPokemons(searchText: string) {
@@ -34,6 +34,7 @@ export default class Main extends Component {
   handleSearch = () => {
     const trimmed = this.state.searchText.trim();
     localStorage.setItem(LOCAL_STORAGE_QUERY_KEY, trimmed);
+    this.setState({ searchText: trimmed });
     this.loadPokemons(trimmed);
   };
 
