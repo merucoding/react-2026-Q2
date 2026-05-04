@@ -1,6 +1,7 @@
 import { Component, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
 import { BORDER_STYLE, BUTTON_HOVER_STYLE } from '../types/constants';
+import ErrorButton from './ErrorButton';
 
 type SearchProps = {
   value: string;
@@ -32,6 +33,7 @@ export default class TopControls extends Component<SearchProps> {
         >
           <Search />
         </button>
+        <ErrorButton />
       </div>
     );
   }
