@@ -11,3 +11,10 @@ export const POKEMON_BY_NAME_URL = 'https://pokeapi.co/api/v2/pokemon/';
 export const LOCAL_STORAGE_QUERY_KEY = 'searchText';
 
 export const UNIT_CONVERSION = 10;
+
+export const POKEMONS_LIST = {
+  results: [
+    { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
+    { name: 'ivysaur', url: 'https://pokeapi.co/api/v2/pokemon/2/' },
+  ],
+};
