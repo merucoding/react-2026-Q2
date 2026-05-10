@@ -1,0 +1,17 @@
+export const MOCK_PIKACHU_DATA = {
+  name: 'pikachu',
+  height: 4,
+  weight: 60,
+};
+
+export const MOCK_POKEMONS_DATA = [
+  { name: 'bulbasaur', height: 7, weight: 69 },
+  { name: 'ivysaur', height: 10, weight: 130 },
+];
+
+export const MOCK_POKEMONS_LIST_RESPONSE = {
+  results: [
+    { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
+    { name: 'ivysaur', url: 'https://pokeapi.co/api/v2/pokemon/2/' },
+  ],
+};

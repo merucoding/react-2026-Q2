@@ -1,14 +1,14 @@
 import type { Pokemon } from 'pokeapi-typescript';
-import { POKEMON_BY_NAME_URL, POKEMON_LIST_URL } from '../types/constants';
 import { isPokemonListResponse } from './isPokemonListResponse';
 import fetchData from './fetchData';
+import { POKEMON_BY_NAME_URL, POKEMON_LIST_URL } from './constants';
 
 export async function fetchPokemons(searchText?: string): Promise<{
   pokemons: Pokemon[];
   errorMessage: string;
 }> {
   try {
-    if (searchText?.trim()) {
+    if (searchText) {
       const pokemon = await fetchData<Pokemon>(
         `${POKEMON_BY_NAME_URL}${searchText}`
       );

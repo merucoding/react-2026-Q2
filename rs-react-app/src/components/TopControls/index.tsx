@@ -1,7 +1,7 @@
 import { Component, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
-import { BORDER_STYLE, BUTTON_HOVER_STYLE } from '../../types/constants';
 import ErrorButton from '../ErrorButton';
+import { BORDER_STYLE, BUTTON_HOVER_STYLE } from '../../shared/constants/style';
 
 type SearchProps = {
   value: string;

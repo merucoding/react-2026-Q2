@@ -2,7 +2,7 @@ import * as api from '../../api/fetchPokemons';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 import Main from './';
-import { LOCAL_STORAGE_QUERY_KEY } from '../../types/constants';
+import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
 import type { Pokemon } from 'pokeapi-typescript';
 
 const pokemon = {

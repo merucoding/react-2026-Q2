@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { BORDER_STYLE } from '../../types/constants';
+import { BORDER_STYLE } from '../../shared/constants/style';
 
 type ErrorButtonState = {
   showError: boolean;

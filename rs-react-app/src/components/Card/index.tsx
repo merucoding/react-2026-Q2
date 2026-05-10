@@ -1,6 +1,6 @@
 import type { Pokemon } from 'pokeapi-typescript';
 import { Component } from 'react';
-import { UNIT_CONVERSION } from '../../types/constants';
+import { DC_TO_CM } from '../../shared/constants/math';
 
 type CardProps = {
   pokemon: Pokemon;
@@ -17,8 +17,8 @@ export default class Card extends Component<CardProps> {
         </div>
         <h2 className="text-fuchsia-400 font-bold text-lg">{pokemon.name}</h2>
         <p className="text-sm">
-          height: {pokemon.height * UNIT_CONVERSION} cm, weight:{' '}
-          {pokemon.weight / UNIT_CONVERSION} kg
+          height: {pokemon.height * DC_TO_CM} cm, weight:{' '}
+          {pokemon.weight / DC_TO_CM} kg
         </p>
       </div>
     );
