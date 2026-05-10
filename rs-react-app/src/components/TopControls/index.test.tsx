@@ -33,8 +33,8 @@ describe('TopControls', () => {
     const onSearch = vi.fn();
     render(<TopControls value="" onChange={vi.fn()} onSearch={onSearch} />);
 
-    const button = screen.getByTestId('search-button');
-    fireEvent.click(button);
+    const searchButton = screen.getByTestId('search-button');
+    fireEvent.click(searchButton);
     expect(onSearch).toHaveBeenCalledTimes(1);
   });
 
