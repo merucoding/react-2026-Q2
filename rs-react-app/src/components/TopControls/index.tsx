@@ -22,12 +22,14 @@ export default class TopControls extends Component<SearchProps> {
           className={BORDER_STYLE}
         />
         <button
+          data-testid="eraser-button"
           onClick={() => this.props.onChange('')}
           className={`${BORDER_STYLE} ${BUTTON_HOVER_STYLE}`}
         >
           <Eraser />
         </button>
         <button
+          data-testid="search-button"
           onClick={this.props.onSearch}
           className={`${BORDER_STYLE} ${BUTTON_HOVER_STYLE}`}
         >
