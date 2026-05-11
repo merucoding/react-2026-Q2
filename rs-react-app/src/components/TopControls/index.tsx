@@ -1,7 +1,7 @@
 import { Component, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
-import { BORDER_STYLE, BUTTON_HOVER_STYLE } from '../types/constants';
-import ErrorButton from './ErrorButton';
+import ErrorButton from '../ErrorButton';
+import { BORDER_STYLE, BUTTON_HOVER_STYLE } from '../../shared/constants/style';
 
 type SearchProps = {
   value: string;
@@ -22,12 +22,14 @@ export default class TopControls extends Component<SearchProps> {
           className={BORDER_STYLE}
         />
         <button
+          data-testid="eraser-button"
           onClick={() => this.props.onChange('')}
           className={`${BORDER_STYLE} ${BUTTON_HOVER_STYLE}`}
         >
           <Eraser />
         </button>
         <button
+          data-testid="search-button"
           onClick={this.props.onSearch}
           className={`${BORDER_STYLE} ${BUTTON_HOVER_STYLE}`}
         >
