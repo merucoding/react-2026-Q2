@@ -2,11 +2,31 @@ export const MOCK_PIKACHU_DATA = {
   name: 'pikachu',
   height: 4,
   weight: 60,
+  sprites: {
+    front_default:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==',
+  },
 };
 
 export const MOCK_POKEMONS_DATA = [
-  { name: 'bulbasaur', height: 7, weight: 69 },
-  { name: 'ivysaur', height: 10, weight: 130 },
+  {
+    name: 'bulbasaur',
+    height: 7,
+    weight: 69,
+    sprites: {
+      front_default:
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==',
+    },
+  },
+  {
+    name: 'ivysaur',
+    height: 10,
+    weight: 130,
+    sprites: {
+      front_default:
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==',
+    },
+  },
 ];
 
 export const MOCK_POKEMONS_LIST_RESPONSE = {
