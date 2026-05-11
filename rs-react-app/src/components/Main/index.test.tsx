@@ -4,22 +4,14 @@ import { describe, it, beforeEach, expect, vi } from 'vitest';
 import Main from './';
 import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
 import type { Pokemon } from 'pokeapi-typescript';
-
-const pokemon = {
-  name: 'bulbasaur',
-  height: 7,
-  weight: 69,
-  sprites: {
-    front_default:
-      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==',
-  },
-} as Pokemon;
+import { MOCK_PIKACHU_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
 
 describe('Main component', () => {
   beforeEach(() => {
     localStorage.clear();
     vi.clearAllMocks();
   });
+
   const mockFetchPokemons = vi.spyOn(api, 'fetchPokemons');
 
   it('Makes initial API call on component mount', async () => {
@@ -29,19 +21,24 @@ describe('Main component', () => {
     });
 
     render(<Main />);
+
     await waitFor(() => expect(mockFetchPokemons).toHaveBeenCalledWith(''));
+
     const input = screen.getByRole('textbox');
+
     expect(input).toHaveValue('');
   });
 
   it('Handles search term from localStorage on initial load', async () => {
     localStorage.setItem(LOCAL_STORAGE_QUERY_KEY, 'pikachu');
+
     mockFetchPokemons.mockResolvedValueOnce({
       pokemons: [],
       errorMessage: '',
     });
 
     render(<Main />);
+
     await waitFor(() =>
       expect(mockFetchPokemons).toHaveBeenCalledWith('pikachu')
     );
@@ -50,13 +47,14 @@ describe('Main component', () => {
 
   it('Handles successful API responses', async () => {
     mockFetchPokemons.mockResolvedValueOnce({
-      pokemons: [pokemon],
+      pokemons: [MOCK_PIKACHU_DATA as Pokemon],
       errorMessage: '',
     });
 
     render(<Main />);
+
     await waitFor(() =>
-      expect(screen.getByText('bulbasaur')).toBeInTheDocument()
+      expect(screen.getByText('pikachu')).toBeInTheDocument()
     );
   });
 
@@ -67,22 +65,28 @@ describe('Main component', () => {
     });
 
     render(<Main />);
+
     await waitFor(() =>
       expect(screen.getByText('Client error 400')).toBeInTheDocument()
     );
   });
 
   it('Updates component state based on API responses', async () => {
+    localStorage.setItem(LOCAL_STORAGE_QUERY_KEY, 'pikachu');
+
     mockFetchPokemons.mockResolvedValueOnce({
       pokemons: [],
       errorMessage: '',
     });
 
     render(<Main />);
+
     const input = screen.getByRole('textbox');
     const searchButton = screen.getByTestId('search-button');
+
     fireEvent.change(input, { target: { value: 'bulbasaur' } });
     fireEvent.click(searchButton);
+
     await waitFor(() =>
       expect(mockFetchPokemons).toHaveBeenCalledWith('bulbasaur')
     );
@@ -96,17 +100,22 @@ describe('Main component', () => {
     });
 
     render(<Main />);
+
     const input = screen.getByRole('textbox');
     const searchButton = screen.getByTestId('search-button');
+
     fireEvent.change(input, { target: { value: '    pikachu   ' } });
     fireEvent.click(searchButton);
+
     await waitFor(() =>
       expect(mockFetchPokemons).toHaveBeenCalledWith('pikachu')
     );
 
     mockFetchPokemons.mockClear();
+
     fireEvent.change(input, { target: { value: 'pikachu' } });
     fireEvent.click(searchButton);
+
     expect(mockFetchPokemons).not.toHaveBeenCalled();
   });
 });
