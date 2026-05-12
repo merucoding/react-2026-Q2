@@ -1,28 +1,36 @@
-import { type ChangeEvent } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
 import ErrorButton from '../ErrorButton/ErrorButton';
 import { BORDER_STYLE, BUTTON_STYLE } from '../../shared/constants/styles';
+import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
 
 type Props = {
-  value: string;
-  onChange: (value: string) => void;
-  onSearch: () => void;
+  onSearch: (input: string) => void;
 };
 
-const TopControls = ({ value, onChange, onSearch }: Props) => {
+const TopControls = ({ onSearch }: Props) => {
+  const [input, setInput] = useState(
+    localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || ''
+  );
+
+  const handleSearch = () => {
+    const trimmed = input.trim();
+    onSearch(trimmed);
+  };
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
+    setInput(event.target.value);
   };
 
   const handleClear = () => {
-    onChange('');
+    setInput('');
   };
 
   return (
     <div className="flex justify-center gap-4 mt-8 flex-wrap">
       <input
         type="text"
-        value={value}
+        value={input}
         onChange={handleChange}
         className={BORDER_STYLE}
       />
@@ -35,7 +43,7 @@ const TopControls = ({ value, onChange, onSearch }: Props) => {
       </button>
       <button
         data-testid="search-button"
-        onClick={onSearch}
+        onClick={handleSearch}
         className={BUTTON_STYLE}
       >
         <Search />

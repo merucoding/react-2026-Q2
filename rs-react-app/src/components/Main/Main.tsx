@@ -9,8 +9,9 @@ import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
 const Main = () => {
   const [loading, setLoading] = useState(false);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [searchText, setSearchText] = useState('');
-  const [lastSearchText, setLastSearchText] = useState('');
+  const [searchText, setSearchText] = useState(
+    localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || ''
+  );
   const [errorMessage, setErrorMessage] = useState('');
 
   const loadPokemons = async (searchText: string): Promise<void> => {
@@ -28,33 +29,19 @@ const Main = () => {
   };
 
   useEffect(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || '';
+    loadPokemons(searchText);
+  }, [searchText]);
 
-    setSearchText(saved);
-    setLastSearchText(saved);
-    loadPokemons(saved);
-  }, []);
+  const handleSearch = (input: string) => {
+    if (input === searchText) return;
 
-  const handleSearch = () => {
-    const trimmed = searchText.trim();
-
-    if (trimmed !== lastSearchText) {
-      localStorage.setItem(LOCAL_STORAGE_QUERY_KEY, trimmed);
-      setLastSearchText(trimmed);
-      loadPokemons(trimmed);
-    }
-    setSearchText(trimmed);
+    localStorage.setItem(LOCAL_STORAGE_QUERY_KEY, input);
+    setSearchText(input);
   };
-
-  const handleInputChange = setSearchText;
 
   return (
     <main className="font-lexend-exa text-emerald-500 font-light">
-      <TopControls
-        value={searchText}
-        onSearch={handleSearch}
-        onChange={handleInputChange}
-      />
+      <TopControls onSearch={handleSearch} />
       {loading && <Spinner />}
       {errorMessage && (
         <div className="mt-8 text-fuchsia-400 font-bold text-lg">
