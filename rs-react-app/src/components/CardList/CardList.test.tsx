@@ -1,6 +1,6 @@
 import type { Pokemon } from 'pokeapi-typescript';
 import { render, screen } from '@testing-library/react';
-import CardList from './';
+import CardList from './CardList';
 import { MOCK_POKEMONS_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
 
 describe('CardList component', () => {

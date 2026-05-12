@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
-import ErrorBoundary from './';
+import ErrorBoundary from './ErrorBoundary';
 import { Component } from 'react';
 
 class ThrowError extends Component {

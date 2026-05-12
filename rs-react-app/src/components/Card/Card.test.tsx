@@ -1,6 +1,6 @@
 import type { Pokemon } from 'pokeapi-typescript';
 import { render, screen } from '@testing-library/react';
-import Card from './';
+import Card from './Card';
 import { DC_TO_CM } from '../../shared/constants/math';
 import { MOCK_PIKACHU_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
 

@@ -1,9 +1,9 @@
 import { Component } from 'react';
-import TopControls from '../TopControls';
+import TopControls from '../TopControls/TopControls';
 import type { Pokemon } from 'pokeapi-typescript';
 import { fetchPokemons } from '../../api/fetchPokemons';
-import Loading from '../Loading';
-import CardList from '../CardList';
+import Loading from '../Loading/Loading';
+import CardList from '../CardList/CardList';
 import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
 
 type MainState = {

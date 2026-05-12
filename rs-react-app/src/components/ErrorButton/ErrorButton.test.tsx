@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import ErrorButton from './';
-import ErrorBoundary from '../ErrorBoundary';
+import ErrorButton from './ErrorButton';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { vi } from 'vitest';
 
 describe('ErrorButton component', () => {

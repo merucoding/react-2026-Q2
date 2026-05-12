@@ -1,6 +1,6 @@
 import { Component, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
-import ErrorButton from '../ErrorButton';
+import ErrorButton from '../ErrorButton/ErrorButton';
 import { BORDER_STYLE, BUTTON_HOVER_STYLE } from '../../shared/constants/style';
 
 type SearchProps = {
