@@ -1,21 +1,18 @@
 import type { Pokemon } from 'pokeapi-typescript';
-import { Component } from 'react';
 import Card from '../Card/Card';
 
-type CardListProps = {
+type Props = {
   pokemons: Pokemon[];
 };
 
-export default class CardList extends Component<CardListProps> {
-  render() {
-    const { pokemons } = this.props;
+const CardList = ({ pokemons }: Props) => {
+  return (
+    <ul className="mt-6 flex gap-4 flex-wrap justify-center">
+      {pokemons.map((pokemon) => (
+        <Card key={pokemon.id} pokemon={pokemon} />
+      ))}
+    </ul>
+  );
+};
 
-    return (
-      <div className="mt-6 flex gap-4 flex-wrap justify-center">
-        {pokemons.map((pokemon, index) => (
-          <Card key={index} pokemon={pokemon} />
-        ))}
-      </div>
-    );
-  }
-}
+export default CardList;

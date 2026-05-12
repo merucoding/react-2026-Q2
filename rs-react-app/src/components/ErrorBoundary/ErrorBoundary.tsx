@@ -1,5 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { BUTTON_STYLE } from '../../shared/constants/style';
+import { BUTTON_STYLE } from '../../shared/constants/styles';
 
 type ErrorBoundaryProps = { children: ReactNode };
 type ErrorBoundaryState = { hasError: boolean };
