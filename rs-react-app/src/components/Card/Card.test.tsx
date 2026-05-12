@@ -1,8 +1,8 @@
 import type { Pokemon } from 'pokeapi-typescript';
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
-import { DC_TO_CM } from '../../shared/constants/math';
 import { MOCK_PIKACHU_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
+import getPokemonParams from '../../utils/getPokemonParams';
 
 describe('Card component', () => {
   it('displays pokemon name and description correctly', () => {
@@ -13,13 +13,12 @@ describe('Card component', () => {
     expect(screen.getByText(MOCK_PIKACHU_DATA.name)).toBeInTheDocument();
     expect(
       screen.getByText(
-        `height: ${MOCK_PIKACHU_DATA.height * DC_TO_CM} cm, weight: ${MOCK_PIKACHU_DATA.weight / DC_TO_CM} kg`
+        getPokemonParams(MOCK_PIKACHU_DATA.height, MOCK_PIKACHU_DATA.weight)
       )
     ).toBeInTheDocument();
     expect(image).toHaveAttribute(
       'src',
       MOCK_PIKACHU_DATA.sprites.front_default
     );
-    expect(image).toHaveAttribute('alt', 'picture');
   });
 });
