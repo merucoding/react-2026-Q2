@@ -1,5 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { BORDER_STYLE, BUTTON_HOVER_STYLE } from '../../shared/constants/style';
+import { BUTTON_STYLE } from '../../shared/constants/style';
 
 type ErrorBoundaryProps = { children: ReactNode };
 type ErrorBoundaryState = { hasError: boolean };
@@ -26,10 +26,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
           <h1 className="font-lexend-exa text-fuchsia-400 font-bold text-2xl">
             Something went wrong...
           </h1>
-          <button
-            onClick={this.handleReload}
-            className={`${BORDER_STYLE} ${BUTTON_HOVER_STYLE} font-lexend-exa text-emerald-500 font-light`}
-          >
+          <button onClick={this.handleReload} className={BUTTON_STYLE}>
             Go back
           </button>
         </div>

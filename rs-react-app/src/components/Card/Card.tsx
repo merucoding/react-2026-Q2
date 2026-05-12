@@ -1,6 +1,7 @@
 import type { Pokemon } from 'pokeapi-typescript';
 import { Component } from 'react';
 import getPokemonParams from '../../utils/getPokemonParams';
+import { BORDER_STYLE } from '../../shared/constants/style';
 
 type CardProps = {
   pokemon: Pokemon;
@@ -11,7 +12,9 @@ export default class Card extends Component<CardProps> {
     const { pokemon } = this.props;
 
     return (
-      <div className="p-2 flex flex-col items-center gap-y-2 aspect-square w-[200px] border-1 border-solid border-fuchsia-300 rounded-xl">
+      <div
+        className={`${BORDER_STYLE} p-2 flex flex-col items-center gap-y-2 aspect-square w-[200px]`}
+      >
         <div className="h-[100px]">
           <img src={pokemon.sprites.front_default} />
         </div>
