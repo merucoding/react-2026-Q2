@@ -10,6 +10,9 @@
   background-size: 15%;
   background-repeat: no-repeat;
   background-position: top right;
+  font-family: "Lexend Exa", sans-serif;
+  color: #10b981;
+  font-weight: 300;
 }
 
 @theme {

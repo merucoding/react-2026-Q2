@@ -1,8 +1,9 @@
 import { useState, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
 import ErrorButton from '../ErrorButton/ErrorButton';
-import { BORDER_STYLE, BUTTON_STYLE } from '../../shared/constants/styles';
+import { BORDER_STYLE } from '../../shared/constants/styles';
 import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
+import Button from '../Button/Button';
 
 type Props = {
   onSearch: (input: string) => void;
@@ -34,20 +35,12 @@ const TopControls = ({ onSearch }: Props) => {
         onChange={handleChange}
         className={BORDER_STYLE}
       />
-      <button
-        data-testid="eraser-button"
-        onClick={handleClear}
-        className={BUTTON_STYLE}
-      >
+      <Button data-testid="eraser-button" onClick={handleClear}>
         <Eraser />
-      </button>
-      <button
-        data-testid="search-button"
-        onClick={handleSearch}
-        className={BUTTON_STYLE}
-      >
+      </Button>
+      <Button data-testid="search-button" onClick={handleSearch}>
         <Search />
-      </button>
+      </Button>
       <ErrorButton />
     </div>
   );

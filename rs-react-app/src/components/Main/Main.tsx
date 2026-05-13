@@ -40,7 +40,7 @@ const Main = () => {
   };
 
   return (
-    <main className="font-lexend-exa text-emerald-500 font-light">
+    <main>
       <TopControls onSearch={handleSearch} />
       {loading && <Spinner />}
       {errorMessage && (
