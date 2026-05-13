@@ -1,9 +1,9 @@
-import { HEADER_STYLE } from '../../shared/constants/styles';
-
 const Header = () => {
   return (
     <header>
-      <h1 className={HEADER_STYLE}>Pokémon Search</h1>
+      <h1 className="font-logo text-4xl bg-linear-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
+        Pokémon Search
+      </h1>
     </header>
   );
 };

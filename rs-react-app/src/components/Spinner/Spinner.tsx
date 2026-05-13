@@ -1,12 +1,10 @@
-import { SPINNER_STYLE } from '../../shared/constants/styles';
-
 const Spinner = () => {
   return (
     <div
       data-testid="spinner"
       className="flex justify-center items-center h-100"
     >
-      <div className={SPINNER_STYLE}></div>
+      <div className="w-8 h-8 border-4 border-fuchsia-300 border-t-transparent rounded-full animate-spin"></div>
     </div>
   );
 };
