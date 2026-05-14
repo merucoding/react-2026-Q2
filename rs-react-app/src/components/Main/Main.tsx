@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import TopControls from '../TopControls/TopControls';
 import type { Pokemon } from 'pokeapi-typescript';
-import { fetchPokemons } from '../../api/fetchPokemons';
 import Spinner from '../Spinner/Spinner';
 import CardList from '../CardList/CardList';
 import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
+import {
+  _baseOffset,
+  fetchPokemonByName,
+  fetchPokemonsList,
+} from '../../api/fetchPokemons';
 
 const Main = () => {
   const [loading, setLoading] = useState(false);
@@ -13,12 +17,18 @@ const Main = () => {
     localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || ''
   );
   const [errorMessage, setErrorMessage] = useState('');
+  const [offset] = useState(_baseOffset);
 
-  const loadPokemons = async (searchText: string): Promise<void> => {
+  const loadPokemons = async (
+    searchText: string,
+    offset: number
+  ): Promise<void> => {
     setLoading(true);
 
     try {
-      const { pokemons, errorMessage } = await fetchPokemons(searchText);
+      const { pokemons, errorMessage } = searchText
+        ? await fetchPokemonByName(searchText)
+        : await fetchPokemonsList(offset);
       setErrorMessage(errorMessage);
       setPokemons(pokemons);
     } catch {
@@ -29,8 +39,8 @@ const Main = () => {
   };
 
   useEffect(() => {
-    loadPokemons(searchText);
-  }, [searchText]);
+    loadPokemons(searchText, offset);
+  }, [searchText, offset]);
 
   const handleSearch = (input: string) => {
     if (input === searchText) return;

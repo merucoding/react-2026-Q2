@@ -1,9 +1,10 @@
 import { http, HttpResponse } from 'msw';
 import { MOCK_POKEMONS_LIST_RESPONSE } from './pokemonMocks';
+import { _baseOffset, _limitPerPage } from '../../../api/fetchPokemons';
 
 export const pokemonListHandler = (
-  offset = 0,
-  limit = 20,
+  offset = _baseOffset,
+  limit = _limitPerPage,
   mock = MOCK_POKEMONS_LIST_RESPONSE
 ) =>
   http.get(
