@@ -9,6 +9,15 @@ import {
   ArrowRightFromLine,
 } from 'lucide-react';
 
+export const Pagination = ({ className, ...props }: ComponentProps<'nav'>) => {
+  return (
+    <nav
+      className={cn('mx-auto flex w-full justify-center my-4', className)}
+      {...props}
+    />
+  );
+};
+
 export const PaginationContent = ({
   className,
   ...props
@@ -16,13 +25,16 @@ export const PaginationContent = ({
   return (
     <ul
       {...props}
-      className={cn('flex flex-row items-center gap-1', className)}
+      className={cn('flex flex-row items-center gap-4', className)}
     />
   );
 };
 
-export const PaginationItem = ({ ...props }: ComponentProps<'li'>) => {
-  return <li {...props} />;
+export const PaginationItem = ({
+  className,
+  ...props
+}: ComponentProps<'li'>) => {
+  return <li {...props} className={cn(className)} />;
 };
 
 export const PaginationLink = ({
@@ -34,7 +46,7 @@ export const PaginationLink = ({
       {...props}
       className={cn(
         BORDER_STYLE,
-        'hover:bg-fuchsia-300 hover:text-white',
+        'block hover:bg-fuchsia-300 hover:text-white',
         className
       )}
     />

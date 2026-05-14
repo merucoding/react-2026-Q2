@@ -1,40 +1,60 @@
+import { BORDER_STYLE } from '../../shared/constants/styles';
 import {
-  ArrowLeft,
-  ArrowLeftToLine,
-  ArrowRight,
-  ArrowRightFromLine,
-} from 'lucide-react';
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationStart,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEnd,
+} from './Pagination';
 
-const PaginatioControls = () => {
+type Props = {
+  page: number;
+  totalPage: number;
+};
+
+const PaginationControls = ({ page, totalPage }: Props) => {
+  const isFirstPage = page === 1;
+  const isLastPage = page === totalPage;
+  const classNamesActive = 'cursor-pointer';
+  const classNamesDisabled = 'pointer-events-none opacity-50';
+
   return (
-    <nav>
-      <ul>
-        <li>
-          <a href="#">
-            <ArrowLeftToLine />
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <ArrowLeft />
-          </a>
-        </li>
-        <li>
-          <span>1</span>
-        </li>
-        <li>
-          <a href="#">
-            <ArrowRight />
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <ArrowRightFromLine />
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationStart
+            to="/pokemons/1"
+            className={isFirstPage ? classNamesDisabled : classNamesActive}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationPrevious
+            to={`/pokemons/${page - 1}`}
+            className={isFirstPage ? classNamesDisabled : classNamesActive}
+          />
+        </PaginationItem>
+        <PaginationItem
+          className={BORDER_STYLE + 'pointer-events-none select-none'}
+        >
+          {page} / {totalPage}
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext
+            to={`/pokemons/${page + 1}`}
+            className={isLastPage ? classNamesDisabled : classNamesActive}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEnd
+            to={`/pokemons/${totalPage}`}
+            className={isLastPage ? classNamesDisabled : classNamesActive}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 };
 
-export default PaginatioControls;
+export default PaginationControls;

@@ -1,23 +1,30 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import TopControls from '../TopControls/TopControls';
 import type { Pokemon } from 'pokeapi-typescript';
 import Spinner from '../Spinner/Spinner';
 import CardList from '../CardList/CardList';
 import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
 import {
-  _baseOffset,
+  _limitPerPage,
   fetchPokemonByName,
   fetchPokemonsList,
 } from '../../api/fetchPokemons';
+import PaginationControls from '../Pagination/PaginationControls';
 
 const Main = () => {
+  const { page } = useParams();
+
+  const currentPage = Number(page) || 1;
+  const offset = (currentPage - 1) * _limitPerPage;
+
   const [loading, setLoading] = useState(false);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [searchText, setSearchText] = useState(
     localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || ''
   );
   const [errorMessage, setErrorMessage] = useState('');
-  const [offset] = useState(_baseOffset);
+  const [totalPage, setTotalPage] = useState(1);
 
   const loadPokemons = async (
     searchText: string,
@@ -26,11 +33,12 @@ const Main = () => {
     setLoading(true);
 
     try {
-      const { pokemons, errorMessage } = searchText
+      const { pokemons, errorMessage, totalPage } = searchText
         ? await fetchPokemonByName(searchText)
         : await fetchPokemonsList(offset);
       setErrorMessage(errorMessage);
       setPokemons(pokemons);
+      setTotalPage(totalPage);
     } catch {
       setErrorMessage('Something went wrong');
     } finally {
@@ -58,7 +66,12 @@ const Main = () => {
           {errorMessage}
         </div>
       )}
-      {!loading && !errorMessage && <CardList pokemons={pokemons} />}
+      {!loading && !errorMessage && (
+        <>
+          <CardList pokemons={pokemons} />
+          <PaginationControls page={currentPage} totalPage={totalPage} />
+        </>
+      )}
     </main>
   );
 };

@@ -6,33 +6,44 @@ export const _apiBase = 'https://pokeapi.co/api/v2/pokemon';
 export const _baseOffset = 0;
 export const _limitPerPage = 20;
 
-const getPokemonsList = async (offset = _baseOffset): Promise<Pokemon[]> => {
-  const pokemons = await fetchData<unknown>(
+const getPokemonsList = async (
+  offset = _baseOffset
+): Promise<{ pokemons: Pokemon[]; totalPage: number }> => {
+  const data = await fetchData<unknown>(
     `${_apiBase}?offset=${offset}&limit=${_limitPerPage}`
   );
 
-  if (!isPokemonListResponse(pokemons)) {
+  if (!isPokemonListResponse(data)) {
     throw new Error('Invalid response');
   }
 
-  return Promise.all(
-    pokemons.results.map((item) => {
+  const pokemons = await Promise.all(
+    data.results.map((item) => {
       return fetchData<Pokemon>(item.url);
     })
   );
+
+  const totalPage = Math.ceil(data.count / _limitPerPage);
+  return { pokemons, totalPage };
 };
 
-const getPokemonByName = async (searchText: string): Promise<Pokemon[]> => {
+const getPokemonByName = async (
+  searchText: string
+): Promise<{ pokemons: Pokemon[]; totalPage: number }> => {
   const pokemon = await fetchData<Pokemon>(`${_apiBase}/${searchText}`);
-  return [pokemon];
+  return { pokemons: [pokemon], totalPage: 1 };
 };
 
-const withErrorHandling = async (fn: () => Promise<Pokemon[]>) => {
+const withErrorHandling = async (
+  fn: () => Promise<{ pokemons: Pokemon[]; totalPage: number }>
+) => {
   try {
-    return { pokemons: await fn(), errorMessage: '' };
+    const { pokemons, totalPage } = await fn();
+    return { pokemons, totalPage, errorMessage: '' };
   } catch (error) {
     return {
       pokemons: [],
+      totalPage: 1,
       errorMessage: error instanceof Error ? error.message : 'Unknown error',
     };
   }

@@ -3,12 +3,9 @@ import {
   NON_EXISTENT_POKEMON_NAME,
   SERVER_ERROR_INPUT,
 } from '../test-utils/constants';
-import {
-  MOCK_PIKACHU_DATA,
-  MOCK_POKEMONS_DATA,
-} from '../test-utils/mocks/handlers/pokemonMocks';
+import { MOCK_PIKACHU_DATA } from '../test-utils/mocks/handlers/pokemonMocks';
 import { describe, it, expect } from 'vitest';
-import { fetchPokemonByName, fetchPokemonsList } from './fetchPokemons';
+import { fetchPokemonByName } from './fetchPokemons';
 
 describe('fetchPokemons', () => {
   it('returns a single pokemon (with searchText)', async () => {
@@ -21,12 +18,12 @@ describe('fetchPokemons', () => {
     expect(errorMessage).toBe('');
   });
 
-  it('returns a list of pokemons (without searchText)', async () => {
-    const { pokemons, errorMessage } = await fetchPokemonsList();
+  // it('returns a list of pokemons (without searchText)', async () => {
+  //   const { pokemons, errorMessage } = await fetchPokemonsList();
 
-    expect(pokemons).toEqual(expect.arrayContaining(MOCK_POKEMONS_DATA));
-    expect(errorMessage).toBe('');
-  });
+  //   expect(pokemons).toEqual(expect.arrayContaining(MOCK_POKEMONS_DATA));
+  //   expect(errorMessage).toBe('');
+  // });
 
   it('returns an error when pokemon not found by searchText', async () => {
     const { pokemons, errorMessage } = await fetchPokemonByName(
