@@ -1,19 +1,17 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ComponentProps } from 'react';
 import { BORDER_STYLE } from '../../shared/constants/styles';
+import { cn } from '../../utils/ui';
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-  children: ReactNode;
-  className?: string;
-};
-
-const Button = ({ children, className = '', ...props }: Props) => {
+const Button = ({ className, ...props }: ComponentProps<'button'>) => {
   return (
     <button
       {...props}
-      className={`${BORDER_STYLE} hover:bg-fuchsia-300 hover:text-white ${className}`}
-    >
-      {children}
-    </button>
+      className={cn(
+        BORDER_STYLE,
+        'hover:bg-fuchsia-300 hover:text-white',
+        className
+      )}
+    />
   );
 };
 
