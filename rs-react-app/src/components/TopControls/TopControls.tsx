@@ -4,6 +4,7 @@ import ErrorButton from '../ErrorButton/ErrorButton';
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
+import AboutLink from '../AboutLink/AboutLink';
 
 type Props = {
   searchText: string;
@@ -46,6 +47,7 @@ const TopControls = ({ searchText, onSearch }: Props) => {
         <Search />
       </Button>
       <ErrorButton />
+      <AboutLink />
     </div>
   );
 };

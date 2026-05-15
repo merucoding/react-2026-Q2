@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import TopControls from '../TopControls/TopControls';
 import type { Pokemon } from 'pokeapi-typescript';
-import Spinner from '../Spinner/Spinner';
-import CardList from '../CardList/CardList';
 import {
   _limitPerPage,
   fetchPokemonByName,
   fetchPokemonsList,
 } from '../../api/fetchPokemons';
-import PaginationControls from '../Pagination/PaginationControls';
 import useLocalStorage from '../../hooks/localStorage.hook';
 import { LOCAL_STORAGE_KEYS } from '../../shared/constants/ls';
+import CardList from '../../components/CardList/CardList';
+import PaginationControls from '../../components/Pagination/PaginationControls';
+import Spinner from '../../components/Spinner/Spinner';
+import TopControls from '../../components/TopControls/TopControls';
 
-const Main = () => {
+const HomePage = () => {
   const { page } = useParams();
 
   const currentPage = Number(page) || 1;
@@ -79,4 +79,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default HomePage;

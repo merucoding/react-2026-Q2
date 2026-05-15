@@ -1,12 +1,27 @@
-import Header from '../Header/Header';
-import Main from '../Main/Main';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import HomePage from '../../pages/HomePage/HomePage';
+import About from '../../pages/About/About';
+import NotFound from '../../pages/NotFound/NotFound';
+import Layout from '../../layouts/Layout';
+// import CardDetails from '../CardDetails/CardDetails';
 
 const App = () => {
   return (
     <ErrorBoundary>
-      <Header />
-      <Main />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Navigate to="/pokemons/1" replace />} />
+
+          <Route path="/pokemons/:page" element={<HomePage />}>
+            {/* <Route path=":detailsId" element={<CardDetails />} /> */}
+          </Route>
+        </Route>
+
+        <Route path="/about" element={<About />} />
+
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
     </ErrorBoundary>
   );
 };
