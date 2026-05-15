@@ -36,6 +36,7 @@ const Main = () => {
       const { pokemons, errorMessage, totalPage } = searchText
         ? await fetchPokemonByName(searchText)
         : await fetchPokemonsList(offset);
+
       setErrorMessage(errorMessage);
       setPokemons(pokemons);
       setTotalPage(totalPage);
@@ -59,7 +60,7 @@ const Main = () => {
 
   return (
     <main>
-      <TopControls onSearch={handleSearch} />
+      <TopControls searchText={searchText} onSearch={handleSearch} />
       {loading && <Spinner />}
       {errorMessage && (
         <div className="mt-8 text-fuchsia-400 font-bold text-lg">

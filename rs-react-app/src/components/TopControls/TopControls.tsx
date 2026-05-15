@@ -2,23 +2,22 @@ import { useState, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
 import ErrorButton from '../ErrorButton/ErrorButton';
 import { BORDER_STYLE } from '../../shared/constants/styles';
-import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
+  searchText: string;
   onSearch: (input: string) => void;
 };
 
-const TopControls = ({ onSearch }: Props) => {
+const TopControls = ({ searchText, onSearch }: Props) => {
   const navigate = useNavigate();
 
-  const [input, setInput] = useState(
-    localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || ''
-  );
+  const [input, setInput] = useState(searchText);
 
   const handleSearch = () => {
     const trimmed = input.trim();
+    setInput(trimmed);
     onSearch(trimmed);
   };
 
@@ -29,6 +28,7 @@ const TopControls = ({ onSearch }: Props) => {
 
   const handleClear = () => {
     setInput('');
+    onSearch('');
   };
 
   return (
