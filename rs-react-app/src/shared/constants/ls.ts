@@ -1,1 +1,3 @@
-export const LOCAL_STORAGE_QUERY_KEY = 'searchText';
+export const LOCAL_STORAGE_KEYS = {
+  SEARCH_TEXT: 'searchText',
+};

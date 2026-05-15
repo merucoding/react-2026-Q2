@@ -4,13 +4,14 @@ import TopControls from '../TopControls/TopControls';
 import type { Pokemon } from 'pokeapi-typescript';
 import Spinner from '../Spinner/Spinner';
 import CardList from '../CardList/CardList';
-import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
 import {
   _limitPerPage,
   fetchPokemonByName,
   fetchPokemonsList,
 } from '../../api/fetchPokemons';
 import PaginationControls from '../Pagination/PaginationControls';
+import useLocalStorage from '../../hooks/localStorage.hook';
+import { LOCAL_STORAGE_KEYS } from '../../shared/constants/ls';
 
 const Main = () => {
   const { page } = useParams();
@@ -20,11 +21,13 @@ const Main = () => {
 
   const [loading, setLoading] = useState(false);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [searchText, setSearchText] = useState(
-    localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || ''
-  );
   const [errorMessage, setErrorMessage] = useState('');
   const [totalPage, setTotalPage] = useState(1);
+
+  const { value: searchText, setStorageValue: setSearchText } = useLocalStorage(
+    LOCAL_STORAGE_KEYS.SEARCH_TEXT,
+    ''
+  );
 
   const loadPokemons = async (
     searchText: string,
@@ -54,7 +57,6 @@ const Main = () => {
   const handleSearch = (input: string) => {
     if (input === searchText) return;
 
-    localStorage.setItem(LOCAL_STORAGE_QUERY_KEY, input);
     setSearchText(input);
   };
 
