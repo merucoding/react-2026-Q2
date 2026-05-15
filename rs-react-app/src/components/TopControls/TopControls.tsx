@@ -4,12 +4,15 @@ import ErrorButton from '../ErrorButton/ErrorButton';
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import { LOCAL_STORAGE_QUERY_KEY } from '../../shared/constants/ls';
 import Button from '../Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   onSearch: (input: string) => void;
 };
 
 const TopControls = ({ onSearch }: Props) => {
+  const navigate = useNavigate();
+
   const [input, setInput] = useState(
     localStorage.getItem(LOCAL_STORAGE_QUERY_KEY) || ''
   );
@@ -21,6 +24,7 @@ const TopControls = ({ onSearch }: Props) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
+    navigate('/pokemons/1');
   };
 
   const handleClear = () => {
