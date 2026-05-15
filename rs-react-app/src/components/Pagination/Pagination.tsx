@@ -9,6 +9,18 @@ import {
   ArrowRightFromLine,
 } from 'lucide-react';
 
+const classNamesActive = 'cursor-pointer';
+const classNamesDisabled = 'pointer-events-none opacity-50';
+
+const paginationIcons = {
+  start: <ArrowLeftToLine />,
+  previous: <ArrowLeft />,
+  next: <ArrowRight />,
+  end: <ArrowRightFromLine />,
+};
+
+type PaginationIcons = keyof typeof paginationIcons;
+
 export const Pagination = ({ className, ...props }: ComponentProps<'nav'>) => {
   return (
     <nav
@@ -39,56 +51,24 @@ export const PaginationItem = ({
 
 export const PaginationLink = ({
   className,
+  disabled,
+  icon,
   ...props
-}: ComponentProps<typeof Link>) => {
+}: ComponentProps<typeof Link> & {
+  disabled: boolean;
+  icon: PaginationIcons;
+}) => {
   return (
     <Link
       {...props}
       className={cn(
         BORDER_STYLE,
         'block hover:bg-fuchsia-300 hover:text-white',
+        disabled ? classNamesDisabled : classNamesActive,
         className
       )}
-    />
-  );
-};
-
-export const PaginationStart = ({
-  ...props
-}: ComponentProps<typeof PaginationLink>) => {
-  return (
-    <PaginationLink {...props}>
-      <ArrowLeftToLine />
-    </PaginationLink>
-  );
-};
-
-export const PaginationPrevious = ({
-  ...props
-}: ComponentProps<typeof PaginationLink>) => {
-  return (
-    <PaginationLink {...props}>
-      <ArrowLeft />
-    </PaginationLink>
-  );
-};
-
-export const PaginationNext = ({
-  ...props
-}: ComponentProps<typeof PaginationLink>) => {
-  return (
-    <PaginationLink {...props}>
-      <ArrowRight />
-    </PaginationLink>
-  );
-};
-
-export const PaginationEnd = ({
-  ...props
-}: ComponentProps<typeof PaginationLink>) => {
-  return (
-    <PaginationLink {...props}>
-      <ArrowRightFromLine />
-    </PaginationLink>
+    >
+      {paginationIcons[icon]}
+    </Link>
   );
 };

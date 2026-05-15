@@ -3,10 +3,7 @@ import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationStart,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationEnd,
+  PaginationLink,
 } from './Pagination';
 
 type Props = {
@@ -17,39 +14,45 @@ type Props = {
 const PaginationControls = ({ page, totalPage }: Props) => {
   const isFirstPage = page === 1;
   const isLastPage = page === totalPage;
-  const classNamesActive = 'cursor-pointer';
-  const classNamesDisabled = 'pointer-events-none opacity-50';
 
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationStart
+          <PaginationLink
             to="/pokemons/1"
-            className={isFirstPage ? classNamesDisabled : classNamesActive}
+            disabled={isFirstPage}
+            icon="start"
           />
         </PaginationItem>
+
         <PaginationItem>
-          <PaginationPrevious
+          <PaginationLink
             to={`/pokemons/${page - 1}`}
-            className={isFirstPage ? classNamesDisabled : classNamesActive}
+            disabled={isFirstPage}
+            icon="previous"
           />
         </PaginationItem>
+
         <PaginationItem
           className={BORDER_STYLE + 'pointer-events-none select-none'}
         >
           {page} / {totalPage}
         </PaginationItem>
+
         <PaginationItem>
-          <PaginationNext
+          <PaginationLink
             to={`/pokemons/${page + 1}`}
-            className={isLastPage ? classNamesDisabled : classNamesActive}
+            disabled={isLastPage}
+            icon="next"
           />
         </PaginationItem>
+
         <PaginationItem>
-          <PaginationEnd
+          <PaginationLink
             to={`/pokemons/${totalPage}`}
-            className={isLastPage ? classNamesDisabled : classNamesActive}
+            disabled={isLastPage}
+            icon="end"
           />
         </PaginationItem>
       </PaginationContent>
