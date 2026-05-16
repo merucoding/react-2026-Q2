@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams, Outlet, useNavigate } from 'react-router-dom';
 import {
   _limitPerPage,
   fetchPokemonByName,
@@ -12,9 +12,12 @@ import CardList from '../../components/CardList/CardList';
 import PaginationControls from '../../components/Pagination/PaginationControls';
 import Spinner from '../../components/Spinner/Spinner';
 import TopControls from '../../components/TopControls/TopControls';
+import { ROUTES } from '../../shared/constants/routes';
 
 const HomePage = () => {
   const { page, detailsId } = useParams();
+
+  const navigate = useNavigate();
 
   const currentPage = Number(page) || 1;
   const offset = (currentPage - 1) * _limitPerPage;
@@ -42,6 +45,8 @@ const HomePage = () => {
         ? await fetchPokemonByName(searchText)
         : await fetchPokemonsList(offset);
 
+      if (!pokemons.length) navigate(ROUTES.NOT_FOUND);
+
       setErrorMessage(errorMessage);
       setPokemons(pokemons);
       setTotalPage(totalPage);
@@ -54,6 +59,7 @@ const HomePage = () => {
 
   useEffect(() => {
     loadPokemons(searchText, offset);
+    // eslint-disable-next-line
   }, [searchText, offset]);
 
   const handleSearch = (input: string) => {

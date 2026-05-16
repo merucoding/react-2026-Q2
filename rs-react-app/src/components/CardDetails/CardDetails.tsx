@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchPokemonByName, type PokemonType } from '../../api/fetchPokemons';
 import Spinner from '../Spinner/Spinner';
 import Card from '../Card/Card';
@@ -7,8 +7,11 @@ import getPokemonParams from '../../utils/getPokemonParams';
 import getPokemonTypes from '../../utils/getPokemonTypes';
 import getPokemonAbilities from '../../utils/getPokemonAbilities';
 import getPokemonMoves from '../../utils/getPokemonMoves';
+import { ROUTES } from '../../shared/constants/routes';
 
 const CardDetails = () => {
+  const navigate = useNavigate();
+
   const { detailsId } = useParams();
 
   const [loading, setLoading] = useState(false);
@@ -36,14 +39,11 @@ const CardDetails = () => {
     loadPokemon();
   }, [detailsId]);
 
+  if (errorMessage) navigate(ROUTES.NOT_FOUND);
+
   return (
-    <div>
+    <div className="sticky top-4">
       {loading && <Spinner />}
-      {errorMessage && (
-        <div className="mt-8 text-fuchsia-400 font-bold text-lg">
-          {errorMessage}
-        </div>
-      )}
       {!loading && !errorMessage && pokemon && (
         <Card
           title={pokemon.name}
