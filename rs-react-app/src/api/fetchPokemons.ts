@@ -6,9 +6,16 @@ export const _apiBase = 'https://pokeapi.co/api/v2/pokemon';
 export const _baseOffset = 0;
 export const _limitPerPage = 20;
 
+export type PokemonType = Pokemon & {
+  cries: {
+    latest: string;
+    legacy?: string;
+  };
+};
+
 const getPokemonsList = async (
   offset = _baseOffset
-): Promise<{ pokemons: Pokemon[]; totalPage: number }> => {
+): Promise<{ pokemons: PokemonType[]; totalPage: number }> => {
   const data = await fetchData<unknown>(
     `${_apiBase}?offset=${offset}&limit=${_limitPerPage}`
   );
@@ -19,7 +26,7 @@ const getPokemonsList = async (
 
   const pokemons = await Promise.all(
     data.results.map((item) => {
-      return fetchData<Pokemon>(item.url);
+      return fetchData<PokemonType>(item.url);
     })
   );
 
@@ -29,13 +36,13 @@ const getPokemonsList = async (
 
 const getPokemonByName = async (
   searchText: string
-): Promise<{ pokemons: Pokemon[]; totalPage: number }> => {
-  const pokemon = await fetchData<Pokemon>(`${_apiBase}/${searchText}`);
+): Promise<{ pokemons: PokemonType[]; totalPage: number }> => {
+  const pokemon = await fetchData<PokemonType>(`${_apiBase}/${searchText}`);
   return { pokemons: [pokemon], totalPage: 1 };
 };
 
 const withErrorHandling = async (
-  fn: () => Promise<{ pokemons: Pokemon[]; totalPage: number }>
+  fn: () => Promise<{ pokemons: PokemonType[]; totalPage: number }>
 ) => {
   try {
     const { pokemons, totalPage } = await fn();
