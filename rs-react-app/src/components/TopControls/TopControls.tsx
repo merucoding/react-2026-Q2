@@ -4,7 +4,8 @@ import ErrorButton from '../ErrorButton/ErrorButton';
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
-import AboutLink from '../AboutLink/AboutLink';
+import NavButton from '../NavButton/NavButton';
+import { ROUTES } from '../../shared/constants/routes';
 
 type Props = {
   searchText: string;
@@ -24,7 +25,7 @@ const TopControls = ({ searchText, onSearch }: Props) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
-    navigate('/pokemons/1');
+    navigate(ROUTES.HOME);
   };
 
   const handleClear = () => {
@@ -47,7 +48,7 @@ const TopControls = ({ searchText, onSearch }: Props) => {
         <Search />
       </Button>
       <ErrorButton />
-      <AboutLink />
+      <NavButton to={ROUTES.ABOUT}>About</NavButton>
     </div>
   );
 };

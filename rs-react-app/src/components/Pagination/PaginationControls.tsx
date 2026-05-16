@@ -1,3 +1,4 @@
+import { ROUTES } from '../../shared/constants/routes';
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import {
   Pagination,
@@ -20,7 +21,7 @@ const PaginationControls = ({ page, totalPage }: Props) => {
       <PaginationContent>
         <PaginationItem>
           <PaginationLink
-            to="/pokemons/1"
+            to={ROUTES.TO_PAGE(1)}
             disabled={isFirstPage}
             icon="start"
           />
@@ -28,7 +29,7 @@ const PaginationControls = ({ page, totalPage }: Props) => {
 
         <PaginationItem>
           <PaginationLink
-            to={`/pokemons/${page - 1}`}
+            to={ROUTES.TO_PAGE(page - 1)}
             disabled={isFirstPage}
             icon="previous"
           />
@@ -42,7 +43,7 @@ const PaginationControls = ({ page, totalPage }: Props) => {
 
         <PaginationItem>
           <PaginationLink
-            to={`/pokemons/${page + 1}`}
+            to={ROUTES.TO_PAGE(page + 1)}
             disabled={isLastPage}
             icon="next"
           />
@@ -50,7 +51,7 @@ const PaginationControls = ({ page, totalPage }: Props) => {
 
         <PaginationItem>
           <PaginationLink
-            to={`/pokemons/${totalPage}`}
+            to={ROUTES.TO_PAGE(totalPage)}
             disabled={isLastPage}
             icon="end"
           />

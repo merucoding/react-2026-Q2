@@ -4,6 +4,7 @@ import HomePage from '../../pages/HomePage/HomePage';
 import About from '../../pages/About/About';
 import NotFound from '../../pages/NotFound/NotFound';
 import Layout from '../../layouts/Layout';
+import { ROUTES } from '../../shared/constants/routes';
 // import CardDetails from '../CardDetails/CardDetails';
 
 const App = () => {
@@ -11,7 +12,7 @@ const App = () => {
     <ErrorBoundary>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Navigate to="/pokemons/1" replace />} />
+          <Route path="/" element={<Navigate to={ROUTES.HOME} replace />} />
 
           <Route path="/pokemons/:page" element={<HomePage />}>
             {/* <Route path=":detailsId" element={<CardDetails />} /> */}

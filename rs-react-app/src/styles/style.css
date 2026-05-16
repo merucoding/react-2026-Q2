@@ -13,6 +13,11 @@
   font-family: "Lexend Exa", sans-serif;
   color: #10b981;
   font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 @theme {
