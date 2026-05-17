@@ -34,4 +34,9 @@ export const MOCK_POKEMONS_LIST_RESPONSE = {
     { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
     { name: 'ivysaur', url: 'https://pokeapi.co/api/v2/pokemon/2/' },
   ],
+  count: 1350,
+};
+
+export const MOCK_INVALID_RESPONSE = {
+  results: [{ firstName: 'Anna', lastName: 'K.' }],
 };

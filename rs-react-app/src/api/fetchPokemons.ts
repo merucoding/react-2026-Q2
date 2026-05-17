@@ -50,7 +50,7 @@ const withErrorHandling = async (
   } catch (error) {
     return {
       pokemons: [],
-      totalPage: 1,
+      totalPage: 0,
       errorMessage: error instanceof Error ? error.message : 'Unknown error',
     };
   }

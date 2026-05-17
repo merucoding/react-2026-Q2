@@ -1,15 +1,12 @@
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse, type JsonBodyType } from 'msw';
+import { _apiBase } from '../../../api/fetchPokemons';
 import { MOCK_POKEMONS_LIST_RESPONSE } from './pokemonMocks';
-import { _baseOffset, _limitPerPage } from '../../../api/fetchPokemons';
 
 export const pokemonListHandler = (
-  offset = _baseOffset,
-  limit = _limitPerPage,
-  mock = MOCK_POKEMONS_LIST_RESPONSE
+  mock:
+    | typeof MOCK_POKEMONS_LIST_RESPONSE
+    | JsonBodyType = MOCK_POKEMONS_LIST_RESPONSE
 ) =>
-  http.get(
-    `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`,
-    () => {
-      return HttpResponse.json(mock);
-    }
-  );
+  http.get(_apiBase, () => {
+    return HttpResponse.json(mock);
+  });

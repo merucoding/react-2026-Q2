@@ -3,9 +3,15 @@ import {
   NON_EXISTENT_POKEMON_NAME,
   SERVER_ERROR_INPUT,
 } from '../test-utils/constants';
-import { MOCK_PIKACHU_DATA } from '../test-utils/mocks/handlers/pokemonMocks';
+import {
+  MOCK_INVALID_RESPONSE,
+  MOCK_PIKACHU_DATA,
+  MOCK_POKEMONS_DATA,
+} from '../test-utils/mocks/handlers/pokemonMocks';
 import { describe, it, expect } from 'vitest';
-import { fetchPokemonByName } from './fetchPokemons';
+import { fetchPokemonByName, fetchPokemonsList } from './fetchPokemons';
+import { server } from '../test-utils/mocks/server';
+import { pokemonListHandler } from '../test-utils/mocks/handlers/pokemonList';
 
 describe('fetchPokemons', () => {
   it('returns a single pokemon (with searchText)', async () => {
@@ -18,12 +24,23 @@ describe('fetchPokemons', () => {
     expect(errorMessage).toBe('');
   });
 
-  // it('returns a list of pokemons (without searchText)', async () => {
-  //   const { pokemons, errorMessage } = await fetchPokemonsList();
+  it('returns a list of pokemons (without searchText)', async () => {
+    const { pokemons, totalPage, errorMessage } = await fetchPokemonsList();
 
-  //   expect(pokemons).toEqual(expect.arrayContaining(MOCK_POKEMONS_DATA));
-  //   expect(errorMessage).toBe('');
-  // });
+    expect(pokemons).toEqual(expect.arrayContaining(MOCK_POKEMONS_DATA));
+    expect(totalPage).toEqual(68);
+    expect(errorMessage).toBe('');
+  });
+
+  it('throws an error for invalid response', async () => {
+    server.use(pokemonListHandler(MOCK_INVALID_RESPONSE));
+
+    const { pokemons, totalPage, errorMessage } = await fetchPokemonsList();
+
+    expect(pokemons).toEqual(expect.arrayContaining([]));
+    expect(totalPage).toEqual(0);
+    expect(errorMessage).toBe('Invalid response');
+  });
 
   it('returns an error when pokemon not found by searchText', async () => {
     const { pokemons, errorMessage } = await fetchPokemonByName(
