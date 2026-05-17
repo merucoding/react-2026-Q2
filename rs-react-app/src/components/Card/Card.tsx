@@ -4,7 +4,7 @@ import type { ReactElement } from 'react';
 import Button from '../Button/Button';
 import NavButton from '../NavButton/NavButton';
 import { ROUTES } from '../../shared/constants/routes';
-import { X } from 'lucide-react';
+import { X as CloseIcon } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 
 type Props = {
@@ -43,7 +43,7 @@ const Card = ({
     >
       {detailed && (
         <NavButton to={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
-          <X />
+          <CloseIcon />
         </NavButton>
       )}
       <div
@@ -61,29 +61,25 @@ const Card = ({
       </h2>
 
       <h3>{description}</h3>
-      {detailed && (
+      {cries && (
+        <Button onClick={() => playCry(cries)}>hear the Pokémon</Button>
+      )}
+      {types && (
         <>
-          {cries && (
-            <Button onClick={() => playCry(cries)}>hear the Pokémon</Button>
-          )}
-          {types && (
-            <>
-              <p>types:</p>
-              <ul>{types}</ul>
-            </>
-          )}
-          {abilities && (
-            <>
-              <p>abilities:</p>
-              <ul>{abilities}</ul>
-            </>
-          )}
-          {moves && (
-            <>
-              <p>moves:</p>
-              <div>{moves}</div>
-            </>
-          )}
+          <p>types:</p>
+          <ul>{types}</ul>
+        </>
+      )}
+      {abilities && (
+        <>
+          <p>abilities:</p>
+          <ul>{abilities}</ul>
+        </>
+      )}
+      {moves && (
+        <>
+          <p>moves:</p>
+          <div>{moves}</div>
         </>
       )}
     </div>

@@ -20,6 +20,9 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const currentPage = Number(page) || 1;
+
+  if (currentPage < 1) navigate(ROUTES.NOT_FOUND);
+
   const offset = (currentPage - 1) * _limitPerPage;
 
   const [loading, setLoading] = useState(false);

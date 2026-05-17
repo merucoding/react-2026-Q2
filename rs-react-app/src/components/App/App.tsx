@@ -5,7 +5,7 @@ import About from '../../pages/About/About';
 import NotFound from '../../pages/NotFound/NotFound';
 import Layout from '../../layouts/Layout';
 import { ROUTES } from '../../shared/constants/routes';
-import CardDetails from '../CardDetails/CardDetails';
+import CardDetails from '../../pages/CardDetails/CardDetails';
 
 const App = () => {
   return (

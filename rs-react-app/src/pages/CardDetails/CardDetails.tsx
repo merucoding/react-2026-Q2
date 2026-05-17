@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchPokemonByName, type PokemonType } from '../../api/fetchPokemons';
-import Spinner from '../Spinner/Spinner';
-import Card from '../Card/Card';
+import Spinner from '../../components/Spinner/Spinner';
+import Card from '../../components/Card/Card';
 import getPokemonParams from '../../utils/getPokemonParams';
 import getPokemonTypes from '../../utils/getPokemonTypes';
 import getPokemonAbilities from '../../utils/getPokemonAbilities';
@@ -44,7 +44,7 @@ const CardDetails = () => {
   return (
     <div className="sticky top-4">
       {loading && <Spinner />}
-      {!loading && !errorMessage && pokemon && (
+      {!loading && pokemon && (
         <Card
           title={pokemon.name}
           src={pokemon.sprites.front_default}
@@ -53,7 +53,7 @@ const CardDetails = () => {
           abilities={getPokemonAbilities(pokemon.abilities)}
           cries={pokemon.cries.latest}
           moves={getPokemonMoves(pokemon.moves)}
-          detailed={true}
+          detailed
         />
       )}
     </div>
