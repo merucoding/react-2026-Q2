@@ -1,11 +1,11 @@
 import { http, HttpResponse } from 'msw';
-import { POKEMON_BY_NAME_URL } from '../../../api/constants';
 import { MOCK_PIKACHU_DATA, MOCK_POKEMONS_DATA } from './pokemonMocks';
 import {
   INVALID_POKEMON_NAME,
   NON_EXISTENT_POKEMON_NAME,
   SERVER_ERROR_INPUT,
 } from '../../constants';
+import { _apiBase } from '../../../api/fetchPokemons';
 
 type Pokemon = {
   name: string;
@@ -14,7 +14,7 @@ type Pokemon = {
 };
 
 export const pokemonByNameHandler = () =>
-  http.get<{ name: string }>(`${POKEMON_BY_NAME_URL}:name`, ({ params }) => {
+  http.get<{ name: string }>(`${_apiBase}/:name`, ({ params }) => {
     const { name } = params;
 
     const db: Record<string, Pokemon> = {

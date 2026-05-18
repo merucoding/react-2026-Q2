@@ -1,4 +1,5 @@
 type PokemonListResponse = {
+  count: number;
   results: { url: string }[];
 };
 
@@ -9,6 +10,7 @@ export function isPokemonListResponse(
     typeof data === 'object' &&
     data !== null &&
     'results' in data &&
-    Array.isArray(data.results)
+    Array.isArray(data.results) &&
+    'count' in data
   );
 }

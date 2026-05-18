@@ -1,33 +1,63 @@
 import type { Pokemon } from 'pokeapi-typescript';
 import { isPokemonListResponse } from './isPokemonListResponse';
 import fetchData from './fetchData';
-import { POKEMON_BY_NAME_URL, POKEMON_LIST_URL } from './constants';
 
-export async function fetchPokemons(searchText?: string): Promise<{
-  pokemons: Pokemon[];
-  errorMessage: string;
-}> {
+export const _apiBase = 'https://pokeapi.co/api/v2/pokemon';
+export const _baseOffset = 0;
+export const _limitPerPage = 20;
+
+export type PokemonType = Pokemon & {
+  cries: {
+    latest: string;
+    legacy?: string;
+  };
+};
+
+const getPokemonsList = async (
+  offset = _baseOffset
+): Promise<{ pokemons: PokemonType[]; totalPage: number }> => {
+  const data = await fetchData<unknown>(
+    `${_apiBase}?offset=${offset}&limit=${_limitPerPage}`
+  );
+
+  if (!isPokemonListResponse(data)) {
+    throw new Error('Invalid response');
+  }
+
+  const pokemons = await Promise.all(
+    data.results.map((item) => {
+      return fetchData<PokemonType>(item.url);
+    })
+  );
+
+  const totalPage = Math.ceil(data.count / _limitPerPage);
+  return { pokemons, totalPage };
+};
+
+const getPokemonByName = async (
+  searchText: string
+): Promise<{ pokemons: PokemonType[]; totalPage: number }> => {
+  const pokemon = await fetchData<PokemonType>(`${_apiBase}/${searchText}`);
+  return { pokemons: [pokemon], totalPage: 1 };
+};
+
+const withErrorHandling = async (
+  fn: () => Promise<{ pokemons: PokemonType[]; totalPage: number }>
+) => {
   try {
-    if (searchText) {
-      const pokemon = await fetchData<Pokemon>(
-        `${POKEMON_BY_NAME_URL}${searchText}`
-      );
-      return { pokemons: [pokemon], errorMessage: '' };
-    }
-    const data = await fetchData<unknown>(POKEMON_LIST_URL);
-    if (!isPokemonListResponse(data)) {
-      throw new Error('Invalid response');
-    }
-    const pokemons = await Promise.all(
-      data.results.map((item) => {
-        return fetchData<Pokemon>(item.url);
-      })
-    );
-    return { pokemons, errorMessage: '' };
+    const { pokemons, totalPage } = await fn();
+    return { pokemons, totalPage, errorMessage: '' };
   } catch (error) {
     return {
       pokemons: [],
+      totalPage: 0,
       errorMessage: error instanceof Error ? error.message : 'Unknown error',
     };
   }
-}
+};
+
+export const fetchPokemonsList = (offset = _baseOffset) =>
+  withErrorHandling(() => getPokemonsList(offset));
+
+export const fetchPokemonByName = (searchText: string) =>
+  withErrorHandling(() => getPokemonByName(searchText));
