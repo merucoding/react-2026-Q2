@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
 import Card from './Card';
 import { MOCK_PIKACHU_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
 import getPokemonParams from '../../utils/getPokemonParams';

@@ -1,4 +1,4 @@
-import { vi } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import * as api from '../../api/fetchPokemons';
 import CardDetails from './CardDetails';
 import { screen, waitFor } from '@testing-library/react';
