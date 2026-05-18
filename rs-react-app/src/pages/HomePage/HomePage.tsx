@@ -21,8 +21,6 @@ const HomePage = () => {
 
   const currentPage = Number(page) || 1;
 
-  if (currentPage < 1) navigate(ROUTES.NOT_FOUND);
-
   const offset = (currentPage - 1) * _limitPerPage;
 
   const [loading, setLoading] = useState(false);
@@ -61,6 +59,10 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+    const pageToNum = Number(page);
+
+    if (isNaN(pageToNum) || pageToNum < 1) navigate(ROUTES.NOT_FOUND);
+
     loadPokemons(searchText, offset);
     // eslint-disable-next-line
   }, [searchText, offset]);
