@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchPokemonsList, type PokemonType } from '../../api/fetchPokemons';
+import {
+  fetchPokemonByName,
+  fetchPokemonsList,
+  type PokemonType,
+} from '../../api/fetchPokemons';
 
 type InitialState = {
   pokemonList: PokemonType[];
@@ -16,9 +20,12 @@ const initialState: InitialState = {
 };
 
 export const fetchPokemonList = createAsyncThunk<
-  { pokemons: PokemonType[]; totalPage: number },
-  number
->('pokemonList/fetchPokemonList', async (offset: number) => {
+  { pokemons: PokemonType[]; totalPage: number; errorMessage: string },
+  { searchText: string; offset: number }
+>('pokemonList/fetchPokemonList', async ({ searchText, offset }) => {
+  if (searchText) {
+    return await fetchPokemonByName(searchText);
+  }
   return await fetchPokemonsList(offset);
 });
 
@@ -36,6 +43,7 @@ const pokemonListSlice = createSlice({
         state.isLoading = false;
         state.pokemonList = action.payload.pokemons;
         state.totalPage = action.payload.totalPage;
+        state.errorMessage = action.payload.errorMessage;
       })
       .addCase(fetchPokemonList.rejected, (state, action) => {
         state.isLoading = false;

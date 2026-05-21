@@ -8,7 +8,7 @@ import PaginationControls from '../../components/Pagination/PaginationControls';
 import Spinner from '../../components/Spinner/Spinner';
 import TopControls from '../../components/TopControls/TopControls';
 import { ROUTES } from '../../shared/constants/routes';
-import { selectPokemonList } from '../../store/pokemonList/pokemonListSelectors';
+import { selectPokemonList } from '../../store/pokemonList/pokemonListSelector';
 import { fetchPokemonList } from '../../store/pokemonList/pokemonListSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
@@ -37,8 +37,16 @@ const HomePage = () => {
 
     if (isNaN(pageToNum) || pageToNum < 1) navigate(ROUTES.NOT_FOUND);
 
-    dispatch(fetchPokemonList(offset));
-  }, [dispatch, navigate, offset, page]);
+    dispatch(fetchPokemonList({ searchText, offset }));
+    // eslint-disable-next-line
+  }, [offset, page, searchText]);
+
+  useEffect(() => {
+    if (!isLoading && !errorMessage && currentPage > totalPage) {
+      navigate(ROUTES.NOT_FOUND);
+    }
+    // eslint-disable-next-line
+  }, [currentPage, errorMessage, isLoading, totalPage]);
 
   const handleSearch = (input: string) => {
     if (input === searchText) return;
