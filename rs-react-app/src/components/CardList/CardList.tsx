@@ -23,6 +23,7 @@ const CardList = ({ pokemons }: Props) => {
                 title={pokemon.name}
                 src={pokemon.sprites.front_default}
                 description={getPokemonParams(pokemon.height, pokemon.weight)}
+                id={pokemon.id.toString()}
               />
             </Link>
           </li>

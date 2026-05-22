@@ -6,6 +6,7 @@ import NavButton from '../NavButton/NavButton';
 import { ROUTES } from '../../shared/constants/routes';
 import { X as CloseIcon } from 'lucide-react';
 import { useParams } from 'react-router-dom';
+import SelectCard from '../SelectCard/SelectCard';
 
 type Props = {
   title: string;
@@ -16,6 +17,7 @@ type Props = {
   abilities?: ReactElement[] | null;
   cries?: string;
   moves?: string;
+  id?: string;
 };
 
 const playCry = (url: string) => {
@@ -32,6 +34,7 @@ const Card = ({
   abilities,
   cries,
   moves,
+  id,
 }: Props) => {
   const { page } = useParams();
 
@@ -82,6 +85,7 @@ const Card = ({
           <div>{moves}</div>
         </>
       )}
+      {id && <SelectCard pokemonId={id} />}
     </div>
   );
 };
