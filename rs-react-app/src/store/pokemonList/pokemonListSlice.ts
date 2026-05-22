@@ -1,33 +1,20 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  fetchPokemonByName,
-  fetchPokemonsList,
-  type PokemonType,
-} from '../../api/fetchPokemons';
+import { createSlice } from '@reduxjs/toolkit';
+import { type PokemonType } from '../../api/fetchPokemons';
+import { fetchPokemonList } from './pokemonListAsyncThunk';
 
 type InitialState = {
-  pokemonList: PokemonType[];
+  pokemonList: PokemonType[] | null;
   isLoading: boolean;
   errorMessage: string;
   totalPage: number;
 };
 
 const initialState: InitialState = {
-  pokemonList: [],
+  pokemonList: null,
   isLoading: false,
   errorMessage: '',
   totalPage: 1,
 };
-
-export const fetchPokemonList = createAsyncThunk<
-  { pokemons: PokemonType[]; totalPage: number; errorMessage: string },
-  { searchText: string; offset: number }
->('pokemonList/fetchPokemonList', async ({ searchText, offset }) => {
-  if (searchText) {
-    return await fetchPokemonByName(searchText);
-  }
-  return await fetchPokemonsList(offset);
-});
 
 const pokemonListSlice = createSlice({
   name: 'pokemonList',
@@ -41,15 +28,16 @@ const pokemonListSlice = createSlice({
       })
       .addCase(fetchPokemonList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.pokemonList = action.payload.pokemons;
-        state.totalPage = action.payload.totalPage;
-        state.errorMessage = action.payload.errorMessage;
+        state.pokemonList =
+          action.payload.pokemons ??
+          (action.payload.pokemon ? [action.payload.pokemon] : null);
+        state.totalPage = action.payload.totalPage || 1;
+        state.errorMessage = '';
       })
       .addCase(fetchPokemonList.rejected, (state, action) => {
         state.isLoading = false;
         state.errorMessage = action.error.message || 'Failed to load pokemons!';
-      })
-      .addDefaultCase(() => {});
+      });
   },
 });
 

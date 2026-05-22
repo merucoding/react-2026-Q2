@@ -13,7 +13,7 @@ export type PokemonType = Pokemon & {
   };
 };
 
-const getPokemonsList = async (
+export const fetchPokemonsList = async (
   offset = _baseOffset
 ): Promise<{ pokemons: PokemonType[]; totalPage: number }> => {
   const data = await fetchData<unknown>(
@@ -34,30 +34,9 @@ const getPokemonsList = async (
   return { pokemons, totalPage };
 };
 
-const getPokemonByName = async (
+export const fetchPokemonByName = async (
   searchText: string
-): Promise<{ pokemons: PokemonType[]; totalPage: number }> => {
+): Promise<{ pokemon: PokemonType }> => {
   const pokemon = await fetchData<PokemonType>(`${_apiBase}/${searchText}`);
-  return { pokemons: [pokemon], totalPage: 1 };
+  return { pokemon: pokemon };
 };
-
-const withErrorHandling = async (
-  fn: () => Promise<{ pokemons: PokemonType[]; totalPage: number }>
-) => {
-  try {
-    const { pokemons, totalPage } = await fn();
-    return { pokemons, totalPage, errorMessage: '' };
-  } catch (error) {
-    return {
-      pokemons: [],
-      totalPage: 0,
-      errorMessage: error instanceof Error ? error.message : 'Unknown error',
-    };
-  }
-};
-
-export const fetchPokemonsList = (offset = _baseOffset) =>
-  withErrorHandling(() => getPokemonsList(offset));
-
-export const fetchPokemonByName = (searchText: string) =>
-  withErrorHandling(() => getPokemonByName(searchText));

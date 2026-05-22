@@ -8,9 +8,14 @@ import PaginationControls from '../../components/Pagination/PaginationControls';
 import Spinner from '../../components/Spinner/Spinner';
 import TopControls from '../../components/TopControls/TopControls';
 import { ROUTES } from '../../shared/constants/routes';
-import { selectPokemonList } from '../../store/pokemonList/pokemonListSelector';
-import { fetchPokemonList } from '../../store/pokemonList/pokemonListSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
+import {
+  selectIsPokemonListLoading,
+  selectPokemonList,
+  selectPokemonListErrorMessage,
+  selectPokemonListTotalPage,
+} from '../../store/pokemonList/pokemonListSelector';
+import { fetchPokemonList } from '../../store/pokemonList/pokemonListAsyncThunk';
 
 const HomePage = () => {
   const { page, detailsId } = useParams();
@@ -22,8 +27,10 @@ const HomePage = () => {
 
   const offset = (currentPage - 1) * _limitPerPage;
 
-  const { pokemonList, isLoading, errorMessage, totalPage } =
-    useAppSelector(selectPokemonList);
+  const pokemonList = useAppSelector(selectPokemonList);
+  const isLoading = useAppSelector(selectIsPokemonListLoading);
+  const errorMessage = useAppSelector(selectPokemonListErrorMessage);
+  const totalPage = useAppSelector(selectPokemonListTotalPage);
 
   const { value: searchText, setStorageValue: setSearchText } = useLocalStorage(
     LOCAL_STORAGE_KEYS.SEARCH_TEXT,
@@ -33,20 +40,20 @@ const HomePage = () => {
   const isCardDetailsOpen = Boolean(detailsId);
 
   useEffect(() => {
-    const pageToNum = Number(page);
-
-    if (isNaN(pageToNum) || pageToNum < 1) navigate(ROUTES.NOT_FOUND);
-
     dispatch(fetchPokemonList({ searchText, offset }));
-    // eslint-disable-next-line
-  }, [offset, page, searchText]);
+  }, [dispatch, offset, searchText]);
 
   useEffect(() => {
+    const pageToNum = Number(page);
+
+    if (isNaN(pageToNum) || pageToNum < 1) {
+      navigate(ROUTES.NOT_FOUND);
+    }
+
     if (!isLoading && !errorMessage && currentPage > totalPage) {
       navigate(ROUTES.NOT_FOUND);
     }
-    // eslint-disable-next-line
-  }, [currentPage, errorMessage, isLoading, totalPage]);
+  }, [currentPage, errorMessage, isLoading, navigate, page, totalPage]);
 
   const handleSearch = (input: string) => {
     if (input === searchText) return;

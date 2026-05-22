@@ -5,7 +5,7 @@ import { ROUTES } from '../../shared/constants/routes';
 import type { PokemonType } from '../../api/fetchPokemons';
 
 type Props = {
-  pokemons: PokemonType[];
+  pokemons: PokemonType[] | null;
 };
 
 const CardList = ({ pokemons }: Props) => {
@@ -15,17 +15,18 @@ const CardList = ({ pokemons }: Props) => {
 
   return (
     <ul className="mt-6 flex gap-4 flex-wrap justify-center">
-      {pokemons.map((pokemon) => (
-        <li key={pokemon.id}>
-          <Link to={ROUTES.TO_DETAILED_VIEW(currentPage, pokemon.name)}>
-            <Card
-              title={pokemon.name}
-              src={pokemon.sprites.front_default}
-              description={getPokemonParams(pokemon.height, pokemon.weight)}
-            />
-          </Link>
-        </li>
-      ))}
+      {pokemons &&
+        pokemons.map((pokemon) => (
+          <li key={pokemon.id}>
+            <Link to={ROUTES.TO_DETAILED_VIEW(currentPage, pokemon.name)}>
+              <Card
+                title={pokemon.name}
+                src={pokemon.sprites.front_default}
+                description={getPokemonParams(pokemon.height, pokemon.weight)}
+              />
+            </Link>
+          </li>
+        ))}
     </ul>
   );
 };

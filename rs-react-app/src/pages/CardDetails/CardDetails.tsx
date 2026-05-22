@@ -7,9 +7,13 @@ import getPokemonTypes from '../../utils/getPokemonTypes';
 import getPokemonAbilities from '../../utils/getPokemonAbilities';
 import getPokemonMoves from '../../utils/getPokemonMoves';
 import { ROUTES } from '../../shared/constants/routes';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { selectPokemon } from '../../store/pokemon/pokemonSelector';
-import { fetchPokemon } from '../../store/pokemon/pokemonSlice';
+import {
+  selectIsPokemonLoading,
+  selectPokemonErrorMessage,
+  selectPokemon,
+} from '../../store/pokemon/pokemonSelector';
+import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
+import { fetchPokemon } from '../../store/pokemon/pokemonAsyncThunk';
 
 const CardDetails = () => {
   const navigate = useNavigate();
@@ -17,14 +21,15 @@ const CardDetails = () => {
 
   const { detailsId } = useParams();
 
-  const { pokemon, isLoading, errorMessage } = useAppSelector(selectPokemon);
+  const pokemon = useAppSelector(selectPokemon);
+  const isLoading = useAppSelector(selectIsPokemonLoading);
+  const errorMessage = useAppSelector(selectPokemonErrorMessage);
 
   useEffect(() => {
     if (!detailsId) return;
 
     dispatch(fetchPokemon(detailsId));
-    // eslint-disable-next-line
-  }, [detailsId]);
+  }, [detailsId, dispatch]);
 
   if (errorMessage) navigate(ROUTES.NOT_FOUND);
 
