@@ -16,6 +16,9 @@ import {
   selectPokemonListTotalPage,
 } from '../../store/pokemonList/pokemonListSelector';
 import { fetchPokemonList } from '../../store/pokemonList/pokemonListAsyncThunk';
+import Flyout from '../../components/Flyout/Flyout';
+import { selectSelectedPokemonLength } from '../../store/selectedList/selectedListSelector';
+import { clearList } from '../../store/selectedList/selectedListSlice';
 
 const HomePage = () => {
   const { page, detailsId } = useParams();
@@ -31,6 +34,8 @@ const HomePage = () => {
   const isLoading = useAppSelector(selectIsPokemonListLoading);
   const errorMessage = useAppSelector(selectPokemonListErrorMessage);
   const totalPage = useAppSelector(selectPokemonListTotalPage);
+
+  const selectedPokemonLength = useAppSelector(selectSelectedPokemonLength);
 
   const { value: searchText, setStorageValue: setSearchText } = useLocalStorage(
     LOCAL_STORAGE_KEYS.SEARCH_TEXT,
@@ -61,6 +66,12 @@ const HomePage = () => {
     setSearchText(input);
   };
 
+  const handleUnselectAll = () => {
+    dispatch(clearList());
+  };
+
+  const handleDownload = () => {};
+
   return (
     <main>
       <TopControls searchText={searchText} onSearch={handleSearch} />
@@ -85,6 +96,13 @@ const HomePage = () => {
           </aside>
         )}
       </div>
+      {selectedPokemonLength > 0 && (
+        <Flyout
+          selectedCount={selectedPokemonLength}
+          onUnselectAll={handleUnselectAll}
+          onDownload={handleDownload}
+        />
+      )}
     </main>
   );
 };

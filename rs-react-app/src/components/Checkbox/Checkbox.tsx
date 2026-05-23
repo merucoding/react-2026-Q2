@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
 import { cn } from '../../utils/ui';
-import { Check } from 'lucide-react';
+import { Check as CheckIcon } from 'lucide-react';
 
 const Checkbox = ({ className, ...props }: ComponentProps<'input'>) => {
   return (
@@ -21,7 +21,7 @@ const Checkbox = ({ className, ...props }: ComponentProps<'input'>) => {
             transition-colors
           `}
       />
-      <Check
+      <CheckIcon
         className={`
           absolute
           w-5 h-5

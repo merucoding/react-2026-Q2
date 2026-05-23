@@ -13,3 +13,8 @@ export const selectIsPokemonSelected = (id: string) =>
   createSelector(selectSelectedPokemonIds, (selectedPokemonIds) =>
     selectedPokemonIds.includes(id)
   );
+
+export const selectSelectedPokemonLength = createSelector(
+  selectSelectedPokemonIds,
+  (selectedPokemonIds) => selectedPokemonIds.length
+);
