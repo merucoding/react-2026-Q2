@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react';
-import Сheckbox from '../Checkbox/Checkbox';
+import Checkbox from '../Checkbox/Checkbox';
 import {
   addToList,
   deleteFromList,
@@ -27,10 +27,11 @@ const SelectCard = ({ pokemonId }: Props) => {
   };
 
   return (
-    <Сheckbox
+    <Checkbox
       checked={isSelected}
       onChange={handleSelect}
       onClick={(event) => event.stopPropagation()}
+      className="absolute top-2 right-2"
     />
   );
 };

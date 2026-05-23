@@ -42,7 +42,7 @@ const Card = ({
 
   return (
     <div
-      className={`${BORDER_STYLE} p-2 flex flex-col items-center gap-y-2 aspect-square text-sm [&_p]:text-fuchsia-400 [&_ul]:text-sm [&_ul]:list-disc ${detailed ? 'w-full mt-6' : 'w-50'}`}
+      className={`${BORDER_STYLE} p-2 flex flex-col items-center gap-y-2 aspect-square text-sm [&_p]:text-fuchsia-400 [&_ul]:text-sm [&_ul]:list-disc ${detailed ? 'w-full mt-6' : 'w-50'} ${id ? 'relative' : ''}`}
     >
       {detailed && (
         <NavButton to={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
