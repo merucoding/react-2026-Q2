@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 type InitialState = {
-  selectedPokemonIds: string[];
+  selectedPokemonIds: number[];
 };
 
 const initialState: InitialState = {
@@ -12,10 +12,10 @@ const selectedPokemonListSlice = createSlice({
   name: 'selectedPokemonList',
   initialState,
   reducers: {
-    addToList: (state, action: PayloadAction<string>) => {
+    addToList: (state, action: PayloadAction<number>) => {
       state.selectedPokemonIds.push(action.payload);
     },
-    deleteFromList: (state, action: PayloadAction<string>) => {
+    deleteFromList: (state, action: PayloadAction<number>) => {
       state.selectedPokemonIds = state.selectedPokemonIds.filter(
         (id) => id !== action.payload
       );

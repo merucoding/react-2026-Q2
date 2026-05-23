@@ -17,7 +17,7 @@ type Props = {
   abilities?: ReactElement[] | null;
   cries?: string;
   moves?: string;
-  id?: string;
+  id?: number;
 };
 
 const playCry = (url: string) => {

@@ -17,8 +17,12 @@ import {
 } from '../../store/pokemonList/pokemonListSelector';
 import { fetchPokemonList } from '../../store/pokemonList/pokemonListAsyncThunk';
 import Flyout from '../../components/Flyout/Flyout';
-import { selectSelectedPokemonLength } from '../../store/selectedList/selectedListSelector';
+import {
+  selectSelectedPokemonIds,
+  selectSelectedPokemonLength,
+} from '../../store/selectedList/selectedListSelector';
 import { clearList } from '../../store/selectedList/selectedListSlice';
+import savePokemonList from '../../services/savePokemonList';
 
 const HomePage = () => {
   const { page, detailsId } = useParams();
@@ -34,7 +38,7 @@ const HomePage = () => {
   const isLoading = useAppSelector(selectIsPokemonListLoading);
   const errorMessage = useAppSelector(selectPokemonListErrorMessage);
   const totalPage = useAppSelector(selectPokemonListTotalPage);
-
+  const selectedPokemonIds = useAppSelector(selectSelectedPokemonIds);
   const selectedPokemonLength = useAppSelector(selectSelectedPokemonLength);
 
   const { value: searchText, setStorageValue: setSearchText } = useLocalStorage(
@@ -70,7 +74,15 @@ const HomePage = () => {
     dispatch(clearList());
   };
 
-  const handleDownload = () => {};
+  const handleDownload = () => {
+    if (!pokemonList) return;
+
+    const selectedPokemonData = pokemonList.filter((pokemon) =>
+      selectedPokemonIds.includes(pokemon.id)
+    );
+
+    savePokemonList(selectedPokemonData);
+  };
 
   return (
     <main>

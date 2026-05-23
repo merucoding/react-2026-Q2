@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
 import { selectIsPokemonSelected } from '../../store/selectedList/selectedListSelector';
 
 type Props = {
-  pokemonId: string;
+  pokemonId: number;
 };
 
 const SelectCard = ({ pokemonId }: Props) => {

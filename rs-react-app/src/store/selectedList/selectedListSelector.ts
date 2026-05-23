@@ -9,7 +9,7 @@ export const selectSelectedPokemonIds = createSelector(
   (selectedPokemonList) => selectedPokemonList.selectedPokemonIds
 );
 
-export const selectIsPokemonSelected = (id: string) =>
+export const selectIsPokemonSelected = (id: number) =>
   createSelector(selectSelectedPokemonIds, (selectedPokemonIds) =>
     selectedPokemonIds.includes(id)
   );
