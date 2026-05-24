@@ -1,12 +1,11 @@
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import DEFAULT_IMAGE from '../../assets/balls.jpg';
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import Button from '../Button/Button';
 import NavButton from '../NavButton/NavButton';
 import { ROUTES } from '../../shared/constants/routes';
 import { X as CloseIcon } from 'lucide-react';
 import { useParams } from 'react-router-dom';
-import SelectCard from '../SelectCard/SelectCard';
 
 type Props = {
   title: string;
@@ -17,7 +16,7 @@ type Props = {
   abilities?: ReactElement[] | null;
   cries?: string;
   moves?: string;
-  id?: number;
+  children?: ReactNode;
 };
 
 const playCry = (url: string) => {
@@ -34,7 +33,7 @@ const Card = ({
   abilities,
   cries,
   moves,
-  id,
+  children,
 }: Props) => {
   const { page } = useParams();
 
@@ -42,7 +41,7 @@ const Card = ({
 
   return (
     <div
-      className={`${BORDER_STYLE} p-2 flex flex-col items-center gap-y-2 aspect-square text-sm [&_p]:text-fuchsia-400 [&_ul]:text-sm [&_ul]:list-disc ${detailed ? 'w-full mt-6' : 'w-50'} ${id ? 'relative' : ''} dark:[&_p]:text-emerald-500`}
+      className={`${BORDER_STYLE} p-2 flex flex-col items-center gap-y-2 aspect-square text-sm [&_p]:text-fuchsia-400 [&_ul]:text-sm [&_ul]:list-disc ${detailed ? 'w-full mt-6' : 'w-50'} relative dark:[&_p]:text-emerald-500`}
     >
       {detailed && (
         <NavButton to={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
@@ -85,7 +84,7 @@ const Card = ({
           <div>{moves}</div>
         </>
       )}
-      {id && <SelectCard pokemonId={id} />}
+      {children}
     </div>
   );
 };

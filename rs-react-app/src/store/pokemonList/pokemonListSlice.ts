@@ -24,14 +24,13 @@ const pokemonListSlice = createSlice({
     builder
       .addCase(fetchPokemonList.pending, (state) => {
         state.isLoading = true;
+        state.pokemonList = null;
         state.errorMessage = '';
       })
       .addCase(fetchPokemonList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.pokemonList =
-          action.payload.pokemons ??
-          (action.payload.pokemon ? [action.payload.pokemon] : null);
-        state.totalPage = action.payload.totalPage || 1;
+        state.pokemonList = action.payload.pokemons;
+        state.totalPage = action.payload.totalPage;
         state.errorMessage = '';
       })
       .addCase(fetchPokemonList.rejected, (state, action) => {

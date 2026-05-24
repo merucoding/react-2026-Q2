@@ -6,11 +6,12 @@ import {
 } from '../../api/fetchPokemons';
 
 export const fetchPokemonList = createAsyncThunk<
-  { pokemons?: PokemonType[]; pokemon?: PokemonType; totalPage?: number },
+  { pokemons: PokemonType[]; totalPage: number },
   { searchText: string; offset: number }
 >('pokemonList/fetchPokemonList', async ({ searchText, offset }) => {
   if (searchText) {
-    return await fetchPokemonByName(searchText);
+    const data = await fetchPokemonByName(searchText);
+    return { pokemons: [data.pokemon], totalPage: 1 };
   }
   return await fetchPokemonsList(offset);
 });

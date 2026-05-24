@@ -11,18 +11,11 @@ import { ROUTES } from '../../shared/constants/routes';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
 import {
   selectIsPokemonListLoading,
-  selectPokemonList,
   selectPokemonListErrorMessage,
   selectPokemonListTotalPage,
 } from '../../store/pokemonList/pokemonListSelector';
 import { fetchPokemonList } from '../../store/pokemonList/pokemonListAsyncThunk';
 import Flyout from '../../components/Flyout/Flyout';
-import {
-  selectSelectedPokemonIds,
-  selectSelectedPokemonLength,
-} from '../../store/selectedList/selectedListSelector';
-import { clearList } from '../../store/selectedList/selectedListSlice';
-import savePokemonList from '../../services/savePokemonList';
 
 const HomePage = () => {
   const { page, detailsId } = useParams();
@@ -34,12 +27,9 @@ const HomePage = () => {
 
   const offset = (currentPage - 1) * _limitPerPage;
 
-  const pokemonList = useAppSelector(selectPokemonList);
   const isLoading = useAppSelector(selectIsPokemonListLoading);
   const errorMessage = useAppSelector(selectPokemonListErrorMessage);
   const totalPage = useAppSelector(selectPokemonListTotalPage);
-  const selectedPokemonIds = useAppSelector(selectSelectedPokemonIds);
-  const selectedPokemonLength = useAppSelector(selectSelectedPokemonLength);
 
   const { value: searchText, setStorageValue: setSearchText } = useLocalStorage(
     LOCAL_STORAGE_KEYS.SEARCH_TEXT,
@@ -59,29 +49,15 @@ const HomePage = () => {
       navigate(ROUTES.NOT_FOUND);
     }
 
-    if (!isLoading && !errorMessage && currentPage > totalPage) {
+    if (totalPage > 1 && currentPage > totalPage) {
       navigate(ROUTES.NOT_FOUND);
     }
-  }, [currentPage, errorMessage, isLoading, navigate, page, totalPage]);
+  }, [currentPage, navigate, page, totalPage]);
 
   const handleSearch = (input: string) => {
     if (input === searchText) return;
 
     setSearchText(input);
-  };
-
-  const handleUnselectAll = () => {
-    dispatch(clearList());
-  };
-
-  const handleDownload = () => {
-    if (!pokemonList) return;
-
-    const selectedPokemonData = pokemonList.filter((pokemon) =>
-      selectedPokemonIds.includes(pokemon.id)
-    );
-
-    savePokemonList(selectedPokemonData);
   };
 
   return (
@@ -97,7 +73,7 @@ const HomePage = () => {
           )}
           {!isLoading && !errorMessage && (
             <>
-              <CardList pokemons={pokemonList} />
+              <CardList />
               <PaginationControls page={currentPage} totalPage={totalPage} />
             </>
           )}
@@ -108,13 +84,7 @@ const HomePage = () => {
           </aside>
         )}
       </div>
-      {selectedPokemonLength > 0 && (
-        <Flyout
-          selectedCount={selectedPokemonLength}
-          onUnselectAll={handleUnselectAll}
-          onDownload={handleDownload}
-        />
-      )}
+      <Flyout />
     </main>
   );
 };

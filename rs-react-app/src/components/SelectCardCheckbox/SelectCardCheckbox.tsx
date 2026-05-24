@@ -11,7 +11,7 @@ type Props = {
   pokemonId: number;
 };
 
-const SelectCard = ({ pokemonId }: Props) => {
+const SelectCardCheckbox = ({ pokemonId }: Props) => {
   const dispatch = useAppDispatch();
 
   const isSelected = useAppSelector(selectIsPokemonSelected(pokemonId));
@@ -36,4 +36,4 @@ const SelectCard = ({ pokemonId }: Props) => {
   );
 };
 
-export default SelectCard;
+export default SelectCardCheckbox;

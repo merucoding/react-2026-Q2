@@ -38,5 +38,5 @@ export const fetchPokemonByName = async (
   searchText: string
 ): Promise<{ pokemon: PokemonType }> => {
   const pokemon = await fetchData<PokemonType>(`${_apiBase}/${searchText}`);
-  return { pokemon: pokemon };
+  return { pokemon };
 };
