@@ -2,9 +2,9 @@ import Card from '../Card/Card';
 import getPokemonParams from '../../utils/getPokemonParams';
 import { Link, useParams } from 'react-router-dom';
 import { ROUTES } from '../../shared/constants/routes';
-import SelectCard from '../SelectCardCheckbox/SelectCardCheckbox';
 import { useAppSelector } from '../../store/hooks/redux';
 import { selectPokemonList } from '../../store/pokemonList/pokemonListSelector';
+import SelectCardCheckbox from '../SelectCardCheckbox/SelectCardCheckbox';
 
 const CardList = () => {
   const { page } = useParams();
@@ -25,7 +25,7 @@ const CardList = () => {
               src={pokemon.sprites.front_default}
               description={getPokemonParams(pokemon.height, pokemon.weight)}
             >
-              <SelectCard pokemonId={pokemon.id} />
+              <SelectCardCheckbox pokemon={pokemon} />
             </Card>
           </Link>
         </li>

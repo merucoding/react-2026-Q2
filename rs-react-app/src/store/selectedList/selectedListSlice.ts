@@ -1,27 +1,28 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { PokemonType } from '../../api/fetchPokemons';
 
 type InitialState = {
-  selectedPokemonIds: number[];
+  selectedPokemonList: PokemonType[];
 };
 
 const initialState: InitialState = {
-  selectedPokemonIds: [],
+  selectedPokemonList: [],
 };
 
 const selectedPokemonListSlice = createSlice({
   name: 'selectedPokemonList',
   initialState,
   reducers: {
-    addToList: (state, action: PayloadAction<number>) => {
-      state.selectedPokemonIds.push(action.payload);
+    addToList: (state, action: PayloadAction<PokemonType>) => {
+      state.selectedPokemonList.push(action.payload);
     },
     deleteFromList: (state, action: PayloadAction<number>) => {
-      state.selectedPokemonIds = state.selectedPokemonIds.filter(
-        (id) => id !== action.payload
+      state.selectedPokemonList = state.selectedPokemonList.filter(
+        (pokemon) => pokemon.id !== action.payload
       );
     },
     clearList: (state) => {
-      state.selectedPokemonIds = [];
+      state.selectedPokemonList = [];
     },
   },
 });

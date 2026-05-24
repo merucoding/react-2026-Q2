@@ -4,17 +4,17 @@ import type { RootState } from '../store';
 export const selectSelectedPokemonListState = (state: RootState) =>
   state.selectedPokemonList;
 
-export const selectSelectedPokemonIds = createSelector(
+export const selectSelectedPokemonList = createSelector(
   selectSelectedPokemonListState,
-  (selectedPokemonList) => selectedPokemonList.selectedPokemonIds
+  (selectedPokemonList) => selectedPokemonList.selectedPokemonList
 );
 
 export const selectIsPokemonSelected = (id: number) =>
-  createSelector(selectSelectedPokemonIds, (selectedPokemonIds) =>
-    selectedPokemonIds.includes(id)
+  createSelector(selectSelectedPokemonList, (selectedPokemonList) =>
+    selectedPokemonList.some((pokemon) => pokemon.id === id)
   );
 
 export const selectSelectedPokemonLength = createSelector(
-  selectSelectedPokemonIds,
-  (selectedPokemonIds) => selectedPokemonIds.length
+  selectSelectedPokemonList,
+  (selectedPokemonList) => selectedPokemonList.length
 );

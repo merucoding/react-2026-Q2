@@ -6,23 +6,24 @@ import {
 } from '../../store/selectedList/selectedListSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
 import { selectIsPokemonSelected } from '../../store/selectedList/selectedListSelector';
+import type { PokemonType } from '../../api/fetchPokemons';
 
 type Props = {
-  pokemonId: number;
+  pokemon: PokemonType;
 };
 
-const SelectCardCheckbox = ({ pokemonId }: Props) => {
+const SelectCardCheckbox = ({ pokemon }: Props) => {
   const dispatch = useAppDispatch();
 
-  const isSelected = useAppSelector(selectIsPokemonSelected(pokemonId));
+  const isSelected = useAppSelector(selectIsPokemonSelected(pokemon.id));
 
   const handleSelect = (event: ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
 
     if (isChecked) {
-      dispatch(addToList(pokemonId));
+      dispatch(addToList(pokemon));
     } else {
-      dispatch(deleteFromList(pokemonId));
+      dispatch(deleteFromList(pokemon.id));
     }
   };
 
