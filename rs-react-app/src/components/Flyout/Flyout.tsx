@@ -10,9 +10,9 @@ type Props = {
 const Flyout = ({ selectedCount, onUnselectAll, onDownload }: Props) => {
   return (
     <div
-      className={`${BORDER_STYLE} fixed bottom-1 left-1 flex items-center gap-4 justify-between bg-white`}
+      className={`${BORDER_STYLE} fixed bottom-1 left-1 flex items-center gap-4 justify-between bg-white dark:bg-fuchsia-900`}
     >
-      <h3 className="text-fuchsia-400 font-bold text-lg">
+      <h3 className="text-fuchsia-400 font-bold text-lg dark:text-emerald-500">
         <span>{selectedCount}</span> Pokémon selected
       </h3>
       <Button onClick={onUnselectAll}>Unselect all</Button>

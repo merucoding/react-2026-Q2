@@ -24,7 +24,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
     if (this.state.hasError) {
       return (
         <div className={CENTERED_PAGE}>
-          <h1 className="font-lexend-exa text-fuchsia-400 font-bold text-2xl">
+          <h1 className="font-lexend-exa text-fuchsia-400 font-bold text-2xl dark:text-emerald-500">
             Something went wrong...
           </h1>
           <Button onClick={this.handleReload} className="mt-4">

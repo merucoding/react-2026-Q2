@@ -5,7 +5,7 @@ import { CENTERED_PAGE } from '../../shared/constants/styles';
 const About = () => {
   return (
     <div className={CENTERED_PAGE}>
-      <h2 className="font-lexend-exa text-fuchsia-400 font-bold text-2xl">
+      <h2 className="font-lexend-exa text-fuchsia-400 font-bold text-2xl dark:text-emerald-500">
         Hello! I`m Méru.
       </h2>
       <p className="mt-2">
@@ -18,7 +18,7 @@ const About = () => {
         And the Pokémon Search was developed as part of the{' '}
         <a
           href="https://rs.school/courses/reactjs"
-          className="text-fuchsia-400 font-bold text-lg"
+          className="text-fuchsia-400 font-bold text-lg dark:text-emerald-500"
         >
           RS School React course.
         </a>

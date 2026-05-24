@@ -19,6 +19,7 @@ const Checkbox = ({ className, ...props }: ComponentProps<'input'>) => {
             cursor-pointer
             hover:bg-fuchsia-300
             transition-colors
+            dark:hover:bg-emerald-700
           `}
       />
       <CheckIcon

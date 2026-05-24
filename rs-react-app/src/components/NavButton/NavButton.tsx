@@ -13,7 +13,7 @@ const NavButton = ({
       {...props}
       className={cn(
         BORDER_STYLE,
-        'hover:bg-fuchsia-300 hover:text-white',
+        'hover:bg-fuchsia-300 hover:text-white dark:hover:bg-emerald-700',
         className
       )}
     >

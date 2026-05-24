@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100..900&family=Permanent+Marker&display=swap');
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 #root {
   max-width: 1280px;
@@ -11,7 +12,6 @@
   background-repeat: no-repeat;
   background-position: top right;
   font-family: "Lexend Exa", sans-serif;
-  color: #10b981;
   font-weight: 300;
   display: flex;
   flex-direction: column;
