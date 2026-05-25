@@ -11,7 +11,7 @@ const CardList = () => {
 
   const pokemonList = useAppSelector(selectPokemonList);
 
-  if (!pokemonList?.length) return;
+  if (!pokemonList?.length) return null;
 
   const currentPage = Number(page) || 1;
 

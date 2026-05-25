@@ -23,7 +23,7 @@ const Flyout = () => {
   };
 
   const handleDownload = () => {
-    if (!pokemonList) return;
+    if (!pokemonList) return null;
 
     savePokemonList(selectedPokemonList);
   };

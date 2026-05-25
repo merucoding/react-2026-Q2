@@ -1,16 +1,30 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import CardList from './CardList';
 import { MOCK_POKEMONS_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
-import type { PokemonType } from '../../api/fetchPokemons';
 import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import CardList from './CardList';
 
 describe('CardList component', () => {
   it('renders correct number of pokemons when data is provided', () => {
+    const store = configureStore({
+      reducer: {
+        pokemonList: () => ({
+          pokemonList: MOCK_POKEMONS_DATA,
+        }),
+        selectedPokemonList: () => ({
+          selectedPokemonList: [],
+        }),
+      },
+    });
+
     render(
-      <MemoryRouter>
-        <CardList pokemons={MOCK_POKEMONS_DATA as PokemonType[]} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <CardList />
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(screen.getAllByRole('img')).toHaveLength(MOCK_POKEMONS_DATA.length);

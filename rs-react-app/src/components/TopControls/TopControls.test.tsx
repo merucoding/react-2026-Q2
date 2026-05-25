@@ -1,12 +1,19 @@
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { vi, describe, it, expect } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import TopControls from './TopControls';
-import { renderWithProviders } from '../../utils/test';
+import { ThemeProvider } from '../../context/ThemeContext';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('TopControls component', () => {
   it('renders search input, buttons and link', () => {
-    renderWithProviders(<TopControls searchText="" onSearch={vi.fn()} />);
+    render(
+      <MemoryRouter>
+        <ThemeProvider>
+          <TopControls searchText="" onSearch={vi.fn()} />
+        </ThemeProvider>
+      </MemoryRouter>
+    );
 
     expect(screen.getByRole('textbox')).toBeInTheDocument();
     expect(screen.getByTestId('error-button')).toBeInTheDocument();
@@ -16,22 +23,38 @@ describe('TopControls component', () => {
   });
 
   it('initializes input with previously entered search text', () => {
-    renderWithProviders(
-      <TopControls searchText="pikachu" onSearch={vi.fn()} />
+    render(
+      <MemoryRouter>
+        <ThemeProvider>
+          <TopControls searchText="pikachu" onSearch={vi.fn()} />
+        </ThemeProvider>
+      </MemoryRouter>
     );
+
     expect(screen.getByRole('textbox')).toHaveValue('pikachu');
   });
 
   it('shows empty input when no saved term exists', () => {
-    renderWithProviders(<TopControls searchText="" onSearch={vi.fn()} />);
+    render(
+      <MemoryRouter>
+        <ThemeProvider>
+          <TopControls searchText="" onSearch={vi.fn()} />
+        </ThemeProvider>
+      </MemoryRouter>
+    );
+
     expect(screen.getByRole('textbox')).toHaveValue('');
   });
 
   it('updates input value when user types', async () => {
     const user = userEvent.setup();
 
-    renderWithProviders(
-      <TopControls searchText="pikachu" onSearch={vi.fn()} />
+    render(
+      <MemoryRouter>
+        <ThemeProvider>
+          <TopControls searchText="pikachu" onSearch={vi.fn()} />
+        </ThemeProvider>
+      </MemoryRouter>
     );
 
     const input = screen.getByRole('textbox');
@@ -51,7 +74,13 @@ describe('TopControls component', () => {
 
     const user = userEvent.setup();
 
-    renderWithProviders(<TopControls searchText="" onSearch={onSearchMock} />);
+    render(
+      <MemoryRouter>
+        <ThemeProvider>
+          <TopControls searchText="" onSearch={onSearchMock} />
+        </ThemeProvider>
+      </MemoryRouter>
+    );
 
     const input = screen.getByRole('textbox');
 
@@ -65,8 +94,12 @@ describe('TopControls component', () => {
     const onSearchMock = vi.fn();
     const user = userEvent.setup();
 
-    renderWithProviders(
-      <TopControls searchText="pikachu" onSearch={onSearchMock} />
+    render(
+      <MemoryRouter>
+        <ThemeProvider>
+          <TopControls searchText="pikachu" onSearch={onSearchMock} />
+        </ThemeProvider>
+      </MemoryRouter>
     );
 
     const input = screen.getByRole('textbox');
