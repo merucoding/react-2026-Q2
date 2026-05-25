@@ -14,12 +14,14 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
     "@tailwindcss/vite": "^4.2.0",
     "clsx": "^2.1.1",
     "lucide-react": "^1.14.0",
     "pokeapi-typescript": "^3.0.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-redux": "^9.3.0",
     "react-router-dom": "^7.15.1",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.2.0"
@@ -30,7 +32,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^24.10.1",
+    "@types/node": "^24.12.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/testing-library__jest-dom": "^5.14.9",

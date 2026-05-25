@@ -1,6 +1,6 @@
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import DEFAULT_IMAGE from '../../assets/balls.jpg';
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import Button from '../Button/Button';
 import NavButton from '../NavButton/NavButton';
 import { ROUTES } from '../../shared/constants/routes';
@@ -16,6 +16,7 @@ type Props = {
   abilities?: ReactElement[] | null;
   cries?: string;
   moves?: string;
+  children?: ReactNode;
 };
 
 const playCry = (url: string) => {
@@ -32,6 +33,7 @@ const Card = ({
   abilities,
   cries,
   moves,
+  children,
 }: Props) => {
   const { page } = useParams();
 
@@ -39,7 +41,7 @@ const Card = ({
 
   return (
     <div
-      className={`${BORDER_STYLE} p-2 flex flex-col items-center gap-y-2 aspect-square text-sm [&_p]:text-fuchsia-400 [&_ul]:text-sm [&_ul]:list-disc ${detailed ? 'w-full mt-6' : 'w-50'}`}
+      className={`${BORDER_STYLE} p-2 flex flex-col items-center gap-y-2 aspect-square text-sm [&_p]:text-fuchsia-400 [&_ul]:text-sm [&_ul]:list-disc ${detailed ? 'w-full mt-6' : 'w-50'} relative dark:[&_p]:text-emerald-500`}
     >
       {detailed && (
         <NavButton to={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
@@ -47,7 +49,7 @@ const Card = ({
         </NavButton>
       )}
       <div
-        className={`border-b border-fuchsia-300 w-full text-center ${!detailed && 'h-25'}`}
+        className={`border-b border-fuchsia-300 w-full text-center ${!detailed && 'h-25'} dark:border-fuchsia-400`}
       >
         <img
           className={`max-h-full rounded-xl inline-block ${detailed && 'w-50 h-50'}`}
@@ -55,7 +57,7 @@ const Card = ({
         />
       </div>
       <h2
-        className={`text-fuchsia-400 font-bold text-lg ${!detailed && 'line-clamp-1'}`}
+        className={`text-fuchsia-400 font-bold text-lg ${!detailed && 'line-clamp-1'} dark:text-emerald-500`}
       >
         {title}
       </h2>
@@ -82,6 +84,7 @@ const Card = ({
           <div>{moves}</div>
         </>
       )}
+      {children}
     </div>
   );
 };

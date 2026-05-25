@@ -6,6 +6,7 @@ import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
 import NavButton from '../NavButton/NavButton';
 import { ROUTES } from '../../shared/constants/routes';
+import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 
 type Props = {
   searchText: string;
@@ -49,6 +50,7 @@ const TopControls = ({ searchText, onSearch }: Props) => {
       </Button>
       <ErrorButton />
       <NavButton to={ROUTES.ABOUT}>About</NavButton>
+      <ThemeSwitcher />
     </div>
   );
 };

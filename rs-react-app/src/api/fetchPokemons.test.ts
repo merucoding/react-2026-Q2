@@ -15,55 +15,39 @@ import { pokemonListHandler } from '../test-utils/mocks/handlers/pokemonList';
 
 describe('fetchPokemons', () => {
   it('returns a single pokemon (with searchText)', async () => {
-    const { pokemons, errorMessage } = await fetchPokemonByName(
-      MOCK_PIKACHU_DATA.name
-    );
+    const { pokemon } = await fetchPokemonByName(MOCK_PIKACHU_DATA.name);
 
-    expect(pokemons).toHaveLength(1);
-    expect(pokemons).toEqual(expect.arrayContaining([MOCK_PIKACHU_DATA]));
-    expect(errorMessage).toBe('');
+    expect(pokemon).toEqual(MOCK_PIKACHU_DATA);
   });
 
   it('returns a list of pokemons (without searchText)', async () => {
-    const { pokemons, totalPage, errorMessage } = await fetchPokemonsList();
+    const { pokemons, totalPage } = await fetchPokemonsList();
 
     expect(pokemons).toEqual(expect.arrayContaining(MOCK_POKEMONS_DATA));
     expect(totalPage).toEqual(68);
-    expect(errorMessage).toBe('');
   });
 
   it('throws an error for invalid response', async () => {
     server.use(pokemonListHandler(MOCK_INVALID_RESPONSE));
 
-    const { pokemons, totalPage, errorMessage } = await fetchPokemonsList();
-
-    expect(pokemons).toEqual(expect.arrayContaining([]));
-    expect(totalPage).toEqual(0);
-    expect(errorMessage).toBe('Invalid response');
+    expect(fetchPokemonsList()).rejects.toThrow('Invalid response');
   });
 
   it('returns an error when pokemon not found by searchText', async () => {
-    const { pokemons, errorMessage } = await fetchPokemonByName(
-      NON_EXISTENT_POKEMON_NAME
+    await expect(fetchPokemonByName(NON_EXISTENT_POKEMON_NAME)).rejects.toThrow(
+      'Error 404: Pokemon not found'
     );
-
-    expect(pokemons).toEqual([]);
-    expect(errorMessage).toBe('Error 404: Pokemon not found');
   });
 
   it('returns a client error message for invalid input', async () => {
-    const { pokemons, errorMessage } =
-      await fetchPokemonByName(INVALID_POKEMON_NAME);
-
-    expect(pokemons).toEqual([]);
-    expect(errorMessage).toBe('Client error 400');
+    await expect(fetchPokemonByName(INVALID_POKEMON_NAME)).rejects.toThrow(
+      'Client error 400'
+    );
   });
 
   it('returns a server error message', async () => {
-    const { pokemons, errorMessage } =
-      await fetchPokemonByName(SERVER_ERROR_INPUT);
-
-    expect(pokemons).toEqual([]);
-    expect(errorMessage).toBe('Server error 500');
+    await expect(fetchPokemonByName(SERVER_ERROR_INPUT)).rejects.toThrow(
+      'Server error 500'
+    );
   });
 });

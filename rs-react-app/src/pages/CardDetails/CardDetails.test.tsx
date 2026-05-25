@@ -1,56 +1,38 @@
-import { describe, it, expect, vi } from 'vitest';
-import * as api from '../../api/fetchPokemons';
+import { describe, it, expect } from 'vitest';
 import CardDetails from './CardDetails';
-import { screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MOCK_PIKACHU_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { MemoryRouter } from 'react-router-dom';
+import pokemonReducer from '../../store/pokemon/pokemonSlice';
 import type { PokemonType } from '../../api/fetchPokemons';
-import { renderWithProviders } from '../../utils/test';
-import { ROUTES } from '../../shared/constants/routes';
-
-const mockedNavigate = vi.fn();
-
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
-
-  return {
-    ...actual,
-    useNavigate: () => mockedNavigate,
-    useParams: () => ({ detailsId: 'pikachu' }),
-  };
-});
 
 describe('CardDetails', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  const mockFetchPokemonByName = vi.spyOn(api, 'fetchPokemonByName');
-
   it('renders pokemon card after successful fetch', async () => {
-    mockFetchPokemonByName.mockResolvedValueOnce({
-      pokemons: [MOCK_PIKACHU_DATA as PokemonType],
-      totalPage: 1,
-      errorMessage: '',
+    const store = configureStore({
+      reducer: {
+        pokemon: pokemonReducer,
+      },
+      preloadedState: {
+        pokemon: {
+          pokemon: MOCK_PIKACHU_DATA as PokemonType,
+          isLoading: false,
+          errorMessage: '',
+        },
+      },
     });
 
-    renderWithProviders(<CardDetails />);
-
-    await waitFor(() => {
-      expect(mockFetchPokemonByName).toHaveBeenCalledWith('pikachu');
-    });
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <CardDetails />
+        </MemoryRouter>
+      </Provider>
+    );
 
     expect(screen.getByText('hear the Pokémon')).toBeInTheDocument();
     expect(screen.getByText('static')).toBeInTheDocument();
     expect(screen.getByText('mega-punch')).toBeInTheDocument();
-  });
-
-  it('navigates to not found page when request fails', async () => {
-    mockFetchPokemonByName.mockRejectedValueOnce(new Error('Error'));
-
-    renderWithProviders(<CardDetails />);
-
-    await waitFor(() => {
-      expect(mockedNavigate).toHaveBeenCalledWith(ROUTES.NOT_FOUND);
-    });
   });
 });

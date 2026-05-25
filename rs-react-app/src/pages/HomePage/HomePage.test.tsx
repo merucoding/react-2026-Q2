@@ -1,11 +1,14 @@
-import * as api from '../../api/fetchPokemons';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 import { MOCK_POKEMONS_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
 import HomePage from './HomePage';
 import { LOCAL_STORAGE_KEYS } from '../../shared/constants/ls';
-import { _baseOffset, type PokemonType } from '../../api/fetchPokemons';
-import { renderWithProviders } from '../../utils/test';
+import { _baseOffset } from '../../api/fetchPokemons';
+import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../context/ThemeContext';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import * as pokemonListAsyncThunk from '../../store/pokemonList/pokemonListAsyncThunk';
 
 describe('HomePage', () => {
   beforeEach(() => {
@@ -13,32 +16,68 @@ describe('HomePage', () => {
     vi.clearAllMocks();
   });
 
-  const mockFetchPokemonByName = vi.spyOn(api, 'fetchPokemonByName');
-  const mockFetchPokemonsList = vi.spyOn(api, 'fetchPokemonsList');
+  vi.spyOn(pokemonListAsyncThunk, 'fetchPokemonList');
 
-  it('Makes initial API call on component mount', async () => {
-    renderWithProviders(<HomePage />);
-
-    await waitFor(() =>
-      expect(mockFetchPokemonsList).toHaveBeenCalledWith(_baseOffset)
-    );
+  const store = configureStore({
+    reducer: {
+      pokemonList: () => ({
+        pokemonList: [],
+      }),
+      selectedPokemonList: () => ({
+        selectedPokemonList: [],
+      }),
+    },
   });
 
-  it('Handles search term from localStorage on initial load', async () => {
+  it('dispatches fetchPokemonList on mount', async () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <HomePage />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
+    );
+
+    expect(pokemonListAsyncThunk.fetchPokemonList).toHaveBeenCalledWith({
+      searchText: '',
+      offset: _baseOffset,
+    });
+  });
+
+  it('handles search term from localStorage on initial load', async () => {
     localStorage.setItem(
       LOCAL_STORAGE_KEYS.SEARCH_TEXT,
       JSON.stringify('pikachu')
     );
 
-    renderWithProviders(<HomePage />);
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <HomePage />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
+    );
 
-    await waitFor(() => {
-      expect(mockFetchPokemonByName).toHaveBeenCalledWith('pikachu');
+    expect(pokemonListAsyncThunk.fetchPokemonList).toHaveBeenCalledWith({
+      searchText: 'pikachu',
+      offset: _baseOffset,
     });
   });
 
-  it('fetches pokemon by search text when user submits input', async () => {
-    renderWithProviders(<HomePage />);
+  it('dispatches search when user submits input', async () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <HomePage />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
+    );
 
     const input = screen.getByRole('textbox');
     const searchButton = screen.getByTestId('search-button');
@@ -46,37 +85,66 @@ describe('HomePage', () => {
     fireEvent.change(input, { target: { value: 'bulbasaur' } });
     fireEvent.click(searchButton);
 
-    await waitFor(() =>
-      expect(mockFetchPokemonByName).toHaveBeenCalledWith('bulbasaur')
-    );
-  });
-
-  it('Handles successful API responses and updates component state', async () => {
-    mockFetchPokemonsList.mockResolvedValueOnce({
-      pokemons: MOCK_POKEMONS_DATA as PokemonType[],
-      totalPage: 1,
-      errorMessage: '',
-    });
-
-    renderWithProviders(<HomePage />);
-
-    await waitFor(() => {
-      expect(screen.getByText('bulbasaur')).toBeInTheDocument();
-      expect(screen.getByText('ivysaur')).toBeInTheDocument();
+    expect(pokemonListAsyncThunk.fetchPokemonList).toHaveBeenCalledWith({
+      searchText: 'bulbasaur',
+      offset: _baseOffset,
     });
   });
 
-  it('Handles API error responses', async () => {
-    mockFetchPokemonsList.mockResolvedValueOnce({
-      pokemons: [],
-      totalPage: 0,
-      errorMessage: 'Unknown error',
+  it('renders pokemon list from store', async () => {
+    const store = configureStore({
+      reducer: {
+        pokemonList: () => ({
+          pokemonList: MOCK_POKEMONS_DATA,
+          isLoading: false,
+          errorMessage: '',
+          totalPage: 1,
+        }),
+        selectedPokemonList: () => ({
+          selectedPokemonList: [],
+        }),
+      },
     });
 
-    renderWithProviders(<HomePage />);
-
-    await waitFor(() =>
-      expect(screen.getByText('Unknown error')).toBeInTheDocument()
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <HomePage />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
+
+    expect(screen.getByText('bulbasaur')).toBeInTheDocument();
+    expect(screen.getByText('ivysaur')).toBeInTheDocument();
+  });
+
+  it('shows error message when error exists', async () => {
+    const store = configureStore({
+      reducer: {
+        pokemonList: () => ({
+          pokemonList: null,
+          isLoading: false,
+          errorMessage: 'Unknown error',
+          totalPage: 1,
+        }),
+        selectedPokemonList: () => ({
+          selectedPokemonList: [],
+        }),
+      },
+    });
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <HomePage />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
+    );
+
+    expect(screen.getByText('Unknown error')).toBeInTheDocument();
   });
 });

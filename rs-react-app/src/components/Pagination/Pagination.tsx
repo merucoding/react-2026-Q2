@@ -63,7 +63,7 @@ export const PaginationLink = ({
       {...props}
       className={cn(
         BORDER_STYLE,
-        'block hover:bg-fuchsia-300 hover:text-white',
+        'block hover:bg-fuchsia-300 hover:text-white dark:hover:bg-emerald-700',
         disabled ? classNamesDisabled : classNamesActive,
         className
       )}
