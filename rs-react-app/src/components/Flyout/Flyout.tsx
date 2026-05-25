@@ -16,7 +16,7 @@ const Flyout = () => {
   const pokemonList = useAppSelector(selectPokemonList);
   const selectedPokemonList = useAppSelector(selectSelectedPokemonList);
 
-  if (selectedPokemonLength < 1) return;
+  if (selectedPokemonLength < 1) return null;
 
   const handleUnselectAll = () => {
     dispatch(clearList());

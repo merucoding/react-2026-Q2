@@ -5,16 +5,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '../../context/ThemeContext';
+import pokemonListReducer from '../../store/pokemonList/pokemonListSlice';
+import selectedPokemonListReducer from '../../store/selectedList/selectedListSlice';
 
 describe('App', () => {
   const store = configureStore({
     reducer: {
-      pokemonList: () => ({
-        pokemonList: [],
-      }),
-      selectedPokemonList: () => ({
-        selectedPokemonList: [],
-      }),
+      pokemonList: pokemonListReducer,
+      selectedPokemonList: selectedPokemonListReducer,
     },
   });
 
