@@ -1,15 +1,26 @@
-import HttpStatusCode from '../types/httpStatusCode';
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
+import type { SerializedError } from '@reduxjs/toolkit/react';
 
-export function getErrorMessage(statusCode: number): string {
-  if (statusCode === HttpStatusCode.NOT_FOUND) {
-    return `Error ${statusCode}: Pokemon not found`;
-  } else if (
-    statusCode >= HttpStatusCode.BAD_REQUEST &&
-    statusCode < HttpStatusCode.INTERNAL_SERVER_ERROR
-  ) {
-    return `Client error ${statusCode}`;
-  } else if (statusCode >= HttpStatusCode.INTERNAL_SERVER_ERROR) {
-    return `Server error ${statusCode}`;
+export const getErrorMessage = (
+  error: FetchBaseQueryError | SerializedError | undefined
+): string => {
+  if (!error) {
+    return 'Unknown error';
   }
-  return `Unexpected error ${statusCode}`;
-}
+
+  if ('status' in error) {
+    if (error.status === 'PARSING_ERROR') {
+      return `${error.originalStatus}: ${error.data}`;
+    }
+
+    if (typeof error.status === 'number') {
+      return (
+        (error.data as { message?: string })?.message || `Error ${error.status}`
+      );
+    }
+
+    return error.error;
+  }
+
+  return error.message || 'Something went wrong';
+};

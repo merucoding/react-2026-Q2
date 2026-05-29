@@ -3,12 +3,12 @@ import { describe, it, beforeEach, expect, vi } from 'vitest';
 import { MOCK_POKEMONS_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
 import HomePage from './HomePage';
 import { LOCAL_STORAGE_KEYS } from '../../shared/constants/ls';
-import { _baseOffset } from '../../api/fetchPokemons';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '../../context/ThemeContext';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import * as pokemonListAsyncThunk from '../../store/pokemonList/pokemonListAsyncThunk';
+import { _baseOffset } from '../../api/pokemonApi/pokemonApi';
 
 describe('HomePage', () => {
   beforeEach(() => {

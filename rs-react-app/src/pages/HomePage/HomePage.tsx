@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useParams, Outlet, useNavigate } from 'react-router-dom';
-import { _limitPerPage } from '../../api/fetchPokemons';
 import useLocalStorage from '../../hooks/localStorage.hook';
 import { LOCAL_STORAGE_KEYS } from '../../shared/constants/ls';
 import CardList from '../../components/CardList/CardList';
@@ -8,39 +7,33 @@ import PaginationControls from '../../components/Pagination/PaginationControls';
 import Spinner from '../../components/Spinner/Spinner';
 import TopControls from '../../components/TopControls/TopControls';
 import { ROUTES } from '../../shared/constants/routes';
-import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
-import {
-  selectIsPokemonListLoading,
-  selectPokemonListErrorMessage,
-  selectPokemonListTotalPage,
-} from '../../store/pokemonList/pokemonListSelector';
-import { fetchPokemonList } from '../../store/pokemonList/pokemonListAsyncThunk';
 import Flyout from '../../components/Flyout/Flyout';
+import { _limitPerPage } from '../../api/pokemonApi/pokemonApi';
+import { getErrorMessage } from '../../api/getErrorMessage';
+import { useGetPokemonListQuery } from '../../api/pokemonApi/pokemonList/pokemonListApi';
 
 const HomePage = () => {
   const { page, detailsId } = useParams();
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const currentPage = Number(page) || 1;
 
   const offset = (currentPage - 1) * _limitPerPage;
-
-  const isLoading = useAppSelector(selectIsPokemonListLoading);
-  const errorMessage = useAppSelector(selectPokemonListErrorMessage);
-  const totalPage = useAppSelector(selectPokemonListTotalPage);
 
   const { value: searchText, setStorageValue: setSearchText } = useLocalStorage(
     LOCAL_STORAGE_KEYS.SEARCH_TEXT,
     ''
   );
 
-  const isCardDetailsOpen = Boolean(detailsId);
+  const { data, isLoading, isError, error } = useGetPokemonListQuery(offset);
 
-  useEffect(() => {
-    dispatch(fetchPokemonList({ searchText, offset }));
-  }, [dispatch, offset, searchText]);
+  const pokemonList = searchText ? [searchText] : (data?.pokemonList ?? []);
+  const totalPage = data?.totalPage || 1;
+  const errorMessage = isError && getErrorMessage(error);
+
+  const isCardDetailsOpen = Boolean(detailsId);
+  const isSearching = Boolean(searchText);
 
   useEffect(() => {
     const pageToNum = Number(page);
@@ -71,12 +64,15 @@ const HomePage = () => {
               {errorMessage}
             </div>
           )}
-          {!isLoading && !errorMessage && (
-            <>
-              <CardList />
-              <PaginationControls page={currentPage} totalPage={totalPage} />
-            </>
-          )}
+          {pokemonList?.length &&
+            (isSearching ? (
+              <CardList pokemonList={pokemonList} />
+            ) : (
+              <>
+                <CardList pokemonList={pokemonList} />
+                <PaginationControls page={currentPage} totalPage={totalPage} />
+              </>
+            ))}
         </section>
         {isCardDetailsOpen && (
           <aside className="w-[25%]">

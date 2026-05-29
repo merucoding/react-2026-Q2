@@ -1,6 +1,6 @@
 import { http, HttpResponse, type JsonBodyType } from 'msw';
-import { _apiBase } from '../../../api/fetchPokemons';
 import { MOCK_POKEMONS_LIST_RESPONSE } from './pokemonMocks';
+import { _apiBase } from '../../../api/pokemonApi/pokemonApi';
 
 export const pokemonListHandler = (
   mock:

@@ -5,7 +5,7 @@ import {
   NON_EXISTENT_POKEMON_NAME,
   SERVER_ERROR_INPUT,
 } from '../../constants';
-import { _apiBase } from '../../../api/fetchPokemons';
+import { _apiBase } from '../../../api/pokemonApi/pokemonApi';
 
 type Pokemon = {
   name: string;

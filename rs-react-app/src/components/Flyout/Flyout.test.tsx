@@ -8,7 +8,7 @@ import {
 } from '../../test-utils/mocks/handlers/pokemonMocks';
 import pokemonListReducer from '../../store/pokemonList/pokemonListSlice';
 import selectedPokemonListReducer from '../../store/selectedList/selectedListSlice';
-import type { PokemonType } from '../../api/fetchPokemons';
+import type { PokemonType } from '../../api/types';
 import userEvent from '@testing-library/user-event';
 import * as savePokemonList from '../../services/savePokemonList';
 import { vi } from 'vitest';

@@ -7,7 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import pokemonListReducer from '../../store/pokemonList/pokemonListSlice';
 import selectedPokemonListReducer from '../../store/selectedList/selectedListSlice';
 import CardList from './CardList';
-import type { PokemonType } from '../../api/fetchPokemons';
+import type { PokemonType } from '../../api/#fetchPokemons';
 
 describe('CardList component', () => {
   it('renders correct number of pokemons when data is provided', () => {

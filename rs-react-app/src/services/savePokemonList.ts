@@ -1,7 +1,7 @@
-import type { PokemonType } from '../api/fetchPokemons';
+import type { PokemonCard } from '../api/types';
 import transformToCVS from '../utils/transformToCVS';
 
-export default function savePokemonList(pokemonList: PokemonType[]) {
+export default function savePokemonList(pokemonList: PokemonCard[]) {
   const transformedData = transformToCVS(pokemonList);
 
   const blob = new Blob([transformedData], {

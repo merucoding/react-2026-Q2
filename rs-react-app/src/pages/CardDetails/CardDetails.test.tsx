@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { MemoryRouter } from 'react-router-dom';
 import pokemonReducer from '../../store/pokemon/pokemonSlice';
-import type { PokemonType } from '../../api/fetchPokemons';
+import type { PokemonType } from '../../api/types';
 
 describe('CardDetails', () => {
   it('renders pokemon card after successful fetch', async () => {

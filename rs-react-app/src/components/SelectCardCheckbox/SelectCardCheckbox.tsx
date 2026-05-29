@@ -6,10 +6,10 @@ import {
 } from '../../store/selectedList/selectedListSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
 import { selectIsPokemonSelected } from '../../store/selectedList/selectedListSelector';
-import type { PokemonType } from '../../api/fetchPokemons';
+import type { PokemonCard } from '../../api/types';
 
 type Props = {
-  pokemon: PokemonType;
+  pokemon: PokemonCard;
 };
 
 const SelectCardCheckbox = ({ pokemon }: Props) => {
