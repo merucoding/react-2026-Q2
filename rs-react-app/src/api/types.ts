@@ -12,13 +12,7 @@ export type PokemonType = Pokemon & {
   };
 };
 
-export type PokemonCard = {
-  name: string;
-  id: number;
-  src: string;
-  description: string;
-  cries: string;
-  types: PokemonType['types'];
-  abilities: PokemonType['abilities'];
-  moves: string;
+export type getPokemonListParams = {
+  pokemonList: string[];
+  totalPage: number;
 };

@@ -6,7 +6,7 @@ import {
 } from '../../store/selectedList/selectedListSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
 import { selectIsPokemonSelected } from '../../store/selectedList/selectedListSelector';
-import type { PokemonCard } from '../../api/types';
+import type { PokemonCard } from '../../types/pokemonTypes';
 
 type Props = {
   pokemon: PokemonCard;

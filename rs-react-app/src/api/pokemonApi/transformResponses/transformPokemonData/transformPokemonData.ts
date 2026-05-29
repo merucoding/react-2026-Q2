@@ -1,6 +1,7 @@
-import getPokemonMoves from '../utils/getPokemonMoves';
-import getPokemonParams from '../utils/getPokemonParams';
-import type { PokemonCard, PokemonType } from './types';
+import type { PokemonCard } from '../../../../types/pokemonTypes';
+import getPokemonMoves from '../../../../utils/getPokemonMoves';
+import getPokemonParams from '../../../../utils/getPokemonParams';
+import type { PokemonType } from '../../../types';
 
 export const transformPokemonData = (pokemon: PokemonType): PokemonCard => ({
   name: pokemon.name,

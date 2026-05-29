@@ -1,18 +1,12 @@
-import { _baseOffset, _limitPerPage, pokemonApi } from '../pokemonApi';
-import type { PokemonListResponse } from '../../types';
+import type { getPokemonListParams } from '../../types';
+import { _baseOffset, pokemonApi } from '../pokemonApi';
+import { transformPokemonList } from '../transformResponses/transformPokemonList/transformPokemonList';
 
 export const pokemonListApi = pokemonApi.injectEndpoints({
   endpoints: (builder) => ({
-    getPokemonList: builder.query<
-      { pokemonList: string[]; totalPage: number },
-      number
-    >({
-      query: (offset = _baseOffset) =>
-        `pokemon?offset=${offset}&limit=${_limitPerPage}`,
-      transformResponse: (response: PokemonListResponse) => ({
-        pokemonList: response.results.map((item) => item.name),
-        totalPage: Math.ceil(response.count / _limitPerPage),
-      }),
+    getPokemonList: builder.query<getPokemonListParams, number>({
+      query: (offset = _baseOffset) => `pokemon?offset=${offset}&limit=20`,
+      transformResponse: transformPokemonList,
     }),
   }),
 });

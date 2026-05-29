@@ -1,4 +1,4 @@
-import type { PokemonCard } from '../api/types';
+import type { PokemonCard } from '../types/pokemonTypes';
 
 export default function transformToCVS(pokemonList: PokemonCard[]) {
   const header = [

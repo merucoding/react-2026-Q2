@@ -1,4 +1,4 @@
-import type { PokemonCard } from '../api/types';
+import type { PokemonCard } from '../types/pokemonTypes';
 import transformToCVS from '../utils/transformToCVS';
 
 export default function savePokemonList(pokemonList: PokemonCard[]) {
