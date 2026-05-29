@@ -12,7 +12,7 @@ export type PokemonType = Pokemon & {
   };
 };
 
-export type getPokemonListParams = {
+export type getPokemonListResponse = {
   pokemonList: string[];
   totalPage: number;
 };

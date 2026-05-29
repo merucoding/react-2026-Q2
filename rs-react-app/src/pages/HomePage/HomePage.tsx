@@ -4,13 +4,12 @@ import useLocalStorage from '../../hooks/localStorage.hook';
 import { LOCAL_STORAGE_KEYS } from '../../shared/constants/ls';
 import CardList from '../../components/CardList/CardList';
 import PaginationControls from '../../components/Pagination/PaginationControls';
-import Spinner from '../../components/Spinner/Spinner';
 import TopControls from '../../components/TopControls/TopControls';
 import { ROUTES } from '../../shared/constants/routes';
 import Flyout from '../../components/Flyout/Flyout';
 import { _limitPerPage } from '../../api/pokemonApi/pokemonApi';
-import { getErrorMessage } from '../../api/getErrorMessage';
 import { useGetPokemonListQuery } from '../../api/pokemonApi/pokemonList/pokemonListApi';
+import { QueryStateWrapper } from '../../components/QueryStateWrapper/QueryStateWrapper';
 
 const HomePage = () => {
   const { page, detailsId } = useParams();
@@ -21,19 +20,15 @@ const HomePage = () => {
 
   const offset = (currentPage - 1) * _limitPerPage;
 
-  const { value: searchText, setStorageValue: setSearchText } = useLocalStorage(
-    LOCAL_STORAGE_KEYS.SEARCH_TEXT,
-    ''
-  );
+  const { value: searchQuery, setStorageValue: setSearchQuery } =
+    useLocalStorage(LOCAL_STORAGE_KEYS.SEARCH_TEXT, '');
 
-  const { data, isLoading, isError, error } = useGetPokemonListQuery(offset);
+  const { data, isLoading, error } = useGetPokemonListQuery(offset);
 
-  const pokemonList = searchText ? [searchText] : (data?.pokemonList ?? []);
-  const totalPage = data?.totalPage || 1;
-  const errorMessage = isError && getErrorMessage(error);
+  const pokemonList = searchQuery ? [searchQuery] : (data?.pokemonList ?? []);
+  const totalPage = searchQuery ? 1 : (data?.totalPage ?? 1);
 
   const isCardDetailsOpen = Boolean(detailsId);
-  const isSearching = Boolean(searchText);
 
   useEffect(() => {
     const pageToNum = Number(page);
@@ -48,31 +43,20 @@ const HomePage = () => {
   }, [currentPage, navigate, page, totalPage]);
 
   const handleSearch = (input: string) => {
-    if (input === searchText) return;
+    if (input === searchQuery) return;
 
-    setSearchText(input);
+    setSearchQuery(input);
   };
 
   return (
     <main>
-      <TopControls searchText={searchText} onSearch={handleSearch} />
+      <TopControls searchQuery={searchQuery} onSearch={handleSearch} />
       <div className="flex gap-x-4">
         <section className={isCardDetailsOpen ? 'w-[75%]' : 'w-full '}>
-          {isLoading && <Spinner />}
-          {errorMessage && (
-            <div className="mt-8 text-fuchsia-400 font-bold text-lg">
-              {errorMessage}
-            </div>
-          )}
-          {pokemonList?.length &&
-            (isSearching ? (
-              <CardList pokemonList={pokemonList} />
-            ) : (
-              <>
-                <CardList pokemonList={pokemonList} />
-                <PaginationControls page={currentPage} totalPage={totalPage} />
-              </>
-            ))}
+          <QueryStateWrapper isLoading={isLoading} error={error}>
+            <CardList pokemonList={pokemonList} />
+            <PaginationControls page={currentPage} totalPage={totalPage} />
+          </QueryStateWrapper>
         </section>
         {isCardDetailsOpen && (
           <aside className="w-[25%]">

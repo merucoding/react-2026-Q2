@@ -9,14 +9,14 @@ import { ROUTES } from '../../shared/constants/routes';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 
 type Props = {
-  searchText: string;
+  searchQuery: string;
   onSearch: (input: string) => void;
 };
 
-const TopControls = ({ searchText, onSearch }: Props) => {
+const TopControls = ({ searchQuery, onSearch }: Props) => {
   const navigate = useNavigate();
 
-  const [input, setInput] = useState(searchText);
+  const [input, setInput] = useState(searchQuery);
 
   const handleSearch = () => {
     const trimmed = input.trim();

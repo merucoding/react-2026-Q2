@@ -3,10 +3,8 @@ import type { SerializedError } from '@reduxjs/toolkit/react';
 
 export const getErrorMessage = (
   error: FetchBaseQueryError | SerializedError | undefined
-): string => {
-  if (!error) {
-    return 'Unknown error';
-  }
+) => {
+  if (!error) return null;
 
   if ('status' in error) {
     if (error.status === 'PARSING_ERROR') {
