@@ -6,6 +6,7 @@ export const pokemonByNameApi = pokemonApi.injectEndpoints({
   endpoints: (builder) => ({
     getPokemonByName: builder.query<PokemonCard, string>({
       query: (name) => `pokemon/${name}`,
+      providesTags: (_result, _error, name) => [{ type: 'Pokemon', id: name }],
       transformResponse: transformPokemonData,
     }),
   }),

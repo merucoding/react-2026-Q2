@@ -6,6 +6,7 @@ export const pokemonListApi = pokemonApi.injectEndpoints({
   endpoints: (builder) => ({
     getPokemonList: builder.query<getPokemonListResponse, number>({
       query: (offset = _baseOffset) => `pokemon?offset=${offset}&limit=20`,
+      providesTags: ['PokemonList'],
       transformResponse: transformPokemonList,
     }),
   }),

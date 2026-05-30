@@ -7,5 +7,6 @@ export const _limitPerPage = 20;
 export const pokemonApi = createApi({
   reducerPath: 'pokemonApi',
   baseQuery: fetchBaseQuery({ baseUrl: _apiBase }),
+  tagTypes: ['Pokemon', 'PokemonList'],
   endpoints: () => ({}),
 });
