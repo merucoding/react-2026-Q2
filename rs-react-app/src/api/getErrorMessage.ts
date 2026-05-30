@@ -1,24 +1,25 @@
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import type { SerializedError } from '@reduxjs/toolkit/react';
+import type { SerializedError } from '@reduxjs/toolkit';
 
 export const getErrorMessage = (
   error: FetchBaseQueryError | SerializedError | undefined
-) => {
+): string | null => {
   if (!error) return null;
 
   if ('status' in error) {
-    if (error.status === 'PARSING_ERROR') {
-      return `${error.originalStatus}: ${error.data}`;
-    }
+    switch (error.status) {
+      case 'PARSING_ERROR':
+        return `${error.originalStatus}: ${error.data}`;
 
-    if (typeof error.status === 'number') {
-      return (
-        (error.data as { message?: string })?.message || `Error ${error.status}`
-      );
-    }
+      case 'FETCH_ERROR':
+      case 'TIMEOUT_ERROR':
+      case 'CUSTOM_ERROR':
+        return error.error;
 
-    return error.error;
+      default:
+        return `Request failed (${error.status})`;
+    }
   }
 
-  return error.message || 'Something went wrong';
+  return error.message ?? 'An unexpected error occurred';
 };
