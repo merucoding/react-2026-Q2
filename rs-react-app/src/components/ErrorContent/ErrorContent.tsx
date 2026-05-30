@@ -8,7 +8,7 @@ type Props = {
 
 export const ErrorContent = ({ error }: Props) => {
   return (
-    <div className="text-fuchsia-400 font-bold text-lg">
+    <div className="text-fuchsia-400 font-bold text-lg my-12">
       {getErrorMessage(error)}
     </div>
   );
