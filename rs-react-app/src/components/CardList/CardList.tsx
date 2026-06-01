@@ -1,15 +1,15 @@
 import Card from '../Card/Card';
 
 type Props = {
-  pokemonList: string[];
+  pokemonNameList: string[];
 };
 
-const CardList = ({ pokemonList }: Props) => {
-  if (!pokemonList?.length) return null;
+const CardList = ({ pokemonNameList }: Props) => {
+  if (!pokemonNameList?.length) return null;
 
   return (
     <ul className="mt-6 flex gap-4 flex-wrap justify-center">
-      {pokemonList.map((pokemon) => (
+      {pokemonNameList.map((pokemon) => (
         <li key={pokemon}>
           <Card pokemon={pokemon} />
         </li>

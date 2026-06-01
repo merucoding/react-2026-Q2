@@ -8,7 +8,7 @@ import TopControls from '../../components/TopControls/TopControls';
 import { ROUTES } from '../../shared/constants/routes';
 import Flyout from '../../components/Flyout/Flyout';
 import { _limitPerPage } from '../../api/pokemonApi/pokemonApi';
-import { useGetPokemonListQuery } from '../../api/pokemonApi/pokemonList/pokemonListApi';
+import { useGetPokemonNameListQuery } from '../../api/pokemonApi/pokemonList/pokemonListApi';
 import { QueryStateWrapper } from '../../components/QueryStateWrapper/QueryStateWrapper';
 
 const HomePage = () => {
@@ -23,9 +23,11 @@ const HomePage = () => {
   const { value: searchQuery, setStorageValue: setSearchQuery } =
     useLocalStorage(LOCAL_STORAGE_KEYS.SEARCH_TEXT, '');
 
-  const { data, isLoading, error } = useGetPokemonListQuery(offset);
+  const { data, isLoading, error } = useGetPokemonNameListQuery(offset);
 
-  const pokemonList = searchQuery ? [searchQuery] : (data?.pokemonList ?? []);
+  const pokemonNameList = searchQuery
+    ? [searchQuery]
+    : (data?.pokemonNameList ?? []);
   const totalPage = searchQuery ? 1 : (data?.totalPage ?? 1);
 
   const isCardDetailsOpen = Boolean(detailsId);
@@ -54,7 +56,7 @@ const HomePage = () => {
       <div className="flex gap-x-4">
         <section className={isCardDetailsOpen ? 'w-[75%]' : 'w-full '}>
           <QueryStateWrapper isLoading={isLoading} error={error}>
-            <CardList pokemonList={pokemonList} />
+            <CardList pokemonNameList={pokemonNameList} />
             <PaginationControls page={currentPage} totalPage={totalPage} />
           </QueryStateWrapper>
         </section>
