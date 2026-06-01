@@ -16,7 +16,7 @@ type Props = {
 
 const CardView = ({
   title,
-  src = DEFAULT_IMAGE,
+  src,
   description,
   details,
   children,
@@ -31,7 +31,7 @@ const CardView = ({
       <div className={cn(CARD_STYLE.imageContainer, details ? '' : 'h-25')}>
         <img
           className={cn(CARD_STYLE.image, details ? 'w-50 h-50' : '')}
-          src={src}
+          src={src || DEFAULT_IMAGE}
         />
       </div>
       <h2 className={cn(CARD_STYLE.title, details ? '' : 'line-clamp-1')}>
