@@ -42,6 +42,31 @@ export const MOCK_POKEMONS_DATA = [
       front_default:
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==',
     },
+    cries: {
+      latest: 'cry-url',
+    },
+    abilities: [
+      {
+        ability: {
+          name: 'static',
+        },
+      },
+    ],
+    types: [
+      {
+        slot: 1,
+        type: {
+          name: 'electric',
+        },
+      },
+    ],
+    moves: [
+      {
+        move: {
+          name: 'mega-punch',
+        },
+      },
+    ],
   },
   {
     name: 'ivysaur',
@@ -51,6 +76,31 @@ export const MOCK_POKEMONS_DATA = [
       front_default:
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==',
     },
+    cries: {
+      latest: 'cry-url',
+    },
+    abilities: [
+      {
+        ability: {
+          name: 'static',
+        },
+      },
+    ],
+    types: [
+      {
+        slot: 1,
+        type: {
+          name: 'electric',
+        },
+      },
+    ],
+    moves: [
+      {
+        move: {
+          name: 'mega-punch',
+        },
+      },
+    ],
   },
 ];
 
@@ -64,4 +114,36 @@ export const MOCK_POKEMONS_LIST_RESPONSE = {
 
 export const MOCK_INVALID_RESPONSE = {
   results: [{ firstName: 'Anna', lastName: 'K.' }],
+};
+
+export const MOCK_POKEMON_NAMES = ['bulbasaur', 'ivysaur'];
+
+export const MOCK_PIKACHU_CARD = {
+  name: 'pikachu',
+  id: 1,
+  src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==',
+  description: 'description',
+  cries: 'cry-url',
+  types: [
+    {
+      slot: 1,
+      type: {
+        name: 'electric',
+      },
+    },
+  ],
+  abilities: [
+    {
+      ability: {
+        name: 'static',
+      },
+    },
+  ],
+  moves: [
+    {
+      move: {
+        name: 'mega-punch',
+      },
+    },
+  ],
 };

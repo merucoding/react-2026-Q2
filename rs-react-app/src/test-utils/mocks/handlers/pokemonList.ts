@@ -7,6 +7,6 @@ export const pokemonListHandler = (
     | typeof MOCK_POKEMONS_LIST_RESPONSE
     | JsonBodyType = MOCK_POKEMONS_LIST_RESPONSE
 ) =>
-  http.get(_apiBase, () => {
+  http.get(`${_apiBase}pokemon`, () => {
     return HttpResponse.json(mock);
   });

@@ -4,15 +4,24 @@ import userEvent from '@testing-library/user-event';
 import TopControls from './TopControls';
 import { ThemeProvider } from '../../context/ThemeContext';
 import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
+import { pokemonApi } from '../../api/pokemonApi/pokemonApi';
 
 describe('TopControls component', () => {
+  afterEach(() => {
+    store.dispatch(pokemonApi.util.resetApiState());
+  });
+
   it('renders search input, buttons and link', () => {
     render(
-      <MemoryRouter>
-        <ThemeProvider>
-          <TopControls searchText="" onSearch={vi.fn()} />
-        </ThemeProvider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <TopControls searchQuery="" onSearch={vi.fn()} />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(screen.getByRole('textbox')).toBeInTheDocument();
@@ -24,11 +33,13 @@ describe('TopControls component', () => {
 
   it('initializes input with previously entered search text', () => {
     render(
-      <MemoryRouter>
-        <ThemeProvider>
-          <TopControls searchText="pikachu" onSearch={vi.fn()} />
-        </ThemeProvider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <TopControls searchQuery="pikachu" onSearch={vi.fn()} />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(screen.getByRole('textbox')).toHaveValue('pikachu');
@@ -36,11 +47,13 @@ describe('TopControls component', () => {
 
   it('shows empty input when no saved term exists', () => {
     render(
-      <MemoryRouter>
-        <ThemeProvider>
-          <TopControls searchText="" onSearch={vi.fn()} />
-        </ThemeProvider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <TopControls searchQuery="" onSearch={vi.fn()} />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(screen.getByRole('textbox')).toHaveValue('');
@@ -50,11 +63,13 @@ describe('TopControls component', () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter>
-        <ThemeProvider>
-          <TopControls searchText="pikachu" onSearch={vi.fn()} />
-        </ThemeProvider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <TopControls searchQuery="pikachu" onSearch={vi.fn()} />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     const input = screen.getByRole('textbox');
@@ -75,11 +90,13 @@ describe('TopControls component', () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter>
-        <ThemeProvider>
-          <TopControls searchText="" onSearch={onSearchMock} />
-        </ThemeProvider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <TopControls searchQuery="" onSearch={onSearchMock} />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     const input = screen.getByRole('textbox');
@@ -95,11 +112,13 @@ describe('TopControls component', () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter>
-        <ThemeProvider>
-          <TopControls searchText="pikachu" onSearch={onSearchMock} />
-        </ThemeProvider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <TopControls searchQuery="pikachu" onSearch={onSearchMock} />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     const input = screen.getByRole('textbox');

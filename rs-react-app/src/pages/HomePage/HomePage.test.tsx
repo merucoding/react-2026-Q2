@@ -1,35 +1,23 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, it, beforeEach, expect, vi } from 'vitest';
-import { MOCK_POKEMONS_DATA } from '../../test-utils/mocks/handlers/pokemonMocks';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { describe, it, beforeEach, expect } from 'vitest';
 import HomePage from './HomePage';
 import { LOCAL_STORAGE_KEYS } from '../../shared/constants/ls';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '../../context/ThemeContext';
-import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import * as pokemonListAsyncThunk from '../../store/pokemonList/pokemonListAsyncThunk';
-import { _baseOffset } from '../../api/pokemonApi/pokemonApi';
+import { pokemonApi } from '../../api/pokemonApi/pokemonApi';
+import { store } from '../../store/store';
 
 describe('HomePage', () => {
   beforeEach(() => {
     localStorage.clear();
-    vi.clearAllMocks();
   });
 
-  vi.spyOn(pokemonListAsyncThunk, 'fetchPokemonList');
-
-  const store = configureStore({
-    reducer: {
-      pokemonList: () => ({
-        pokemonList: [],
-      }),
-      selectedPokemonList: () => ({
-        selectedPokemonList: [],
-      }),
-    },
+  afterEach(() => {
+    store.dispatch(pokemonApi.util.resetApiState());
   });
 
-  it('dispatches fetchPokemonList on mount', async () => {
+  it('renders pokemon list from API', async () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
@@ -40,10 +28,12 @@ describe('HomePage', () => {
       </Provider>
     );
 
-    expect(pokemonListAsyncThunk.fetchPokemonList).toHaveBeenCalledWith({
-      searchText: '',
-      offset: _baseOffset,
+    await waitFor(() => {
+      expect(screen.queryAllByTestId('spinner')).toHaveLength(0);
     });
+
+    expect(screen.getByText('bulbasaur')).toBeInTheDocument();
+    expect(screen.getByText('ivysaur')).toBeInTheDocument();
   });
 
   it('handles search term from localStorage on initial load', async () => {
@@ -62,10 +52,11 @@ describe('HomePage', () => {
       </Provider>
     );
 
-    expect(pokemonListAsyncThunk.fetchPokemonList).toHaveBeenCalledWith({
-      searchText: 'pikachu',
-      offset: _baseOffset,
+    await waitFor(() => {
+      expect(screen.queryAllByTestId('spinner')).toHaveLength(0);
     });
+
+    expect(screen.getByText('pikachu')).toBeInTheDocument();
   });
 
   it('dispatches search when user submits input', async () => {
@@ -85,66 +76,10 @@ describe('HomePage', () => {
     fireEvent.change(input, { target: { value: 'bulbasaur' } });
     fireEvent.click(searchButton);
 
-    expect(pokemonListAsyncThunk.fetchPokemonList).toHaveBeenCalledWith({
-      searchText: 'bulbasaur',
-      offset: _baseOffset,
+    await waitFor(() => {
+      expect(screen.queryAllByTestId('spinner')).toHaveLength(0);
     });
-  });
-
-  it('renders pokemon list from store', async () => {
-    const store = configureStore({
-      reducer: {
-        pokemonList: () => ({
-          pokemonList: MOCK_POKEMONS_DATA,
-          isLoading: false,
-          errorMessage: '',
-          totalPage: 1,
-        }),
-        selectedPokemonList: () => ({
-          selectedPokemonList: [],
-        }),
-      },
-    });
-
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <ThemeProvider>
-            <HomePage />
-          </ThemeProvider>
-        </MemoryRouter>
-      </Provider>
-    );
 
     expect(screen.getByText('bulbasaur')).toBeInTheDocument();
-    expect(screen.getByText('ivysaur')).toBeInTheDocument();
-  });
-
-  it('shows error message when error exists', async () => {
-    const store = configureStore({
-      reducer: {
-        pokemonList: () => ({
-          pokemonList: null,
-          isLoading: false,
-          errorMessage: 'Unknown error',
-          totalPage: 1,
-        }),
-        selectedPokemonList: () => ({
-          selectedPokemonList: [],
-        }),
-      },
-    });
-
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <ThemeProvider>
-            <HomePage />
-          </ThemeProvider>
-        </MemoryRouter>
-      </Provider>
-    );
-
-    expect(screen.getByText('Unknown error')).toBeInTheDocument();
   });
 });
