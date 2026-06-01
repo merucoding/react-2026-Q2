@@ -22,11 +22,10 @@ const DetailsList = ({ details }: Props) => {
         <Button onClick={() => playCry(cries)}>hear the Pokémon</Button>
       )}
       {detailsList.map(({ title, items }) => {
-        console.log(title, items);
         return items.length > 0 ? (
           <div key={title}>
             <p>{title}:</p>
-            <ul>
+            <ul className={title === 'moves' ? 'list-none' : 'list-disc'}>
               {items.map((item) => (
                 <li key={item}>{item}</li>
               ))}
