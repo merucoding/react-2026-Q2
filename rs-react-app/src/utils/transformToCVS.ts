@@ -19,7 +19,10 @@ export default function transformToCVS(pokemonList: PokemonCard[]) {
     pokemon.cries,
     pokemon.types.map((type) => type.type.name).join(', '),
     pokemon.abilities.map((ability) => ability.ability.name).join(', '),
-    pokemon.moves,
+    pokemon.moves
+      .slice(0, 15)
+      .map((move) => move.move.name)
+      .join(', '),
     `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`,
   ]);
 
