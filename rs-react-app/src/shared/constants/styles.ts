@@ -11,3 +11,5 @@ export const CARD_STYLE = {
   image: 'max-h-full rounded-xl inline-block',
   title: 'text-fuchsia-400 font-bold text-lg dark:text-emerald-500',
 };
+
+export const CARD_LIST_STYLE = `mt-6 flex gap-4 flex-wrap justify-center [&_li]:min-w-50 [&_li]:min-h-50 [&_li]:flex [&_li]:items-center [&_li]:justify-center`;

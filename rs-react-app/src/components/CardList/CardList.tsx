@@ -1,3 +1,4 @@
+import { CARD_LIST_STYLE } from '../../shared/constants/styles';
 import Card from '../Card/Card';
 
 type Props = {
@@ -8,7 +9,7 @@ const CardList = ({ pokemonNameList }: Props) => {
   if (!pokemonNameList?.length) return null;
 
   return (
-    <ul className="mt-6 flex gap-4 flex-wrap justify-center">
+    <ul className={CARD_LIST_STYLE}>
       {pokemonNameList.map((pokemon) => (
         <li key={pokemon}>
           <Card pokemon={pokemon} />
