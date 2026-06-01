@@ -11,6 +11,7 @@ type Props = {
   pokemon: PokemonCard;
   detailed: boolean;
   children?: ReactNode;
+  onClick: () => void;
 };
 
 const playCry = (url: string) => {
@@ -18,12 +19,13 @@ const playCry = (url: string) => {
   audio.play();
 };
 
-const CardView = ({ pokemon, detailed, children }: Props) => {
+const CardView = ({ pokemon, detailed, children, onClick }: Props) => {
   const { name, src, description, cries, types, abilities, moves } = pokemon;
 
   return (
     <div
       className={cn(CARD_STYLE.container, detailed ? 'w-full mt-6' : 'w-50')}
+      onClick={onClick}
     >
       {children}
       <div className={cn(CARD_STYLE.imageContainer, detailed ? '' : 'h-25')}>

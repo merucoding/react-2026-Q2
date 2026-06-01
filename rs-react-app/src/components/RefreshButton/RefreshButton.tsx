@@ -6,7 +6,7 @@ export const RefreshButton = () => {
   const dispatch = useAppDispatch();
 
   const handleRefresh = () => {
-    dispatch(pokemonApi.util.invalidateTags(['PokemonList', 'Pokemon']));
+    dispatch(pokemonApi.util.invalidateTags(['PokemonNameList', 'Pokemon']));
   };
 
   return <Button onClick={handleRefresh}>refresh</Button>;

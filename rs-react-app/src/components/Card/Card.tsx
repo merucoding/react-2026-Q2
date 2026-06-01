@@ -1,5 +1,5 @@
 import { ROUTES } from '../../shared/constants/routes';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetPokemonByNameQuery } from '../../api/pokemonApi/pokemonByName/pokemonByNameApi';
 import { QueryStateWrapper } from '../QueryStateWrapper/QueryStateWrapper';
 import CardView from '../CardView/CardView';
@@ -14,6 +14,7 @@ type Props = {
 
 const Card = ({ pokemon, detailed = false }: Props) => {
   const { page } = useParams();
+  const navigate = useNavigate();
 
   const currentPage = Number(page) || 1;
 
@@ -23,17 +24,21 @@ const Card = ({ pokemon, detailed = false }: Props) => {
   return (
     <QueryStateWrapper isLoading={isLoading} error={error}>
       {isSuccess && (
-        <Link to={ROUTES.TO_DETAILED_VIEW(currentPage, data.name)}>
-          <CardView pokemon={data} detailed={detailed}>
-            {detailed ? (
-              <NavButton to={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
-                <CloseIcon />
-              </NavButton>
-            ) : (
-              <SelectCardCheckbox pokemon={data} />
-            )}
-          </CardView>
-        </Link>
+        <CardView
+          pokemon={data}
+          detailed={detailed}
+          onClick={() =>
+            navigate(ROUTES.TO_DETAILED_VIEW(currentPage, data.name))
+          }
+        >
+          {detailed ? (
+            <NavButton to={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
+              <CloseIcon />
+            </NavButton>
+          ) : (
+            <SelectCardCheckbox pokemon={data} />
+          )}
+        </CardView>
       )}
     </QueryStateWrapper>
   );
