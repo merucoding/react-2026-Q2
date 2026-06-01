@@ -10,9 +10,9 @@ const CardList = ({ pokemonNameList }: Props) => {
 
   return (
     <ul className={CARD_LIST_STYLE}>
-      {pokemonNameList.map((pokemon) => (
-        <li key={pokemon}>
-          <Card pokemon={pokemon} />
+      {pokemonNameList.map((name) => (
+        <li key={name}>
+          <Card pokemonName={name} />
         </li>
       ))}
     </ul>

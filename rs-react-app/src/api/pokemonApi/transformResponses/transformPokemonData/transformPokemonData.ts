@@ -1,5 +1,4 @@
 import type { PokemonCard } from '../../../../types/pokemonTypes';
-import getPokemonMoves from '../../../../utils/getPokemonMoves';
 import getPokemonParams from '../../../../utils/getPokemonParams';
 import type { PokemonType } from '../../../types';
 
@@ -11,5 +10,5 @@ export const transformPokemonData = (pokemon: PokemonType): PokemonCard => ({
   cries: pokemon.cries.latest,
   types: pokemon.types,
   abilities: pokemon.abilities,
-  moves: getPokemonMoves(pokemon.moves),
+  moves: pokemon.moves,
 });

@@ -8,5 +8,5 @@ export type PokemonCard = {
   cries: string;
   types: PokemonType['types'];
   abilities: PokemonType['abilities'];
-  moves: string;
+  moves: PokemonType['moves'];
 };
