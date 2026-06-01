@@ -23,7 +23,7 @@ const HomePage = () => {
   const { value: searchQuery, setStorageValue: setSearchQuery } =
     useLocalStorage(LOCAL_STORAGE_KEYS.SEARCH_TEXT, '');
 
-  const { data, isLoading, error } = useGetPokemonNameListQuery(offset);
+  const { data, isFetching, error } = useGetPokemonNameListQuery(offset);
 
   const pokemonNameList = searchQuery
     ? [searchQuery]
@@ -55,7 +55,7 @@ const HomePage = () => {
       <TopControls searchQuery={searchQuery} onSearch={handleSearch} />
       <div className="flex gap-x-4">
         <section className={isCardDetailsOpen ? 'w-[75%]' : 'w-full '}>
-          <QueryStateWrapper isLoading={isLoading} error={error}>
+          <QueryStateWrapper isLoading={isFetching} error={error}>
             <CardList pokemonNameList={pokemonNameList} />
             <PaginationControls page={currentPage} totalPage={totalPage} />
           </QueryStateWrapper>
