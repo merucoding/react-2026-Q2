@@ -5,22 +5,16 @@ import {
   NON_EXISTENT_POKEMON_NAME,
   SERVER_ERROR_INPUT,
 } from '../../constants';
-import { _apiBase } from '../../../api/fetchPokemons';
-
-type Pokemon = {
-  name: string;
-  height: number;
-  weight: number;
-};
+import { _apiBase } from '../../../api/pokemonApi/pokemonApi';
 
 export const pokemonByNameHandler = () =>
-  http.get<{ name: string }>(`${_apiBase}/:name`, ({ params }) => {
+  http.get<{ name: string }>(`${_apiBase}pokemon/:name`, ({ params }) => {
     const { name } = params;
 
-    const db: Record<string, Pokemon> = {
+    const db: Record<string, typeof MOCK_PIKACHU_DATA> = {
       pikachu: MOCK_PIKACHU_DATA,
-      '1': MOCK_POKEMONS_DATA[0],
-      '2': MOCK_POKEMONS_DATA[1],
+      bulbasaur: MOCK_POKEMONS_DATA[0],
+      ivysaur: MOCK_POKEMONS_DATA[1],
     };
 
     if (name === NON_EXISTENT_POKEMON_NAME)

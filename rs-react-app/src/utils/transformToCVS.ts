@@ -1,8 +1,6 @@
-import type { PokemonType } from '../api/fetchPokemons';
-import getPokemonMoves from './getPokemonMoves';
-import getPokemonParams from './getPokemonParams';
+import type { PokemonCard } from '../types/pokemonTypes';
 
-export default function transformToCVS(pokemonList: PokemonType[]) {
+export default function transformToCVS(pokemonList: PokemonCard[]) {
   const header = [
     'name',
     'id',
@@ -17,11 +15,14 @@ export default function transformToCVS(pokemonList: PokemonType[]) {
   const rows = pokemonList.map((pokemon) => [
     pokemon.name,
     pokemon.id,
-    getPokemonParams(pokemon.height, pokemon.weight),
-    pokemon.cries.latest,
+    pokemon.description,
+    pokemon.cries,
     pokemon.types.map((type) => type.type.name).join(', '),
     pokemon.abilities.map((ability) => ability.ability.name).join(', '),
-    getPokemonMoves(pokemon.moves),
+    pokemon.moves
+      .slice(0, 15)
+      .map((move) => move.move.name)
+      .join(', '),
     `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`,
   ]);
 

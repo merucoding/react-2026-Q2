@@ -7,16 +7,17 @@ import { useNavigate } from 'react-router-dom';
 import NavButton from '../NavButton/NavButton';
 import { ROUTES } from '../../shared/constants/routes';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
+import { RefreshButton } from '../RefreshButton/RefreshButton';
 
 type Props = {
-  searchText: string;
+  searchQuery: string;
   onSearch: (input: string) => void;
 };
 
-const TopControls = ({ searchText, onSearch }: Props) => {
+const TopControls = ({ searchQuery, onSearch }: Props) => {
   const navigate = useNavigate();
 
-  const [input, setInput] = useState(searchText);
+  const [input, setInput] = useState(searchQuery);
 
   const handleSearch = () => {
     const trimmed = input.trim();
@@ -51,6 +52,7 @@ const TopControls = ({ searchText, onSearch }: Props) => {
       <ErrorButton />
       <NavButton to={ROUTES.ABOUT}>About</NavButton>
       <ThemeSwitcher />
+      <RefreshButton />
     </div>
   );
 };

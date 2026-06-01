@@ -1,19 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import App from './App';
-import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '../../context/ThemeContext';
-import pokemonListReducer from '../../store/pokemonList/pokemonListSlice';
-import selectedPokemonListReducer from '../../store/selectedList/selectedListSlice';
+import { store } from '../../store/store';
+import { pokemonApi } from '../../api/pokemonApi/pokemonApi';
 
 describe('App', () => {
-  const store = configureStore({
-    reducer: {
-      pokemonList: pokemonListReducer,
-      selectedPokemonList: selectedPokemonListReducer,
-    },
+  afterEach(() => {
+    store.dispatch(pokemonApi.util.resetApiState());
   });
 
   it('redirects to HomePage', () => {

@@ -1,7 +1,6 @@
 import savePokemonList from '../../services/savePokemonList';
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
-import { selectPokemonList } from '../../store/pokemonList/pokemonListSelector';
 import {
   selectSelectedPokemonLength,
   selectSelectedPokemonList,
@@ -13,7 +12,6 @@ const Flyout = () => {
   const dispatch = useAppDispatch();
 
   const selectedPokemonLength = useAppSelector(selectSelectedPokemonLength);
-  const pokemonList = useAppSelector(selectPokemonList);
   const selectedPokemonList = useAppSelector(selectSelectedPokemonList);
 
   if (selectedPokemonLength < 1) return null;
@@ -23,8 +21,6 @@ const Flyout = () => {
   };
 
   const handleDownload = () => {
-    if (!pokemonList) return null;
-
     savePokemonList(selectedPokemonList);
   };
 

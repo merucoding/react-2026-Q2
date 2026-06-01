@@ -1,46 +1,36 @@
 import { useEffect } from 'react';
 import { useParams, Outlet, useNavigate } from 'react-router-dom';
-import { _limitPerPage } from '../../api/fetchPokemons';
 import useLocalStorage from '../../hooks/localStorage.hook';
 import { LOCAL_STORAGE_KEYS } from '../../shared/constants/ls';
 import CardList from '../../components/CardList/CardList';
 import PaginationControls from '../../components/Pagination/PaginationControls';
-import Spinner from '../../components/Spinner/Spinner';
 import TopControls from '../../components/TopControls/TopControls';
 import { ROUTES } from '../../shared/constants/routes';
-import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
-import {
-  selectIsPokemonListLoading,
-  selectPokemonListErrorMessage,
-  selectPokemonListTotalPage,
-} from '../../store/pokemonList/pokemonListSelector';
-import { fetchPokemonList } from '../../store/pokemonList/pokemonListAsyncThunk';
 import Flyout from '../../components/Flyout/Flyout';
+import { _limitPerPage } from '../../api/pokemonApi/pokemonApi';
+import { useGetPokemonNameListQuery } from '../../api/pokemonApi/pokemonList/pokemonListApi';
+import { QueryStateWrapper } from '../../components/QueryStateWrapper/QueryStateWrapper';
 
 const HomePage = () => {
   const { page, detailsId } = useParams();
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const currentPage = Number(page) || 1;
 
   const offset = (currentPage - 1) * _limitPerPage;
 
-  const isLoading = useAppSelector(selectIsPokemonListLoading);
-  const errorMessage = useAppSelector(selectPokemonListErrorMessage);
-  const totalPage = useAppSelector(selectPokemonListTotalPage);
+  const { value: searchQuery, setStorageValue: setSearchQuery } =
+    useLocalStorage(LOCAL_STORAGE_KEYS.SEARCH_TEXT, '');
 
-  const { value: searchText, setStorageValue: setSearchText } = useLocalStorage(
-    LOCAL_STORAGE_KEYS.SEARCH_TEXT,
-    ''
-  );
+  const { data, isFetching, error } = useGetPokemonNameListQuery(offset);
+
+  const pokemonNameList = searchQuery
+    ? [searchQuery]
+    : (data?.pokemonNameList ?? []);
+  const totalPage = searchQuery ? 1 : (data?.totalPage ?? 1);
 
   const isCardDetailsOpen = Boolean(detailsId);
-
-  useEffect(() => {
-    dispatch(fetchPokemonList({ searchText, offset }));
-  }, [dispatch, offset, searchText]);
 
   useEffect(() => {
     const pageToNum = Number(page);
@@ -55,28 +45,20 @@ const HomePage = () => {
   }, [currentPage, navigate, page, totalPage]);
 
   const handleSearch = (input: string) => {
-    if (input === searchText) return;
+    if (input === searchQuery) return;
 
-    setSearchText(input);
+    setSearchQuery(input);
   };
 
   return (
     <main>
-      <TopControls searchText={searchText} onSearch={handleSearch} />
+      <TopControls searchQuery={searchQuery} onSearch={handleSearch} />
       <div className="flex gap-x-4">
         <section className={isCardDetailsOpen ? 'w-[75%]' : 'w-full '}>
-          {isLoading && <Spinner />}
-          {errorMessage && (
-            <div className="mt-8 text-fuchsia-400 font-bold text-lg">
-              {errorMessage}
-            </div>
-          )}
-          {!isLoading && !errorMessage && (
-            <>
-              <CardList />
-              <PaginationControls page={currentPage} totalPage={totalPage} />
-            </>
-          )}
+          <QueryStateWrapper isLoading={isFetching} error={error}>
+            <CardList pokemonNameList={pokemonNameList} />
+            <PaginationControls page={currentPage} totalPage={totalPage} />
+          </QueryStateWrapper>
         </section>
         {isCardDetailsOpen && (
           <aside className="w-[25%]">

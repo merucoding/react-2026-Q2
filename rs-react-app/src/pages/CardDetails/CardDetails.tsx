@@ -1,53 +1,43 @@
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import Spinner from '../../components/Spinner/Spinner';
-import Card from '../../components/Card/Card';
-import getPokemonParams from '../../utils/getPokemonParams';
-import getPokemonTypes from '../../utils/getPokemonTypes';
-import getPokemonAbilities from '../../utils/getPokemonAbilities';
-import getPokemonMoves from '../../utils/getPokemonMoves';
+import { useParams } from 'react-router-dom';
+import { skipToken } from '@reduxjs/toolkit/query';
+import { useGetPokemonByNameQuery } from '../../api/pokemonApi/pokemonByName/pokemonByNameApi';
+import { QueryStateWrapper } from '../../components/QueryStateWrapper/QueryStateWrapper';
+import CardView from '../../components/CardView/CardView';
+import NavButton from '../../components/NavButton/NavButton';
+import { X as CloseIcon } from 'lucide-react';
 import { ROUTES } from '../../shared/constants/routes';
-import {
-  selectIsPokemonLoading,
-  selectPokemonErrorMessage,
-  selectPokemon,
-} from '../../store/pokemon/pokemonSelector';
-import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
-import { fetchPokemon } from '../../store/pokemon/pokemonAsyncThunk';
+import getDetailsList from '../../utils/getDetailsList';
 
 const CardDetails = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const { detailsId, page } = useParams();
 
-  const { detailsId } = useParams();
+  const currentPage = Number(page) || 1;
 
-  const pokemon = useAppSelector(selectPokemon);
-  const isLoading = useAppSelector(selectIsPokemonLoading);
-  const errorMessage = useAppSelector(selectPokemonErrorMessage);
+  const { data, isFetching, error, isSuccess } = useGetPokemonByNameQuery(
+    detailsId ?? skipToken
+  );
 
-  useEffect(() => {
-    if (!detailsId) return;
-
-    dispatch(fetchPokemon(detailsId));
-  }, [detailsId, dispatch]);
-
-  if (errorMessage) navigate(ROUTES.NOT_FOUND);
+  const detailsList = isSuccess ? getDetailsList(data) : [];
 
   return (
     <div className="sticky top-4">
-      {isLoading && <Spinner />}
-      {!isLoading && pokemon && (
-        <Card
-          title={pokemon.name}
-          src={pokemon.sprites.front_default}
-          description={getPokemonParams(pokemon.height, pokemon.weight)}
-          types={getPokemonTypes(pokemon.types)}
-          abilities={getPokemonAbilities(pokemon.abilities)}
-          cries={pokemon.cries.latest}
-          moves={getPokemonMoves(pokemon.moves)}
-          detailed
-        />
-      )}
+      <QueryStateWrapper isLoading={isFetching} error={error}>
+        {isSuccess && (
+          <CardView
+            title={data.name}
+            src={data.src}
+            description={data.description}
+            details={{
+              cries: data.cries,
+              detailsList,
+            }}
+          >
+            <NavButton to={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
+              <CloseIcon />
+            </NavButton>
+          </CardView>
+        )}
+      </QueryStateWrapper>
     </div>
   );
 };
