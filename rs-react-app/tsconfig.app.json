@@ -5,7 +5,7 @@
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["vite/client"],
+    "esModuleInterop": true,
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -22,7 +22,12 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": false,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "plugins": [{ "name": "next" }]
   },
-  "include": ["src"]
+  "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts"],
+  "exclude": ["./node_modules"]
 }

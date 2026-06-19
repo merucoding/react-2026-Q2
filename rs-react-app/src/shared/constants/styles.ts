@@ -13,3 +13,8 @@ export const CARD_STYLE = {
 };
 
 export const CARD_LIST_STYLE = `mt-6 flex gap-4 flex-wrap justify-center [&_li]:min-w-50 [&_li]:min-h-50 [&_li]:flex [&_li]:items-center [&_li]:justify-center`;
+
+export const BODY_STYLE =
+  'dark:bg-linear-to-br dark:from-purple-950 dark:via-fuchsia-900 dark:to-pink-700';
+
+export const APP_STYLE = 'text-emerald-500 dark:text-fuchsia-200';
