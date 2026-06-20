@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import '../styles/style.css';
 
 import { APP_STYLE, BODY_STYLE } from '../shared/constants/styles';
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'PokeApi',
@@ -17,7 +17,7 @@ const RootLayout = ({ children }: Props) => {
     <html lang="en">
       <body className={BODY_STYLE}>
         <div id="root" className={APP_STYLE}>
-          {children}
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-const CACHE_TTL = Number(import.meta.env.VITE_POKEMON_API_CACHE_TTL) || 60;
+const CACHE_TTL = Number(process.env.NEXT_PUBLIC_POKEMON_API_CACHE_TTL) || 60;
 
 export const _apiBase = 'https://pokeapi.co/api/v2/';
 export const _baseOffset = 0;
