@@ -1,5 +1,7 @@
+'use client';
+
 import { ROUTES } from '../../shared/constants/routes';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { useGetPokemonByNameQuery } from '../../api/pokemonApi/pokemonByName/pokemonByNameApi';
 import { QueryStateWrapper } from '../QueryStateWrapper/QueryStateWrapper';
 import CardView from '../CardView/CardView';
@@ -10,8 +12,8 @@ type Props = {
 };
 
 const Card = ({ pokemonName }: Props) => {
-  const { page } = useParams();
-  const navigate = useNavigate();
+  const { page } = useParams() as { page: string };
+  const router = useRouter();
 
   const currentPage = Number(page) || 1;
 
@@ -26,7 +28,7 @@ const Card = ({ pokemonName }: Props) => {
           src={data.src}
           description={data.description}
           onClick={() =>
-            navigate(ROUTES.TO_DETAILED_VIEW(currentPage, data.name))
+            router.push(ROUTES.TO_DETAILED_VIEW(currentPage, data.name))
           }
         >
           <SelectCardCheckbox pokemon={data} />

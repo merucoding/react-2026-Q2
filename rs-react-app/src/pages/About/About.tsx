@@ -23,7 +23,7 @@ const About = () => {
           RS School React course.
         </a>
       </p>
-      <NavButton to={ROUTES.HOME} className="mt-4">
+      <NavButton href={ROUTES.HOME} className="mt-4">
         Go home
       </NavButton>
     </div>

@@ -21,7 +21,7 @@ const PaginationControls = ({ page, totalPage }: Props) => {
       <PaginationContent>
         <PaginationItem>
           <PaginationLink
-            to={ROUTES.TO_PAGE(1)}
+            href={ROUTES.TO_PAGE(1)}
             disabled={isFirstPage}
             icon="start"
           />
@@ -29,7 +29,7 @@ const PaginationControls = ({ page, totalPage }: Props) => {
 
         <PaginationItem>
           <PaginationLink
-            to={ROUTES.TO_PAGE(page - 1)}
+            href={ROUTES.TO_PAGE(page - 1)}
             disabled={isFirstPage}
             icon="previous"
           />
@@ -43,7 +43,7 @@ const PaginationControls = ({ page, totalPage }: Props) => {
 
         <PaginationItem>
           <PaginationLink
-            to={ROUTES.TO_PAGE(page + 1)}
+            href={ROUTES.TO_PAGE(page + 1)}
             disabled={isLastPage}
             icon="next"
           />
@@ -51,7 +51,7 @@ const PaginationControls = ({ page, totalPage }: Props) => {
 
         <PaginationItem>
           <PaginationLink
-            to={ROUTES.TO_PAGE(totalPage)}
+            href={ROUTES.TO_PAGE(totalPage)}
             disabled={isLastPage}
             icon="end"
           />

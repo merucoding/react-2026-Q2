@@ -1,9 +1,11 @@
+'use client';
+
 import { useState, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
 import ErrorButton from '../ErrorButton/ErrorButton';
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import Button from '../Button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import NavButton from '../NavButton/NavButton';
 import { ROUTES } from '../../shared/constants/routes';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
@@ -15,7 +17,7 @@ type Props = {
 };
 
 const TopControls = ({ searchQuery, onSearch }: Props) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [input, setInput] = useState(searchQuery);
 
@@ -27,7 +29,7 @@ const TopControls = ({ searchQuery, onSearch }: Props) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
-    navigate(ROUTES.HOME);
+    router.push(ROUTES.HOME);
   };
 
   const handleClear = () => {
@@ -50,7 +52,7 @@ const TopControls = ({ searchQuery, onSearch }: Props) => {
         <Search />
       </Button>
       <ErrorButton />
-      <NavButton to={ROUTES.ABOUT}>About</NavButton>
+      <NavButton href={ROUTES.ABOUT}>About</NavButton>
       <ThemeSwitcher />
       <RefreshButton />
     </div>

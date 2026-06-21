@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import { cn } from '../../utils/ui';
 import { BORDER_STYLE } from '../../shared/constants/styles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import {
   ArrowLeft,
   ArrowLeftToLine,

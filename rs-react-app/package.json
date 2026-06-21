@@ -21,10 +21,9 @@
     "next": "^16.2.9",
     "pokeapi-typescript": "^3.0.3",
     "postcss": "^8.5.15",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-redux": "^9.3.0",
-    "react-router-dom": "^7.15.1",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.2.0"
   },

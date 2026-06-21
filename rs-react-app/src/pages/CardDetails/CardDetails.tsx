@@ -1,4 +1,6 @@
-import { useParams } from 'react-router-dom';
+'use client';
+
+import { useParams } from 'next/navigation';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { useGetPokemonByNameQuery } from '../../api/pokemonApi/pokemonByName/pokemonByNameApi';
 import { QueryStateWrapper } from '../../components/QueryStateWrapper/QueryStateWrapper';
@@ -9,7 +11,10 @@ import { ROUTES } from '../../shared/constants/routes';
 import getDetailsList from '../../utils/getDetailsList';
 
 const CardDetails = () => {
-  const { detailsId, page } = useParams();
+  const { detailsId, page } = useParams() as {
+    detailsId: string;
+    page: string;
+  };
 
   const currentPage = Number(page) || 1;
 
@@ -32,7 +37,7 @@ const CardDetails = () => {
               detailsList,
             }}
           >
-            <NavButton to={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
+            <NavButton href={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
               <CloseIcon />
             </NavButton>
           </CardView>

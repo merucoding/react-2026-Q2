@@ -8,7 +8,7 @@ const NotFound = () => {
       <h2 className="font-lexend-exa text-fuchsia-400 font-bold text-2xl">
         Page not found...
       </h2>
-      <NavButton to={ROUTES.HOME} className="mt-4">
+      <NavButton href={ROUTES.HOME} className="mt-4">
         Go home
       </NavButton>
     </div>
