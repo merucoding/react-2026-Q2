@@ -1,4 +1,4 @@
-import CardDetails from '../../../../../../pages/CardDetails/CardDetails';
+import CardDetails from '@/views/CardDetails/CardDetails';
 
 type Props = {
   params: Promise<{

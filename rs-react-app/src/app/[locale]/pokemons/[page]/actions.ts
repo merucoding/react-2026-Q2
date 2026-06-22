@@ -2,8 +2,8 @@
 
 import { getLocale } from 'next-intl/server';
 
-import { redirect } from '../../../../i18n/navigation';
-import { ROUTES } from '../../../../shared/constants/routes';
+import { redirect } from '@/i18n/navigation';
+import { ROUTES } from '@/shared/constants/routes';
 
 export const searchPokemon = async (formData: FormData) => {
   const locale = await getLocale();
