@@ -4,10 +4,12 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const nextConfig = {
   distDir: './dist',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'raw.githubusercontent.com',
+        pathname: '/PokeAPI/sprites/master/sprites/pokemon/**',
       },
     ],
   },
