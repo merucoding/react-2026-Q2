@@ -1,5 +1,36 @@
 {
   "Header": {
     "title": "Pokémon Search"
+  },
+  "TopControls": {
+    "about": "About",
+    "clear": "Clear search",
+    "search": "Search"
+  },
+  "ErrorButton": {
+    "trigger": "trigger error"
+  },
+  "RefreshButton": {
+    "refresh": "refresh"
+  },
+  "LanguageSwitcher": {
+    "en": "English",
+    "ru": "Русский",
+    "kk": "Қазақша"
+  },
+  "AboutPage": {
+    "intro": "Hello! I’m Méru.",
+    "description": "I love coffee, movies, the sea, mountains, clean working code, and turning my dreams into reality. I completed both the preparatory and main courses at RS School. I keep learning, improving my skills, and staying persistent on my journey to becoming a Software Engineer.",
+    "project": "The Pokémon Search was developed as part of the ",
+    "goHome": "Go home"
+  },
+  "ErrorBoundary": {
+    "title": "Something went wrong...",
+    "goBack": "Go back"
+  },
+  "Flyout": {
+    "selected": " Pokémon selected",
+    "unselectAll": "Unselect all",
+    "download": "Download"
   }
 }

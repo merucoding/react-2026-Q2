@@ -11,8 +11,11 @@ import { ROUTES } from '../../shared/constants/routes';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import { RefreshButton } from '../RefreshButton/RefreshButton';
 import { searchPokemon } from '../../app/[locale]/pokemons/[page]/actions';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
+import { useTranslations } from 'next-intl';
 
 const TopControls = () => {
+  const t = useTranslations('TopControls');
   const searchParams = useSearchParams();
 
   const searchQuery = searchParams?.get('search') ?? '';
@@ -41,17 +44,27 @@ const TopControls = () => {
           onChange={handleChange}
           className={BORDER_STYLE}
         />
-        <Button data-testid="eraser-button" type="button" onClick={handleClear}>
+        <Button
+          data-testid="eraser-button"
+          type="button"
+          onClick={handleClear}
+          aria-label={t('clear')}
+        >
           <Eraser />
         </Button>
-        <Button data-testid="search-button" type="submit">
+        <Button
+          data-testid="search-button"
+          type="submit"
+          aria-label={t('search')}
+        >
           <Search />
         </Button>
       </form>
       <ErrorButton />
-      <NavButton href={ROUTES.ABOUT}>About</NavButton>
+      <NavButton href={ROUTES.ABOUT}>{t('about')}</NavButton>
       <ThemeSwitcher />
       <RefreshButton />
+      <LanguageSwitcher />
     </div>
   );
 };
