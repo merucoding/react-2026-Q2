@@ -9,7 +9,7 @@ import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import reactCompiler from 'eslint-plugin-react-compiler';
 
 export default defineConfig([
-  { ignores: ['dist', 'vite.config.ts'] },
+  { ignores: ['dist', 'vite.config.ts', 'next-env.d.ts'] },
   js.configs.recommended,
   ...tseslint.configs.strict,
   {

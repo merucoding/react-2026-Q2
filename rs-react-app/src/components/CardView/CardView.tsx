@@ -1,9 +1,9 @@
 import { CARD_STYLE } from '../../shared/constants/styles';
-import DEFAULT_IMAGE from '../../assets/balls.jpg';
 import type { ReactNode } from 'react';
 import { cn } from '../../utils/ui';
 import type { DetailsType } from '../DetailsList/DetailsList';
 import DetailsList from '../DetailsList/DetailsList';
+import Image from 'next/image';
 
 type Props = {
   title: string;
@@ -14,13 +14,18 @@ type Props = {
 };
 
 const CardView = ({ title, src, description, details, children }: Props) => {
+  const imageSize = details ? 200 : 100;
+
   return (
     <div className={cn(CARD_STYLE.container, details ? 'w-full mt-6' : 'w-50')}>
       {children}
       <div className={cn(CARD_STYLE.imageContainer, details ? '' : 'h-25')}>
-        <img
+        <Image
+          src={src || '/balls.jpg'}
           className={cn(CARD_STYLE.image, details ? 'w-50 h-50' : '')}
-          src={src || DEFAULT_IMAGE}
+          alt={`${title} avatar`}
+          width={imageSize}
+          height={imageSize}
         />
       </div>
       <h2 className={cn(CARD_STYLE.title, details ? '' : 'line-clamp-1')}>
