@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import { cn } from '../../utils/ui';
+import { cn } from '@/utils/ui';
 import { Check as CheckIcon } from 'lucide-react';
 
 const Checkbox = ({ className, ...props }: ComponentProps<'input'>) => {

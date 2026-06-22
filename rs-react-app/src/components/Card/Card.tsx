@@ -1,38 +1,39 @@
-import { ROUTES } from '../../shared/constants/routes';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetPokemonByNameQuery } from '../../api/pokemonApi/pokemonByName/pokemonByNameApi';
-import { QueryStateWrapper } from '../QueryStateWrapper/QueryStateWrapper';
+import { getPokemonByName } from '@/api/pokemonApi/pokemonByName/getPokemonByName';
+import { Link } from '@/i18n/navigation';
+import { ROUTES } from '@/shared/constants/routes';
 import CardView from '../CardView/CardView';
+import { ErrorContent } from '../ErrorContent/ErrorContent';
 import SelectCardCheckbox from '../SelectCardCheckbox/SelectCardCheckbox';
 
 type Props = {
   pokemonName: string;
+  currentPage: number;
 };
 
-const Card = ({ pokemonName }: Props) => {
-  const { page } = useParams();
-  const navigate = useNavigate();
+const Card = async ({ pokemonName, currentPage }: Props) => {
+  const data = await getPokemonByName(pokemonName);
 
-  const currentPage = Number(page) || 1;
-
-  const { data, isFetching, error, isSuccess } =
-    useGetPokemonByNameQuery(pokemonName);
+  if (!data) {
+    return <ErrorContent message="Pokemon not found" />;
+  }
 
   return (
-    <QueryStateWrapper isLoading={isFetching} error={error}>
-      {isSuccess && (
+    <div className="relative">
+      <Link
+        href={ROUTES.TO_DETAILED_VIEW(currentPage, data.name)}
+        className="block"
+      >
         <CardView
           title={data.name}
           src={data.src}
           description={data.description}
-          onClick={() =>
-            navigate(ROUTES.TO_DETAILED_VIEW(currentPage, data.name))
-          }
-        >
-          <SelectCardCheckbox pokemon={data} />
-        </CardView>
-      )}
-    </QueryStateWrapper>
+        />
+      </Link>
+
+      <div className="absolute top-2 right-2 z-10">
+        <SelectCardCheckbox pokemon={data} />
+      </div>
+    </div>
   );
 };
 

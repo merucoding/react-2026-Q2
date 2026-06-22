@@ -1,58 +1,70 @@
-import { useState, type ChangeEvent } from 'react';
+'use client';
+
+import { useEffect, useState, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
 import ErrorButton from '../ErrorButton/ErrorButton';
-import { BORDER_STYLE } from '../../shared/constants/styles';
+import { BORDER_STYLE } from '@/shared/constants/styles';
 import Button from '../Button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'next/navigation';
 import NavButton from '../NavButton/NavButton';
-import { ROUTES } from '../../shared/constants/routes';
+import { ROUTES } from '@/shared/constants/routes';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import { RefreshButton } from '../RefreshButton/RefreshButton';
+import { searchPokemon } from '@/app/[locale]/pokemons/[page]/actions';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
+import { useTranslations } from 'next-intl';
 
-type Props = {
-  searchQuery: string;
-  onSearch: (input: string) => void;
-};
+const TopControls = () => {
+  const t = useTranslations('TopControls');
+  const searchParams = useSearchParams();
 
-const TopControls = ({ searchQuery, onSearch }: Props) => {
-  const navigate = useNavigate();
+  const searchQuery = searchParams?.get('search') ?? '';
 
   const [input, setInput] = useState(searchQuery);
 
-  const handleSearch = () => {
-    const trimmed = input.trim();
-    setInput(trimmed);
-    onSearch(trimmed);
-  };
+  useEffect(() => {
+    setInput(searchQuery);
+  }, [searchQuery]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
-    navigate(ROUTES.HOME);
   };
 
   const handleClear = () => {
     setInput('');
-    onSearch('');
   };
 
   return (
     <div className="flex justify-center gap-4 mt-8 flex-wrap">
-      <input
-        type="text"
-        value={input}
-        onChange={handleChange}
-        className={BORDER_STYLE}
-      />
-      <Button data-testid="eraser-button" onClick={handleClear}>
-        <Eraser />
-      </Button>
-      <Button data-testid="search-button" onClick={handleSearch}>
-        <Search />
-      </Button>
+      <form action={searchPokemon} className="flex gap-4">
+        <input
+          name="search"
+          type="text"
+          value={input}
+          onChange={handleChange}
+          className={BORDER_STYLE}
+        />
+        <Button
+          data-testid="eraser-button"
+          type="button"
+          onClick={handleClear}
+          aria-label={t('clear')}
+        >
+          <Eraser />
+        </Button>
+        <Button
+          data-testid="search-button"
+          type="submit"
+          aria-label={t('search')}
+        >
+          <Search />
+        </Button>
+      </form>
       <ErrorButton />
-      <NavButton to={ROUTES.ABOUT}>About</NavButton>
+      <NavButton href={ROUTES.ABOUT}>{t('about')}</NavButton>
       <ThemeSwitcher />
       <RefreshButton />
+      <LanguageSwitcher />
     </div>
   );
 };

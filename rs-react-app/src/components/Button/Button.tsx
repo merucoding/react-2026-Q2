@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
-import { BORDER_STYLE } from '../../shared/constants/styles';
-import { cn } from '../../utils/ui';
+import { BORDER_STYLE } from '@/shared/constants/styles';
+import { cn } from '@/utils/ui';
 
 const Button = ({ className, ...props }: ComponentProps<'button'>) => {
   return (

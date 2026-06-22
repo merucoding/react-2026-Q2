@@ -7,7 +7,7 @@
   margin: 0 auto;
   padding: 0 2rem;
   text-align: center;
-  background: url('../assets/pikachu.svg');
+  background: url('/pikachu.svg');
   background-size: 15%;
   background-repeat: no-repeat;
   background-position: top right;

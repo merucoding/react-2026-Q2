@@ -1,4 +1,6 @@
-import { useTheme } from '../../context/useTheme';
+'use client';
+
+import { useTheme } from '@/context/useTheme';
 import Button from '../Button/Button';
 import { MoonStar as MoonIcon, Sun as SunIcon } from 'lucide-react';
 

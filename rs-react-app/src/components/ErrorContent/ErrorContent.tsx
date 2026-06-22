@@ -1,15 +1,9 @@
-import type { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import type { SerializedError } from '@reduxjs/toolkit/react';
-import { getErrorMessage } from '../../api/getErrorMessage';
-
 type Props = {
-  error: FetchBaseQueryError | SerializedError;
+  message: string;
 };
 
-export const ErrorContent = ({ error }: Props) => {
+export const ErrorContent = ({ message }: Props) => {
   return (
-    <div className="text-fuchsia-400 font-bold text-lg my-12">
-      {getErrorMessage(error)}
-    </div>
+    <div className="text-fuchsia-400 font-bold text-lg my-12">{message}</div>
   );
 };

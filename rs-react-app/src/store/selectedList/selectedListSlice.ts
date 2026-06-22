@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { PokemonCard } from '../../types/pokemonTypes';
+import type { PokemonCard } from '@/types/pokemonTypes';
 
 type InitialState = {
   selectedPokemonList: PokemonCard[];
