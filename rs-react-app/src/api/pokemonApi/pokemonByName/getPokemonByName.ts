@@ -1,6 +1,6 @@
-import type { PokemonCard } from '../../../types/pokemonTypes';
+import type { PokemonCard } from '@/types/pokemonTypes';
 import type { PokemonType } from '../types';
-import HttpStatusCode from '../../../types/httpStatusCode';
+import HttpStatusCode from '@/types/httpStatusCode';
 import { _apiBase, _cacheTtl } from '../constants';
 import { getErrorMessage } from '../getErrorMessage';
 import { transformPokemonData } from '../transformResponses/transformPokemonData/transformPokemonData';

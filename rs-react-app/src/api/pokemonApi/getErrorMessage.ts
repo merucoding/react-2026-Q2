@@ -1,4 +1,4 @@
-import HttpStatusCode from '../../types/httpStatusCode';
+import HttpStatusCode from '@/types/httpStatusCode';
 
 export function getErrorMessage(statusCode: number): string {
   if (statusCode === HttpStatusCode.NOT_FOUND) {

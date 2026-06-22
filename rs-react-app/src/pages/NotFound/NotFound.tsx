@@ -1,6 +1,6 @@
-import NavButton from '../../components/NavButton/NavButton';
-import { ROUTES } from '../../shared/constants/routes';
-import { CENTERED_PAGE } from '../../shared/constants/styles';
+import NavButton from '@/components/NavButton/NavButton';
+import { ROUTES } from '@/shared/constants/routes';
+import { CENTERED_PAGE } from '@/shared/constants/styles';
 
 const NotFound = () => {
   return (

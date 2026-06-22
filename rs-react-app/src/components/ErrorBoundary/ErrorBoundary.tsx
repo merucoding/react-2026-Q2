@@ -2,7 +2,7 @@
 
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import Button from '../Button/Button';
-import { CENTERED_PAGE } from '../../shared/constants/styles';
+import { CENTERED_PAGE } from '@/shared/constants/styles';
 
 type ErrorBoundaryProps = {
   children: ReactNode;

@@ -1,6 +1,6 @@
-import { getPokemonByName } from '../../api/pokemonApi/pokemonByName/getPokemonByName';
-import { Link } from '../../i18n/navigation';
-import { ROUTES } from '../../shared/constants/routes';
+import { getPokemonByName } from '@/api/pokemonApi/pokemonByName/getPokemonByName';
+import { Link } from '@/i18n/navigation';
+import { ROUTES } from '@/shared/constants/routes';
 import CardView from '../CardView/CardView';
 import { ErrorContent } from '../ErrorContent/ErrorContent';
 import SelectCardCheckbox from '../SelectCardCheckbox/SelectCardCheckbox';

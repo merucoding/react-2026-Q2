@@ -1,5 +1,5 @@
-import { redirect } from '../../i18n/navigation';
-import { ROUTES } from '../../shared/constants/routes';
+import { redirect } from '@/i18n/navigation';
+import { ROUTES } from '@/shared/constants/routes';
 
 type Props = {
   params: Promise<{

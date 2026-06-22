@@ -1,4 +1,4 @@
-import { CARD_LIST_STYLE } from '../../shared/constants/styles';
+import { CARD_LIST_STYLE } from '@/shared/constants/styles';
 import Card from '../Card/Card';
 
 type Props = {

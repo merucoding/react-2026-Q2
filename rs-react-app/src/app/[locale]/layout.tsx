@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { routing } from '../../i18n/routing';
-import TranslatedErrorBoundary from '../../components/ErrorBoundary/TranslatedErrorBoundary';
+import { routing } from '@/i18n/routing';
+import TranslatedErrorBoundary from '@/components/ErrorBoundary/TranslatedErrorBoundary';
 
 type Props = {
   children: ReactNode;

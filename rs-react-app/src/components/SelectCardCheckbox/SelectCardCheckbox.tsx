@@ -5,10 +5,10 @@ import Checkbox from '../Checkbox/Checkbox';
 import {
   addToList,
   deleteFromList,
-} from '../../store/selectedList/selectedListSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
-import { selectIsPokemonSelected } from '../../store/selectedList/selectedListSelector';
-import type { PokemonCard } from '../../types/pokemonTypes';
+} from '@/store/selectedList/selectedListSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks/redux';
+import { selectIsPokemonSelected } from '@/store/selectedList/selectedListSelector';
+import type { PokemonCard } from '@/types/pokemonTypes';
 
 type Props = {
   pokemon: PokemonCard;

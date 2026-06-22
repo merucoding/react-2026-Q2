@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 
-import { APP_STYLE, BODY_STYLE } from '../shared/constants/styles';
+import { APP_STYLE, BODY_STYLE } from '@/shared/constants/styles';
 import Providers from './providers';
 
-import '../styles/style.css';
+import '@/styles/style.css';
 
 export const metadata: Metadata = {
   title: 'PokeApi',

@@ -2,9 +2,9 @@
 
 import type { ChangeEvent } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { usePathname, useRouter } from '../../i18n/navigation';
-import { BORDER_STYLE } from '../../shared/constants/styles';
-import { cn } from '../../utils/ui';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { BORDER_STYLE } from '@/shared/constants/styles';
+import { cn } from '@/utils/ui';
 
 const LanguageSwitcher = () => {
   const locale = useLocale();

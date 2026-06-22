@@ -1,13 +1,13 @@
 import type { ComponentProps } from 'react';
-import { cn } from '../../utils/ui';
-import { BORDER_STYLE } from '../../shared/constants/styles';
+import { cn } from '@/utils/ui';
+import { BORDER_STYLE } from '@/shared/constants/styles';
 import {
   ArrowLeft,
   ArrowLeftToLine,
   ArrowRight,
   ArrowRightFromLine,
 } from 'lucide-react';
-import { Link } from '../../i18n/navigation';
+import { Link } from '@/i18n/navigation';
 
 const classNamesActive = 'cursor-pointer';
 const classNamesDisabled = 'pointer-events-none opacity-50';

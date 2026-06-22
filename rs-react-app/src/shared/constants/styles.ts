@@ -8,7 +8,7 @@ export const CARD_STYLE = {
   container: `${BORDER_STYLE} relative p-2 flex flex-col items-center gap-y-2 aspect-square text-sm [&_p]:text-fuchsia-400 [&_ul]:text-sm [&_p]:mb-2 dark:[&_p]:text-emerald-500`,
   imageContainer:
     'border-b border-fuchsia-300 w-full text-center dark:border-fuchsia-400',
-  image: 'max-h-full rounded-xl inline-block',
+  image: 'rounded-xl inline-block',
   title: 'text-fuchsia-400 font-bold text-lg dark:text-emerald-500',
 };
 

@@ -1,5 +1,5 @@
-import transformToCVS from '../../../utils/transformToCVS';
-import type { PokemonCard } from '../../../types/pokemonTypes';
+import transformToCVS from '@/utils/transformToCVS';
+import type { PokemonCard } from '@/types/pokemonTypes';
 
 export async function POST(request: Request) {
   try {

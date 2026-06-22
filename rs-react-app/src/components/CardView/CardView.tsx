@@ -1,6 +1,6 @@
-import { CARD_STYLE } from '../../shared/constants/styles';
+import { CARD_STYLE } from '@/shared/constants/styles';
 import type { ReactNode } from 'react';
-import { cn } from '../../utils/ui';
+import { cn } from '@/utils/ui';
 import type { DetailsType } from '../DetailsList/DetailsList';
 import DetailsList from '../DetailsList/DetailsList';
 import Image from 'next/image';

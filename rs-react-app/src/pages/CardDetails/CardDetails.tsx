@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation';
 import { X as CloseIcon } from 'lucide-react';
-import CardView from '../../components/CardView/CardView';
-import NavButton from '../../components/NavButton/NavButton';
-import { ROUTES } from '../../shared/constants/routes';
-import getDetailsList from '../../utils/getDetailsList';
-import { getPokemonByName } from '../../api/pokemonApi/pokemonByName/getPokemonByName';
+import CardView from '@/components/CardView/CardView';
+import NavButton from '@/components/NavButton/NavButton';
+import { ROUTES } from '@/shared/constants/routes';
+import getDetailsList from '@/utils/getDetailsList';
+import { getPokemonByName } from '@/api/pokemonApi/pokemonByName/getPokemonByName';
 
 type Props = {
   pokemonName: string;

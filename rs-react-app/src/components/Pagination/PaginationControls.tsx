@@ -1,5 +1,5 @@
-import { ROUTES } from '../../shared/constants/routes';
-import { BORDER_STYLE } from '../../shared/constants/styles';
+import { ROUTES } from '@/shared/constants/routes';
+import { BORDER_STYLE } from '@/shared/constants/styles';
 import {
   Pagination,
   PaginationContent,

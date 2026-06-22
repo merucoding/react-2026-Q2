@@ -1,9 +1,9 @@
-import CardList from '../../components/CardList/CardList';
-import PaginationControls from '../../components/Pagination/PaginationControls';
-import Flyout from '../../components/Flyout/Flyout';
+import CardList from '@/components/CardList/CardList';
+import PaginationControls from '@/components/Pagination/PaginationControls';
+import Flyout from '@/components/Flyout/Flyout';
 import { notFound } from 'next/navigation';
-import { _limitPerPage } from '../../api/pokemonApi/constants';
-import { getPokemonNameList } from '../../api/pokemonApi/pokemonList/getPokemonNameList';
+import { _limitPerPage } from '@/api/pokemonApi/constants';
+import { getPokemonNameList } from '@/api/pokemonApi/pokemonList/getPokemonNameList';
 
 type Props = {
   params: Promise<{

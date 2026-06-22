@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useRouter } from '../../i18n/navigation';
+import { useRouter } from '@/i18n/navigation';
 import Button from '../Button/Button';
 
 export const RefreshButton = () => {

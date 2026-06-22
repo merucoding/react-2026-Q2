@@ -3,14 +3,14 @@
 import { useEffect, useState, type ChangeEvent } from 'react';
 import { Eraser, Search } from 'lucide-react';
 import ErrorButton from '../ErrorButton/ErrorButton';
-import { BORDER_STYLE } from '../../shared/constants/styles';
+import { BORDER_STYLE } from '@/shared/constants/styles';
 import Button from '../Button/Button';
 import { useSearchParams } from 'next/navigation';
 import NavButton from '../NavButton/NavButton';
-import { ROUTES } from '../../shared/constants/routes';
+import { ROUTES } from '@/shared/constants/routes';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import { RefreshButton } from '../RefreshButton/RefreshButton';
-import { searchPokemon } from '../../app/[locale]/pokemons/[page]/actions';
+import { searchPokemon } from '@/app/[locale]/pokemons/[page]/actions';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import { useTranslations } from 'next-intl';
 
