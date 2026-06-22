@@ -11,7 +11,7 @@ const Layout = ({
   return (
     <>
       <Header />
-      <main>
+      <main className="w-full">
         <div className="flex gap-x-4">
           <section className="flex-1">{children}</section>
           {details}
