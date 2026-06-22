@@ -1,5 +1,5 @@
-import type { PokemonListResponse } from '../../../types';
-import { _limitPerPage } from '../../pokemonApi';
+import { _limitPerPage } from '../../constants';
+import type { PokemonListResponse } from '../../types';
 
 export const transformPokemonList = (response: PokemonListResponse) => ({
   pokemonNameList: response.results.map((item) => item.name),

@@ -1,48 +1,40 @@
-'use client';
-
-import { useParams } from 'next/navigation';
-import { skipToken } from '@reduxjs/toolkit/query';
-import { useGetPokemonByNameQuery } from '../../api/pokemonApi/pokemonByName/pokemonByNameApi';
-import { QueryStateWrapper } from '../../components/QueryStateWrapper/QueryStateWrapper';
+import { notFound } from 'next/navigation';
+import { X as CloseIcon } from 'lucide-react';
 import CardView from '../../components/CardView/CardView';
 import NavButton from '../../components/NavButton/NavButton';
-import { X as CloseIcon } from 'lucide-react';
 import { ROUTES } from '../../shared/constants/routes';
 import getDetailsList from '../../utils/getDetailsList';
+import { getPokemonByName } from '../../api/pokemonApi/pokemonByName/getPokemonByName';
 
-const CardDetails = () => {
-  const { detailsId, page } = useParams() as {
-    detailsId: string;
-    page: string;
-  };
+type Props = {
+  pokemonName: string;
+  currentPage: number;
+};
 
-  const currentPage = Number(page) || 1;
+const CardDetails = async ({ pokemonName, currentPage }: Props) => {
+  const data = await getPokemonByName(pokemonName);
 
-  const { data, isFetching, error, isSuccess } = useGetPokemonByNameQuery(
-    detailsId ?? skipToken
-  );
+  if (!data) {
+    notFound();
+  }
 
-  const detailsList = isSuccess ? getDetailsList(data) : [];
+  const detailsList = getDetailsList(data);
 
   return (
     <div className="sticky top-4">
-      <QueryStateWrapper isLoading={isFetching} error={error}>
-        {isSuccess && (
-          <CardView
-            title={data.name}
-            src={data.src}
-            description={data.description}
-            details={{
-              cries: data.cries,
-              detailsList,
-            }}
-          >
-            <NavButton href={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
-              <CloseIcon />
-            </NavButton>
-          </CardView>
-        )}
-      </QueryStateWrapper>
+      <CardView
+        title={data.name}
+        src={data.src}
+        description={data.description}
+        details={{
+          cries: data.cries,
+          detailsList,
+        }}
+      >
+        <NavButton href={ROUTES.TO_PAGE(currentPage)} className="ml-auto">
+          <CloseIcon />
+        </NavButton>
+      </CardView>
     </div>
   );
 };

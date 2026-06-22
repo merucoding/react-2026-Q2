@@ -11,22 +11,11 @@ type Props = {
   description: string;
   details?: DetailsType;
   children?: ReactNode;
-  onClick?: () => void;
 };
 
-const CardView = ({
-  title,
-  src,
-  description,
-  details,
-  children,
-  onClick,
-}: Props) => {
+const CardView = ({ title, src, description, details, children }: Props) => {
   return (
-    <div
-      className={cn(CARD_STYLE.container, details ? 'w-full mt-6' : 'w-50')}
-      onClick={onClick}
-    >
+    <div className={cn(CARD_STYLE.container, details ? 'w-full mt-6' : 'w-50')}>
       {children}
       <div className={cn(CARD_STYLE.imageContainer, details ? '' : 'h-25')}>
         <img

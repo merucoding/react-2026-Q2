@@ -1,9 +1,20 @@
 import CardDetails from '../../../../../pages/CardDetails/CardDetails';
 
-const PokemonDetails = () => {
+type Props = {
+  params: Promise<{
+    page: string;
+    detailsId: string;
+  }>;
+};
+
+const PokemonDetails = async ({ params }: Props) => {
+  const { page, detailsId } = await params;
+
+  const currentPage = Number(page) || 1;
+
   return (
     <aside className="w-[25%]">
-      <CardDetails />
+      <CardDetails pokemonName={detailsId} currentPage={currentPage} />
     </aside>
   );
 };

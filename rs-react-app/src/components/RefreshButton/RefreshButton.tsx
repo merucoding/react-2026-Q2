@@ -1,12 +1,13 @@
-import { pokemonApi } from '../../api/pokemonApi/pokemonApi';
-import { useAppDispatch } from '../../store/hooks/redux';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import Button from '../Button/Button';
 
 export const RefreshButton = () => {
-  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleRefresh = () => {
-    dispatch(pokemonApi.util.invalidateTags(['PokemonNameList', 'Pokemon']));
+    router.refresh();
   };
 
   return <Button onClick={handleRefresh}>refresh</Button>;

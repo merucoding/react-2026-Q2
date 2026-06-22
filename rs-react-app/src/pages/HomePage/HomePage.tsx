@@ -1,58 +1,52 @@
-'use client';
-
-import { useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import useLocalStorage from '../../hooks/localStorage.hook';
-import { LOCAL_STORAGE_KEYS } from '../../shared/constants/ls';
 import CardList from '../../components/CardList/CardList';
 import PaginationControls from '../../components/Pagination/PaginationControls';
-import { ROUTES } from '../../shared/constants/routes';
 import Flyout from '../../components/Flyout/Flyout';
-import { _limitPerPage } from '../../api/pokemonApi/pokemonApi';
-import { useGetPokemonNameListQuery } from '../../api/pokemonApi/pokemonList/pokemonListApi';
-import { QueryStateWrapper } from '../../components/QueryStateWrapper/QueryStateWrapper';
+import { notFound } from 'next/navigation';
+import { _limitPerPage } from '../../api/pokemonApi/constants';
+import { getPokemonNameList } from '../../api/pokemonApi/pokemonList/getPokemonNameList';
 
-const HomePage = () => {
-  const { page } = useParams() as {
+type Props = {
+  params: Promise<{
     page: string;
-  };
+  }>;
+  searchParams: Promise<{
+    search?: string;
+  }>;
+};
 
-  const router = useRouter();
+const HomePage = async ({ params, searchParams }: Props) => {
+  const { page } = await params;
+  const { search } = await searchParams;
 
-  const currentPage = Number(page) || 1;
+  const currentPage = Number(page);
+
+  if (Number.isNaN(currentPage) || currentPage < 1) {
+    notFound();
+  }
+
+  const searchQuery = search?.trim().toLowerCase() ?? '';
 
   const offset = (currentPage - 1) * _limitPerPage;
 
-  const { value: searchQuery } = useLocalStorage(
-    LOCAL_STORAGE_KEYS.SEARCH_TEXT,
-    ''
-  );
+  const data = searchQuery
+    ? {
+        pokemonNameList: [searchQuery],
+        totalPage: 1,
+      }
+    : await getPokemonNameList(offset);
 
-  const { data, isFetching, error } = useGetPokemonNameListQuery(offset);
-
-  const pokemonNameList = searchQuery
-    ? [searchQuery]
-    : (data?.pokemonNameList ?? []);
-  const totalPage = searchQuery ? 1 : (data?.totalPage ?? 1);
-
-  useEffect(() => {
-    const pageToNum = Number(page);
-
-    if (isNaN(pageToNum) || pageToNum < 1) {
-      router.push(ROUTES.NOT_FOUND);
-    }
-
-    if (totalPage > 1 && currentPage > totalPage) {
-      router.push(ROUTES.NOT_FOUND);
-    }
-  }, [currentPage, page, router, totalPage]);
+  if (data.totalPage > 1 && currentPage > data.totalPage) {
+    notFound();
+  }
 
   return (
     <>
-      <QueryStateWrapper isLoading={isFetching} error={error}>
-        <CardList pokemonNameList={pokemonNameList} />
-        <PaginationControls page={currentPage} totalPage={totalPage} />
-      </QueryStateWrapper>
+      <CardList
+        pokemonNameList={data.pokemonNameList}
+        currentPage={currentPage}
+      />
+      <PaginationControls page={currentPage} totalPage={data.totalPage} />
+
       <Flyout />
     </>
   );

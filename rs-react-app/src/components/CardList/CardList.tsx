@@ -3,16 +3,15 @@ import Card from '../Card/Card';
 
 type Props = {
   pokemonNameList: string[];
+  currentPage: number;
 };
 
-const CardList = ({ pokemonNameList }: Props) => {
-  if (!pokemonNameList?.length) return null;
-
+const CardList = ({ pokemonNameList, currentPage }: Props) => {
   return (
     <ul className={CARD_LIST_STYLE}>
       {pokemonNameList.map((name) => (
         <li key={name}>
-          <Card pokemonName={name} />
+          <Card pokemonName={name} currentPage={currentPage} />
         </li>
       ))}
     </ul>

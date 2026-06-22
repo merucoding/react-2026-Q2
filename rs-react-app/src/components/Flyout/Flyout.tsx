@@ -1,3 +1,5 @@
+'use client';
+
 import savePokemonList from '../../services/savePokemonList';
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
