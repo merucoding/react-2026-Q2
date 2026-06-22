@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '../../i18n/navigation';
 import { BORDER_STYLE } from '../../shared/constants/styles';
 import { cn } from '../../utils/ui';
 import type { ComponentProps } from 'react';

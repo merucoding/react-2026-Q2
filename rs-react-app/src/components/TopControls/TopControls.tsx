@@ -10,7 +10,7 @@ import NavButton from '../NavButton/NavButton';
 import { ROUTES } from '../../shared/constants/routes';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import { RefreshButton } from '../RefreshButton/RefreshButton';
-import { searchPokemon } from '../../app/pokemons/[page]/actions';
+import { searchPokemon } from '../../app/[locale]/pokemons/[page]/actions';
 
 const TopControls = () => {
   const searchParams = useSearchParams();

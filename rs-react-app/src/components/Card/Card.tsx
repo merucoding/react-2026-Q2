@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { getPokemonByName } from '../../api/pokemonApi/pokemonByName/getPokemonByName';
+import { Link } from '../../i18n/navigation';
 import { ROUTES } from '../../shared/constants/routes';
 import CardView from '../CardView/CardView';
 import { ErrorContent } from '../ErrorContent/ErrorContent';

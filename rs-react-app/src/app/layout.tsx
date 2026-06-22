@@ -6,6 +6,8 @@ import Providers from './providers';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 
 import '../styles/style.css';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'PokeApi',
@@ -15,14 +17,19 @@ type Props = {
   children: ReactNode;
 };
 
-const RootLayout = ({ children }: Props) => {
+const RootLayout = async ({ children }: Props) => {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={BODY_STYLE}>
         <div id="root" className={APP_STYLE}>
-          <Providers>
-            <ErrorBoundary>{children}</ErrorBoundary>
-          </Providers>
+          <NextIntlClientProvider messages={messages}>
+            <Providers>
+              <ErrorBoundary>{children}</ErrorBoundary>
+            </Providers>
+          </NextIntlClientProvider>
         </div>
       </body>
     </html>
