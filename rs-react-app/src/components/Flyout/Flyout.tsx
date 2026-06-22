@@ -24,8 +24,8 @@ const Flyout = () => {
     dispatch(clearList());
   };
 
-  const handleDownload = () => {
-    savePokemonList(selectedPokemonList);
+  const handleDownload = async () => {
+    await savePokemonList(selectedPokemonList);
   };
 
   return (

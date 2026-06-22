@@ -1,4 +1,4 @@
-import type { PokemonType } from '../api/types';
+import type { PokemonType } from '../api/pokemonApi/types';
 
 export type PokemonCard = {
   name: string;
